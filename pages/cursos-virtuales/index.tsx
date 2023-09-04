@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import React from 'react'
 
-const index = () => {
-    const router = useRouter()
-    useEffect(() => {
-        router.push('/')
-    }, [])
+const Index = () => {
+    // const router = useRouter()
+    // useEffect(() => {
+    //     router.push('/')
+    // }, [])
   return (
     <></>
   )
 }
 
-export default index
+export default Index
