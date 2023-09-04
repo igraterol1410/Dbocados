@@ -25,7 +25,7 @@ const Navbar = () => {
         alt='logo'
         />
       </Box>
-      <Flex
+      {/* <Flex
       gap={4}>
       <Link href="/login">
         <Button variant='outline'>Inicio de sesión</Button>
@@ -33,7 +33,7 @@ const Navbar = () => {
       <Link href="/signup">
         <Button variant='outline'>Registro</Button>
       </Link>
-      </Flex>
+      </Flex> */}
     </Flex>
   )
 }

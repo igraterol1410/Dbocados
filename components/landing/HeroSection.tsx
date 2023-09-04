@@ -2,6 +2,7 @@ import { Box, Button, Center, Grid, GridItem, Heading, Text } from '@chakra-ui/r
 import React from 'react'
 import DBocadosBg from '@/assets/isaid.svg'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const HeroSection = () => {
   return (
@@ -31,7 +32,16 @@ const HeroSection = () => {
               <Heading mb={0} as='h1' fontSize={['1.75rem','2.9rem']} color='white'>Conviértete en un profesional de la repostería con nuestros cursos.</Heading>
               <br />
               <Text mb={0} color='white'>Te llevamos paso a paso para que logres esa meta tan importante</Text>
-              <Button alignSelf='flex-end' bg='pink.500' color='white' size='lg' mt={6}>Inscríbete aquí</Button>
+              <Link href="/cursos-virtuales/CubiertaChocolate">
+                <Button 
+                alignSelf='flex-end' 
+                bg='pink.500' 
+                color='white' 
+                size='lg' 
+                mt={6}>
+                  Inscríbete aquí
+                </Button>
+              </Link>
             </GridItem>
             <GridItem>
             </GridItem>
