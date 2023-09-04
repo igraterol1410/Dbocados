@@ -8,7 +8,7 @@ export const getCourses = async () => {
     courses.forEach((doc) => {
         allCourses.push(doc.data())
     })
-    const myPromise = new Promise((resolve, reject) => {
+    const myPromise = new Promise <[]> ((resolve, reject) => {
       setTimeout(() => {
           resolve(allCourses);
       }, 300);
