@@ -1,5 +1,5 @@
 import Seo from '@/components/seo/Seo'
-import { Box, Button, Center, FormControl, FormHelperText, FormLabel, Grid, GridItem, Heading, Input, Text, useToast } from '@chakra-ui/react'
+import { Box, Button, Center, FormControl, FormLabel, Grid, GridItem, Heading, Input, Text, useToast } from '@chakra-ui/react'
 import { Field, Form, Formik } from 'formik'
 import React, { useState } from 'react'
 import CursoPost from '@/assets/cubierta-chocolate.jpg'

@@ -1,8 +1,8 @@
 import React from 'react'
-import { Box, Button, Flex } from '@chakra-ui/react'
+import { Box, Flex } from '@chakra-ui/react'
 import DbocadosLogo from '@/assets/logo.svg'
 import Image from 'next/image'
-import Link from 'next/link'
+// import Link from 'next/link'
 
 const Navbar = () => {
   return (

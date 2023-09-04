@@ -1,4 +1,4 @@
-import { Box, Button, Center, Grid, GridItem, Heading, Text } from '@chakra-ui/react'
+import { Box, Button, Grid, GridItem, Heading, Text } from '@chakra-ui/react'
 import React from 'react'
 import DBocadosBg from '@/assets/isaid.svg'
 import Image from 'next/image'

@@ -1,4 +1,4 @@
-import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore"
+import { getFirestore, collection, addDoc } from "firebase/firestore"
 import firebaseApp from '../firebase'
 
 const db = getFirestore(firebaseApp)
