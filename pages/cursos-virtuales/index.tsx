@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import React from 'react'
 
 const Index = () => {
-    const router = useRouter()
-    useEffect(() => {
-        router.push('/')
-    }, [])
+    // const router = useRouter()
+    // useEffect(() => {
+    //     router.push('/')
+    // }, [])
   return (
     <></>
   )
