@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
-const index = () => {
+const Index = () => {
     const router = useRouter()
     useEffect(() => {
         router.push('/')
@@ -11,4 +11,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index
