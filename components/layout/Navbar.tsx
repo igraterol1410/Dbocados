@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Button, Flex } from '@chakra-ui/react'
 import DbocadosLogo from '@/assets/logo.svg'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const Navbar = () => {
   return (
@@ -10,17 +11,28 @@ const Navbar = () => {
     py={4}
     justifyContent='space-between'
     gap={4}
+    position='fixed'
+    w='full'
+    top={0}
+    zIndex={1000}
+    // bg='white'
+    // boxShadow='dark-lg'
     >
       <Box>
         <Image 
         src={DbocadosLogo} 
+        height={40}
         alt='logo'
-        style={{height: '40px'}}
         />
       </Box>
-      <Flex>
-        <Button>Inicio de sesión</Button>
-        <Button>Registro</Button>
+      <Flex
+      gap={4}>
+      <Link href="/login">
+        <Button variant='outline'>Inicio de sesión</Button>
+      </Link>
+      <Link href="/signup">
+        <Button variant='outline'>Registro</Button>
+      </Link>
       </Flex>
     </Flex>
   )
