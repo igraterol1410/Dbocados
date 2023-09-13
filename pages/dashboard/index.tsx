@@ -1,37 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import  { Grid } from '@chakra-ui/react'
 import DbocadosLogo from '@/assets/logo.svg'
 import Image from 'next/image'
 import Layout from '@/components/layout/Layout'
 import NavbarDashboard from '@/components/layout/NavbarDashboard'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { firebaseApp } from '@/firebase'
-import { getUserData } from '@/services/users'
+// import { getUserData } from '@/services/users'
 
 const Dashboard = () => {
     const auth = getAuth(firebaseApp)
-    const router = useRouter()
-    const [user, setUser] = useState<any>({})
-    // const getUser = () => {
-    //     getUserData()
-    // }
-    onAuthStateChanged(auth, (user) => {
-        if(!user){
-            setUser({})
-        } else {
-            setUser(user)
-            // console.log(user.uid)
-            // getUserData(user.uid)
-        }
-    })
+    // const router = useRouter()
     useEffect(() => {
-        if(user.uid){
-            getUserData('R1YVPrSXYvQVWBO5WgwhwlRpixk1')
-        } else {
-            router.push('/')
-        }
-    }, [user])
+        onAuthStateChanged(auth, (user) => {
+            if(user){
+                console.log(user)
+            }
+        })
+    }, [])
   return (
     <Layout>
         <NavbarDashboard />

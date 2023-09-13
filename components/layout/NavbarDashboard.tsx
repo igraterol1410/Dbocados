@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Flex, Button } from '@chakra-ui/react'
 import DbocadosLogo from '@/assets/logo.svg'
 import Image from 'next/image'
@@ -13,12 +13,14 @@ const NavbarDashboard = () => {
     const handleLogOut = () => {
         logOut()
     }
-
-    onAuthStateChanged(auth, (user) => {
-        if(!user){
-            router.push('/')
-        }
-      })
+    
+    useEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+          if(!user){
+              router.push('/')
+          }
+        })
+    }, [])
 
   return (
     <Flex

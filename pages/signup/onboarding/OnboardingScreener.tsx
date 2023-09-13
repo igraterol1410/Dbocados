@@ -5,16 +5,21 @@ import { Grid, Button } from '@chakra-ui/react'
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import React, { useEffect } from "react"
 
 
 const OnboardingScreener = () => {
-    const router = useRouter()
-    const auth = getAuth(firebaseApp)
+  const router = useRouter()
+  const auth = getAuth(firebaseApp)
+
+  
+  useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if(!user){
-          router.push('/')
-      }
-  })
+        if(!user){
+            router.push('/')
+        }
+    })
+  }, [])
   return (
     <Layout>
         <NavbarDashboard />

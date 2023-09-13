@@ -17,7 +17,7 @@ const Login = () => {
     const auth = getAuth(firebaseApp);
     const [password, setPassword] = useState(true)
     const [loading, setLoading] = useState(false)
-    const [user, setUser] = useState<any>({})
+    // const [user, setUser] = useState<any>({})
     const toast = useToast()
     const router = useRouter()
     const animationKeyframesInfo = keyframes`
@@ -54,17 +54,15 @@ const Login = () => {
     })
     }
 
-    onAuthStateChanged(auth, (user) => {
-        if(user){
-            setUser(user)
-        }
-    })
-
+    
     useEffect(() => {
-        if(user.uid){
-            router.push('/dashboard')
-        }
-    }, [user])
+        onAuthStateChanged(auth, (user) => {
+            if(user){
+                router.push('/dashboard')
+                // setUser(user)
+            }
+        })
+    }, [])
   return (
     <Seo
     title='Inicio de sesión'

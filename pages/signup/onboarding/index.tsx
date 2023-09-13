@@ -1,9 +1,9 @@
 import OnboardingScreener from "./OnboardingScreener"
 
-const index = () => {
+const Index = () => {
   return (
     <OnboardingScreener />
   )
 }
 
-export default index
+export default Index

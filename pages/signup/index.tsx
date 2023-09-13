@@ -16,7 +16,6 @@ import { firebaseApp } from '@/firebase'
 const Signup = () => {
     const [password, setPassword] = useState(true)
     const [loading, setLoading] = useState(false)
-    const [user, setUser] = useState<any>({})
     const auth = getAuth(firebaseApp)
     const toast = useToast()
     const router = useRouter()
@@ -48,17 +47,14 @@ const Signup = () => {
         })
     }
 
-    onAuthStateChanged(auth, (user) => {
-        if(user){
-            setUser(user)
-        }
-    })
-
+    
     useEffect(() => {
-        if(user.uid){
-            router.push('/signup/onboarding')
-        }
-    }, [user])
+        onAuthStateChanged(auth, (user) => {
+            if(user){
+                router.push('signup/onboarding')
+            }
+        })
+    }, [])
 
   return (
     <Seo
