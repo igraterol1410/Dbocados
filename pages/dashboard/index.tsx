@@ -9,7 +9,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { firebaseApp } from '@/firebase'
 import { getUserData } from '@/services/users'
 
-const index = () => {
+const Index = () => {
     const auth = getAuth(firebaseApp)
     const router = useRouter()
     // const [user, setUser] = useState({})
@@ -47,4 +47,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index
