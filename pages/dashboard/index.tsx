@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import  { Grid } from '@chakra-ui/react'
 import DbocadosLogo from '@/assets/logo.svg'
 import Image from 'next/image'
@@ -12,7 +12,7 @@ import { getUserData } from '@/services/users'
 const index = () => {
     const auth = getAuth(firebaseApp)
     const router = useRouter()
-    const [user, setUser] = useState({})
+    // const [user, setUser] = useState({})
     // const getUser = () => {
     //     getUserData()
     // }
