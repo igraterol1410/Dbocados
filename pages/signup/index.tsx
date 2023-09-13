@@ -4,7 +4,7 @@ import { Box, Button, FormControl, FormLabel, Grid, GridItem, keyframes, Heading
 import { Field, Form, Formik } from 'formik'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DbocadosLogo from '@/assets/logo.svg'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { motion } from 'framer-motion'
@@ -16,6 +16,7 @@ import { firebaseApp } from '@/firebase'
 const Signup = () => {
     const [password, setPassword] = useState(true)
     const [loading, setLoading] = useState(false)
+    const [user, setUser] = useState<any>({})
     const auth = getAuth(firebaseApp)
     const toast = useToast()
     const router = useRouter()
@@ -49,9 +50,15 @@ const Signup = () => {
 
     onAuthStateChanged(auth, (user) => {
         if(user){
-            router.push('/signup/onboarding')
+            setUser(user)
         }
     })
+
+    useEffect(() => {
+        if(user.uid){
+            router.push('/signup/onboarding')
+        }
+    }, [user])
 
   return (
     <Seo

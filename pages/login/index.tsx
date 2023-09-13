@@ -4,7 +4,7 @@ import { Box, Button, FormControl, FormLabel, Grid, GridItem, Heading, Input, In
 import { Field, Form, Formik } from 'formik'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DbocadosLogo from '@/assets/logo.svg'
 import { loginUser } from '@/services/auth'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
@@ -17,6 +17,7 @@ const Login = () => {
     const auth = getAuth(firebaseApp);
     const [password, setPassword] = useState(true)
     const [loading, setLoading] = useState(false)
+    const [user, setUser] = useState<any>({})
     const toast = useToast()
     const router = useRouter()
     const animationKeyframesInfo = keyframes`
@@ -34,12 +35,9 @@ const Login = () => {
     const handleSubmit = (values: {email:string, password:string}) => {
         setLoading(true)
         loginUser(values).then((res:any) => {
-            console.log(res)
-            if(!res.error){
+            if(res.error){
                 // console.log(res.user)
                 // router.push('/dashboard')
-            }
-            else{
                 toast({
                     title: 'Error',
                     description: `${res.message}`,
@@ -58,9 +56,15 @@ const Login = () => {
 
     onAuthStateChanged(auth, (user) => {
         if(user){
+            setUser(user)
+        }
+    })
+
+    useEffect(() => {
+        if(user.uid){
             router.push('/dashboard')
         }
-      })
+    }, [user])
   return (
     <Seo
     title='Inicio de sesión'

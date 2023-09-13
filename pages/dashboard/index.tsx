@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import  { Grid } from '@chakra-ui/react'
 import DbocadosLogo from '@/assets/logo.svg'
 import Image from 'next/image'
@@ -9,26 +9,29 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { firebaseApp } from '@/firebase'
 import { getUserData } from '@/services/users'
 
-const Index = () => {
+const Dashboard = () => {
     const auth = getAuth(firebaseApp)
     const router = useRouter()
-    // const [user, setUser] = useState({})
+    const [user, setUser] = useState<any>({})
     // const getUser = () => {
     //     getUserData()
     // }
     onAuthStateChanged(auth, (user) => {
         if(!user){
-            router.push('/')
+            setUser({})
         } else {
-            console.log(user.uid)
-            getUserData(user.uid)
+            setUser(user)
+            // console.log(user.uid)
+            // getUserData(user.uid)
         }
     })
-    // useEffect(() => {
-    //     if(user){
-    //         getUserData('R1YVPrSXYvQVWBO5WgwhwlRpixk1')
-    //     }
-    // }, [])
+    useEffect(() => {
+        if(user.uid){
+            getUserData('R1YVPrSXYvQVWBO5WgwhwlRpixk1')
+        } else {
+            router.push('/')
+        }
+    }, [user])
   return (
     <Layout>
         <NavbarDashboard />
@@ -47,4 +50,4 @@ const Index = () => {
   )
 }
 
-export default Index
+export default Dashboard
