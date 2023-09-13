@@ -2,16 +2,24 @@ import React from 'react'
 import { Box, Flex, Button } from '@chakra-ui/react'
 import DbocadosLogo from '@/assets/logo.svg'
 import Image from 'next/image'
-import Link from 'next/link'
 import { logOut } from '@/services/auth'
 import { useRouter } from 'next/router'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { firebaseApp } from '@/firebase'
 
-const NavbarDashboard = () => {
+const NavbarDashboard = () => {  
+    const auth = getAuth(firebaseApp);
     const router = useRouter()
     const handleLogOut = () => {
         logOut()
-        router.push('/')
     }
+
+    onAuthStateChanged(auth, (user) => {
+        if(!user){
+            router.push('/')
+        }
+      })
+
   return (
     <Flex
     px={['1rem', '2rem']}
@@ -32,9 +40,7 @@ const NavbarDashboard = () => {
       </Box>
       <Flex
       gap={4}>
-      <Link href="/login">
         <Button variant='outline' onClick={handleLogOut}>Cerrar sesión</Button>
-      </Link>
       </Flex>
     </Flex>
   )

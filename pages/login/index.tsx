@@ -1,6 +1,6 @@
 import Layout from '@/components/layout/Layout'
 import Seo from '@/components/seo/Seo'
-import { Box, Button, FormControl, FormLabel, Grid, GridItem, Heading, Input, InputGroup, InputRightAddon, useToast, keyframes } from '@chakra-ui/react'
+import { Box, Button, FormControl, FormLabel, Grid, GridItem, Heading, Input, InputGroup, InputRightAddon, useToast, keyframes, Text } from '@chakra-ui/react'
 import { Field, Form, Formik } from 'formik'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -9,11 +9,16 @@ import DbocadosLogo from '@/assets/logo.svg'
 import { loginUser } from '@/services/auth'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { motion } from 'framer-motion'
+import { useRouter } from 'next/router'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { firebaseApp } from '@/firebase'
 
 const Login = () => {
+    const auth = getAuth(firebaseApp);
     const [password, setPassword] = useState(true)
     const [loading, setLoading] = useState(false)
     const toast = useToast()
+    const router = useRouter()
     const animationKeyframesInfo = keyframes`
   0% { transform: translateY(600px); opacity: 0 }
   100% { transform: translateY(0px); opacity: 1 }
@@ -28,17 +33,11 @@ const Login = () => {
 
     const handleSubmit = (values: {email:string, password:string}) => {
         setLoading(true)
-        loginUser(values).then((res:{error:boolean, message:string, user:any}) => {
+        loginUser(values).then((res:any) => {
+            console.log(res)
             if(!res.error){
-                console.log(res.user)
-                toast({
-                    title: 'Genial',
-                    description: `${res.message}`,
-                    position:'top-right',
-                    status: 'success',
-                    duration: 9000,
-                    isClosable: true,
-                })
+                // console.log(res.user)
+                // router.push('/dashboard')
             }
             else{
                 toast({
@@ -51,8 +50,17 @@ const Login = () => {
                 })
             }
         setLoading(false)
-        })
+    })
+    .finally(() => {
+        setLoading(false)
+    })
     }
+
+    onAuthStateChanged(auth, (user) => {
+        if(user){
+            router.push('/dashboard')
+        }
+      })
   return (
     <Seo
     title='Inicio de sesión'
@@ -123,7 +131,9 @@ const Login = () => {
                                         type={password ? 'password' : 'text' }
                                         placeholder='Contraseña'
                                         />
-                                        <InputRightAddon color='#e80297' onClick={() => setPassword(!password)} children={password ? <AiFillEyeInvisible /> : <AiFillEye />} />
+                                        <InputRightAddon color='#e80297' onClick={() => setPassword(!password)} >
+                                            {password ? <AiFillEyeInvisible /> : <AiFillEye />}
+                                        </InputRightAddon>
                                     </InputGroup>
                                     {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                                 </FormControl>
@@ -142,6 +152,12 @@ const Login = () => {
                             </Form>
                         )}
                     </Formik>
+                    <Text textAlign='center' mt={4}>
+                        No tienes cuenta aún? <Link href='/signup'><u>Registrate</u></Link>
+                    </Text>
+                    <Text textAlign='center' mt={2}>
+                        o <Link href='/'><u>Ir al inicio</u></Link>
+                    </Text>
                 </Box>
             </GridItem>
         </Grid>

@@ -1,10 +1,11 @@
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import { firebaseApp } from '@/firebase';
+import { saveUser } from './users';
 
 const auth = getAuth(firebaseApp);
 
 export const loginUser = async (user:{email:string, password:string}) => {
-  try {
+  try {    
     const userCredential:{user:any} = await signInWithEmailAndPassword(auth, user.email, user.password)
     const response = {
       error: false,
@@ -28,7 +29,7 @@ export const loginUser = async (user:{email:string, password:string}) => {
 export const createUser = async (user:{email:string, password:string}) => {
   try {
     const userCredential:{user:any} = await createUserWithEmailAndPassword(auth, user.email, user.password)
-    console.log(userCredential)
+    saveUser(userCredential.user)
     const response = {
       error: false,
       user: userCredential.user,
@@ -49,14 +50,4 @@ export const createUser = async (user:{email:string, password:string}) => {
 
 export const logOut = async () => {
   await signOut(auth)
-}
-
-export const checkUser = async () => {
-    onAuthStateChanged(auth, user => {
-      if(user){
-        return user
-      }else{
-        return null
-      }
-    })
 }

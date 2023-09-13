@@ -10,10 +10,13 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { motion } from 'framer-motion'
 import { createUser } from '@/services/auth'
 import { useRouter } from 'next/router'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { firebaseApp } from '@/firebase'
 
 const Signup = () => {
     const [password, setPassword] = useState(true)
     const [loading, setLoading] = useState(false)
+    const auth = getAuth(firebaseApp)
     const toast = useToast()
     const router = useRouter()
     const animationKeyframesInfo = keyframes`
@@ -28,11 +31,9 @@ const Signup = () => {
 `
     const animation2 = `${animationKeyframes2} 1.5s ease-in-out `
     const handleSubmit = (values: {email:string, password:string}) => {
+        setLoading(true)
         createUser(values).then((res:{error:boolean, message:string, user:any}) => {
-            if(!res.error){
-                router.push('/signup/onboarding')
-            }
-            else{
+            if(res.error){
                 toast({
                     title: 'Error',
                     description: `${res.message}`,
@@ -41,10 +42,17 @@ const Signup = () => {
                     duration: 9000,
                     isClosable: true,
                 })
-            }                
+            }               
         setLoading(false)
         })
     }
+
+    onAuthStateChanged(auth, (user) => {
+        if(user){
+            router.push('/signup/onboarding')
+        }
+    })
+
   return (
     <Seo
     title='Registrate'
@@ -101,7 +109,9 @@ const Signup = () => {
                                         type={password ? 'password' : 'text' }
                                         placeholder='Contraseña'
                                         />
-                                        <InputRightAddon color='#e80297' onClick={() => setPassword(!password)} children={password ? <AiFillEyeInvisible /> : <AiFillEye />} />
+                                        <InputRightAddon color='#e80297' onClick={() => setPassword(!password)} >
+                                            {password ? <AiFillEyeInvisible /> : <AiFillEye />}
+                                        </InputRightAddon>
                                     </InputGroup>
                                     {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                                 </FormControl>
@@ -113,9 +123,9 @@ const Signup = () => {
                                 type='submit'
                                 isLoading={loading}
                                 isDisabled={loading || !values.email || !values.password}
-                                loadingText='Iniciando sesión'
+                                loadingText='Registrando usuario'
                                 >
-                                    Iniciar Sesión
+                                    Confirmar registro
                                 </Button>
                             </Form>
                         )}
