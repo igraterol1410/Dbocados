@@ -3,7 +3,7 @@ import firebaseApp from '../firebase'
 
 const db = getFirestore(firebaseApp)
 export const createNewStudent = async (student: {}) => {
-    const newStudent = await addDoc(collection(db, "virtual-course-1"), student)
+    const newStudent = await addDoc(collection(db, "virtual-course-2"), student)
     const myPromise = new Promise <{}> ((resolve, reject) => {
       setTimeout(() => {
           resolve(newStudent);
