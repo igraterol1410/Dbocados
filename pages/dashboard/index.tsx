@@ -2,38 +2,34 @@ import React, { useEffect } from 'react'
 import  { Grid } from '@chakra-ui/react'
 import DbocadosLogo from '@/assets/logo.svg'
 import Image from 'next/image'
-import Layout from '@/components/layout/Layout'
-import NavbarDashboard from '@/components/layout/NavbarDashboard'
 // import { useRouter } from 'next/router'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { firebaseApp } from '@/firebase'
-// import { getUserData } from '@/services/users'
+import { getUserData } from '@/services/users'
 
 const Dashboard = () => {
     const auth = getAuth(firebaseApp)
-    // const router = useRouter()
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if(user){
-                console.log(user)
+                getUserData(user.uid).then((res:any) => {
+                    console.log(res)
+                })
             }
         })
     }, [])
   return (
-    <Layout>
-        <NavbarDashboard />
-        <Grid 
-        alignItems='center' 
-        justifyContent='center'            
-        h={['100%','100vh']}
-        w='full'
-        >
-            <Image
-            src={DbocadosLogo}
-            alt='Logo dbocados'
-            />
-        </Grid>
-    </Layout>
+    <Grid 
+    alignItems='center' 
+    justifyContent='center'            
+    h={['100%','calc(100vh - 50px)']}
+    w='full'
+    >
+        <Image
+        src={DbocadosLogo}
+        alt='Logo dbocados'
+        />
+    </Grid>
   )
 }
 

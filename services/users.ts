@@ -18,5 +18,5 @@ export const getUserData = async (uid:any) => {
     const userRef = doc(db, `usuarios/${uid}`)
     const userData = await getDoc(userRef)
     const data = userData.data()
-    console.log(data)
+    return data
 }

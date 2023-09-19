@@ -15,7 +15,6 @@ export const loginUser = async (user:{email:string, password:string}) => {
     return response
   }
   catch(error){
-    console.log(error)
     let message = 'Credenciales invalidas'
     const response = {
       error: true,
