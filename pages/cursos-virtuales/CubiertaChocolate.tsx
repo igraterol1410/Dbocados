@@ -1,5 +1,5 @@
 import Seo from '@/components/seo/Seo'
-import { Box, Button, Center, FormControl, FormLabel, Grid, GridItem, Heading, Input, Text, useToast } from '@chakra-ui/react'
+import { Box, Button, Center, FormControl, FormHelperText, FormLabel, Grid, GridItem, Heading, Input, Text, useToast } from '@chakra-ui/react'
 import { Field, Form, Formik } from 'formik'
 import React, { useState } from 'react'
 import CursoPost from '@/assets/cubierta-chocolate.jpg'
@@ -11,7 +11,9 @@ import { AiOutlineWhatsApp } from "react-icons/ai";
 const CubiertaChocolate = () => {
     const toast = useToast()
     const [success, setSuccess] = useState(false)
+    const [loading, setLoading] = useState(false)
     const handleSubmit = (values: {}) => {
+        setLoading(true)
         createNewStudent(values).then(() => {
             setSuccess(true)
             toast({
@@ -22,6 +24,7 @@ const CubiertaChocolate = () => {
                 duration: 9000,
                 isClosable: true,
               })
+              setLoading(false)
         })
     }
   return (
@@ -80,7 +83,7 @@ const CubiertaChocolate = () => {
                                     <Text fontSize='xl' fontWeight='bold'>Bienvenido</Text>
                                 </Center>
                                 <Center mt={4}>
-                                    <a href="https://chat.whatsapp.com/KxaRGCRIRHcCvh6BWWM8qX">
+                                    <a href="https://chat.whatsapp.com/EFGAEvrhJkFFSq6j0L8iC2">
                                         <Button 
                                         bg='#25D366' 
                                         color='white' 
@@ -103,7 +106,7 @@ const CubiertaChocolate = () => {
                                 initialValues={{
                                     name: '',
                                     email: '',
-                                    phone: 0
+                                    phone: ''
                                 }}
                                 validate={(values) => {}}
                                 onSubmit={handleSubmit}
@@ -139,14 +142,22 @@ const CubiertaChocolate = () => {
                                                 type='number'
                                                 placeholder='Teléfono'
                                                 />
-                                                {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
+                                                {
+                                                    touched.phone && errors.phone &&
+                                                    <FormHelperText color='white'>
+                                                        {errors.phone}
+                                                    </FormHelperText>
+                                                }
                                             </FormControl>
                                             <Button 
                                             mt={5} 
                                             w='full'
                                             bg='#e80297' 
                                             color='white'
+                                            isDisabled={!values.email || !values.name || !values.phone}
                                             type='submit'
+                                            isLoading={loading}
+                                            loadingText='Guardando tus datos'
                                             >
                                                 Confirmar inscripción
                                             </Button>
