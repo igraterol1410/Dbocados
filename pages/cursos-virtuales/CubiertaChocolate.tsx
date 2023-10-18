@@ -83,7 +83,7 @@ const CubiertaChocolate = () => {
                                     <Text fontSize='xl' fontWeight='bold'>Bienvenido</Text>
                                 </Center>
                                 <Center mt={4}>
-                                    <a href="https://chat.whatsapp.com/EFGAEvrhJkFFSq6j0L8iC2">
+                                    <a href="https://chat.whatsapp.com/L3DMeXNaAUK9tpo5oj1SdA">
                                         <Button 
                                         bg='#25D366' 
                                         color='white' 
