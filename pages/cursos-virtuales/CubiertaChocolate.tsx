@@ -12,7 +12,7 @@ const CubiertaChocolate = () => {
     const toast = useToast()
     const [success, setSuccess] = useState(false)
     const handleSubmit = (values: {}) => {
-        createNewStudent(values).then(() => {
+        createNewStudent(values, 'virtual-course-3').then(() => {
             setSuccess(true)
             toast({
                 title: 'Genial',
@@ -36,7 +36,6 @@ const CubiertaChocolate = () => {
             alignItems='center'             
             h={['100%','100vh']}
             >
-                {/* <Heading textAlign='center' mb={4} color='#683c10'>Curso de cubierta especial de Chocolate</Heading> */}
                 <Image
                 src={CursoPost}
                 alt='Post de curso virtual de cubierta especial de chocolate'
@@ -80,7 +79,7 @@ const CubiertaChocolate = () => {
                                     <Text fontSize='xl' fontWeight='bold'>Bienvenido</Text>
                                 </Center>
                                 <Center mt={4}>
-                                    <a href="https://chat.whatsapp.com/KxaRGCRIRHcCvh6BWWM8qX">
+                                    <a href="https://chat.whatsapp.com/L3DMeXNaAUK9tpo5oj1SdA">
                                         <Button 
                                         bg='#25D366' 
                                         color='white' 
@@ -103,7 +102,7 @@ const CubiertaChocolate = () => {
                                 initialValues={{
                                     name: '',
                                     email: '',
-                                    phone: 0
+                                    phone: ''
                                 }}
                                 validate={(values) => {}}
                                 onSubmit={handleSubmit}
@@ -115,6 +114,7 @@ const CubiertaChocolate = () => {
                                                 <FormLabel>Nombre completo</FormLabel>
                                                 <Field
                                                 as={Input}
+                                                required
                                                 name='name'
                                                 type='text'
                                                 placeholder='Nombre'
@@ -125,6 +125,7 @@ const CubiertaChocolate = () => {
                                                 <FormLabel>Correo</FormLabel>
                                                 <Field
                                                 as={Input}
+                                                required
                                                 name='email'
                                                 type='email'
                                                 placeholder='Correo'
@@ -135,8 +136,9 @@ const CubiertaChocolate = () => {
                                                 <FormLabel>Número de teléfono</FormLabel>
                                                 <Field
                                                 as={Input}
+                                                required
                                                 name='phone'
-                                                type='number'
+                                                type='tel'
                                                 placeholder='Teléfono'
                                                 />
                                                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
@@ -147,6 +149,7 @@ const CubiertaChocolate = () => {
                                             bg='#e80297' 
                                             color='white'
                                             type='submit'
+                                            isDisabled={!values.email || !values.name || !values.phone}
                                             >
                                                 Confirmar inscripción
                                             </Button>

@@ -10,7 +10,12 @@ import { AiOutlineLogout } from 'react-icons/ai'
 import { HiOutlineMenuAlt1 } from 'react-icons/hi'
 import { motion } from 'framer-motion'
 
-const NavbarDashboard = ({asideOpen, setAsideOpen}:{asideOpen:boolean, setAsideOpen:any}) => {  
+interface NavbarProps {
+  asideOpen: boolean,
+  setAsideOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const NavbarDashboard:React.FC<NavbarProps> = ({asideOpen, setAsideOpen}) => {  
     const auth = getAuth(firebaseApp);
     const router = useRouter()
     const handleLogOut = () => {

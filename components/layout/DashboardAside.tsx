@@ -35,11 +35,11 @@ const DashboardAside = ({ asideOpen }:{ asideOpen:boolean }) => {
             icon:<BiHomeAlt2 />,
             link:'/dashboard'
         },
-        {
-            title:'Mis cursos',
-            icon:<PiBooks />,
-            link:'/dashboard/mis-cursos'
-        },
+        // {
+        //     title:'Mis cursos',
+        //     icon:<PiBooks />,
+        //     link:'/dashboard/mis-cursos'
+        // },
         {
             title:'Cursos digitales',
             icon:<HiOutlineDesktopComputer />,
@@ -64,12 +64,12 @@ const DashboardAside = ({ asideOpen }:{ asideOpen:boolean }) => {
             title:'Cotizador',
             icon:<AiOutlineCalculator />,
             link:'/dashboard/cotizador'
-        },
-        {
-            title:'Mi perfil',
-            icon:<BiUserCircle />,
-            link:'/dashboard/perfil'
         }
+        // {
+        //     title:'Mi perfil',
+        //     icon:<BiUserCircle />,
+        //     link:'/dashboard/perfil'
+        // }
     ]
     const openAside = keyframes`
         0% { width: 64px }
