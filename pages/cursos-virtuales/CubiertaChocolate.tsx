@@ -11,7 +11,9 @@ import { AiOutlineWhatsApp } from "react-icons/ai";
 const CubiertaChocolate = () => {
     const toast = useToast()
     const [success, setSuccess] = useState(false)
+    const [loading, setLoading] = useState(false)
     const handleSubmit = (values: {}) => {
+        setLoading(true)
         createNewStudent(values, 'virtual-course-3').then(() => {
             setSuccess(true)
             toast({
@@ -21,7 +23,8 @@ const CubiertaChocolate = () => {
                 status: 'success',
                 duration: 9000,
                 isClosable: true,
-              })
+            })
+            setLoading(false)
         })
     }
   return (
@@ -149,7 +152,9 @@ const CubiertaChocolate = () => {
                                             bg='#e80297' 
                                             color='white'
                                             type='submit'
-                                            isDisabled={!values.email || !values.name || !values.phone}
+                                            isDisabled={!values.email || !values.name || !values.phone || loading}
+                                            isLoading={loading}
+                                            loadingText='Guardando los datos'
                                             >
                                                 Confirmar inscripción
                                             </Button>
