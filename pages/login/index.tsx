@@ -36,8 +36,6 @@ const Login = () => {
         setLoading(true)
         loginUser(values).then((res:any) => {
             if(res.error){
-                // console.log(res.user)
-                // router.push('/dashboard')
                 toast({
                     title: 'Error',
                     description: `${res.message}`,
@@ -59,7 +57,6 @@ const Login = () => {
         onAuthStateChanged(auth, (user) => {
             if(user){
                 router.push('/dashboard')
-                // setUser(user)
             }
         })
     }, [])

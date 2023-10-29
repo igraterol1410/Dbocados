@@ -14,7 +14,7 @@ const Navbar = () => {
     position='fixed'
     w='full'
     top={0}
-    zIndex={1000}
+    zIndex={10000}
     >
       <Box>
         <Image 
@@ -25,9 +25,11 @@ const Navbar = () => {
       </Box>
       <Flex
       gap={4}>
-      <Link href="/login">
-        <Button variant='outline'>Inicio de sesión</Button>
-      </Link>
+        <Button variant='outline'>
+          <Link href="/login">
+            Inicio de sesión
+          </Link>
+        </Button>
       <Link href="/signup">
         <Button variant='outline'>Registro</Button>
       </Link>

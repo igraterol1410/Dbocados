@@ -40,7 +40,7 @@ const NavbarDashboard:React.FC<NavbarProps> = ({asideOpen, setAsideOpen}) => {
     w='full'
     top={0}
     zIndex={1000}
-    bg='#683c10'
+    bg='#fcfcfc'
     >
       {/* <Box>
         <Image 
@@ -52,7 +52,7 @@ const NavbarDashboard:React.FC<NavbarProps> = ({asideOpen, setAsideOpen}) => {
       <Flex
       gap={4}
       fontSize='lg'
-      color='white'
+      color='#000'
       >
         <Box
         as={motion.div}

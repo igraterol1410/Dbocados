@@ -2,12 +2,11 @@ import { Box, Flex, List, ListItem, Text, Tooltip, keyframes, Center } from '@ch
 import { usePathname } from 'next/navigation'
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
-import { AiOutlineCalculator, AiOutlineShop } from 'react-icons/ai';
+import { MdOutlineRequestQuote } from 'react-icons/md';
 import { FaChalkboardTeacher } from "react-icons/fa";
-import { HiOutlineDesktopComputer } from "react-icons/hi";
-import { LiaUsersSolid } from "react-icons/lia";
-import { PiBooks } from "react-icons/pi";
-import { BiHomeAlt2, BiUserCircle } from "react-icons/bi";
+import { GrConfigure } from "react-icons/gr";
+import { BiFoodMenu } from "react-icons/bi";
+import { BiHomeAlt2 } from "react-icons/bi";
 import { motion } from 'framer-motion'
 
 import DbocadosLogo from '@/assets/logo.svg'
@@ -16,7 +15,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { firebaseApp } from '@/firebase';
 import { getUserData } from '@/services/users';
 
-const DashboardAside = ({ asideOpen }:{ asideOpen:boolean }) => {
+const CotizadorAside = ({ asideOpen }:{ asideOpen:boolean }) => {
     const [user, setUser] = useState<any>({})
     const pathname = usePathname()
     const auth = getAuth(firebaseApp)
@@ -31,58 +30,49 @@ const DashboardAside = ({ asideOpen }:{ asideOpen:boolean }) => {
     }, [])
     const items = [
         {
-            title:'Inicio',
-            icon:<BiHomeAlt2 />,
-            link:'/dashboard'
-        },
-        // {
-        //     title:'Mis cursos',
-        //     icon:<PiBooks />,
-        //     link:'/dashboard/mis-cursos'
-        // },
-        {
-            title:'Cursos digitales',
-            icon:<HiOutlineDesktopComputer />,
+            title:'Cotizaciones',
+            icon:<MdOutlineRequestQuote />,
             link:'/dashboard/cursos-virtuales'
         },
         {
-            title:'Cursos presenciales',
-            icon:<FaChalkboardTeacher />,
-            link:'/dashboard/cursos-presenciales'
+            title:'Recetas',
+            icon:<BiFoodMenu />,
+            link:'/cotizador/recetas'
         },
         {
-            title:'ForoChats',
-            icon:<LiaUsersSolid />,
-            link:'/dashboard/forochat'
+            title:'Configuración',
+            icon:<GrConfigure />,
+            link:'/cotizador/configuracion'
         },
         {
-            title:'Productos',
-            icon:<AiOutlineShop />,
-            link:'/dashboard/productos'
-        },
-        {
-            title:'Cotizador',
-            icon:<AiOutlineCalculator />,
-            link:'/cotizador'
+            title:'Ir al panel',
+            icon:<BiHomeAlt2 />,
+            link:'/dashboard'
         }
-        // {
-        //     title:'Mi perfil',
-        //     icon:<BiUserCircle />,
-        //     link:'/dashboard/perfil'
-        // }
     ]
     const openAside = keyframes`
         0% { width: 64px }
-        100% { width: 236px }
+        100% { width: 300px }
     `
     const openAsideAction = `${openAside} 1.5s ease-in-out `
     const closeAside = keyframes`
-        0% { width: 236px }
+        0% { width: 300px }
         100% { width: 64px }
     `
-    const closeAsideAction = `${closeAside} 1.5s ease-in-out `
+    const closeAsideActionMobile = `${closeAside} 1.5s ease-in-out `
+    const openAsideMobile = keyframes`
+        0% { width: 64px, left: -300px }
+        100% { width: 300px, left: 0 }
+    `
+    const openAsideActionMobile = `${openAsideMobile} 1.5s ease-in-out `
+    const closeAsideMobile = keyframes`
+        0% { width: 300px, left: 0 }
+        100% { width: 64px, left: -300px }
+    `
+    const closeAsideAction = `${closeAsideMobile} 1.5s ease-in-out `
     const appearText = keyframes`
         0% { opacity: 0 }
+        50% { opacity: 0 }
         100% { opacity: 1 }
     `
     const appearTextAction = `${appearText} 1.5s ease-in-out `
@@ -94,10 +84,10 @@ const DashboardAside = ({ asideOpen }:{ asideOpen:boolean }) => {
   return (
     <Box 
     as={motion.div}
-    animation={asideOpen ? openAsideAction : closeAsideAction}
+    animation={[asideOpen ? openAsideActionMobile : closeAsideActionMobile, asideOpen ? openAsideAction : closeAsideAction]}
     transition='all ease .5s'
     position='fixed'
-    left={0}
+    left={[asideOpen ? 0 : -300,0]}
     top={0}
     h='100vh'
     bg='#fcfcfc' 
@@ -157,12 +147,12 @@ const DashboardAside = ({ asideOpen }:{ asideOpen:boolean }) => {
                                 as={motion.div}
                                 transition='all ease .5s'
                                 _hover={{
-                                    color:`${pathname === item.link ? 'white' : '#e80297'}`
+                                    color:'#e80297'
                                 }}
                                 borderBottom='1px solid rgba(255, 255, 255, .85)'
                                 >
                                 <Tooltip hasArrow label={item.title} placement='right'>
-                                    <Text fontSize='2xl'>
+                                    <Text fontSize='2xl' m={0}>
                                         {item.icon}
                                     </Text>
                                 </Tooltip>
@@ -184,4 +174,4 @@ const DashboardAside = ({ asideOpen }:{ asideOpen:boolean }) => {
   )
 }
 
-export default DashboardAside
+export default CotizadorAside
