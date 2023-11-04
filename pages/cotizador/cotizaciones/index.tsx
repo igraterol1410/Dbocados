@@ -2,14 +2,14 @@ import React, { Dispatch, SetStateAction, useState } from 'react'
 import { Box, Button, Center, Flex, Grid, Heading, Text } from '@chakra-ui/react'
 import PageContainer from '@/components/layout/PageContainer'
 import Image from 'next/image'
-import Ilustracion from '@/assets/configuracion.svg'
+import Ilustracion from '@/assets/cotizaciones.svg'
 import Link from 'next/link'
 import { BiPlus } from 'react-icons/bi'
 
-const Recetas = () => {
+const Cotizaciones = () => {
     const [showList, setShowList] = useState<boolean>(false)
   return (
-    <PageContainer title={showList ? 'Recetas' : 'Recetas'}>
+    <PageContainer title={'Cotizaciones'}>
         <Introduccion showList={showList} setShowList={setShowList} />
     </PageContainer>
   )
@@ -53,10 +53,10 @@ const Introduccion:React.FC<introduccionProps> = ({showList, setShowList}) => {
                         <Text>
                             Antes de continuar, vamos a personalizar tu cotizador. Esto implica ingresar algunos precios referenciales. Esta configuración te permitirá crear cotizaciones precisas en el futuro. Empecemos.
                         </Text>
-                    </Box>
+                    </Box>                   
                 </Box>
                 <Flex direction='column' h='100%' justifyContent='space-between'>
-                    <Link href='crear-receta'>
+                    <Link href='crear-cotizacion'>
                       <Button 
                       w='full' 
                       bg='#e80297' 
@@ -65,7 +65,7 @@ const Introduccion:React.FC<introduccionProps> = ({showList, setShowList}) => {
                       onClick={handleInformation}
                       rightIcon={<BiPlus />}
                       >
-                          Crear una receta
+                          Crear una cotización
                       </Button>
                     </Link>
                 </Flex>
@@ -74,4 +74,4 @@ const Introduccion:React.FC<introduccionProps> = ({showList, setShowList}) => {
     )
 }
 
-export default Recetas
+export default Cotizaciones

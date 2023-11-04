@@ -9,53 +9,45 @@ import {
   FormLabel,
   Text,
   useToast,
-  Spinner,
   Select
 } from '@chakra-ui/react'
 import { Formik,Form,Field, FormikErrors } from 'formik'
-import { Ingredients, IngredientsError } from '@/types/ingredients'
-import { AiOutlinePlusCircle, AiOutlinePlus } from 'react-icons/ai'
-import { currencyFormatter } from '@/functions/financeFunctions'
+import { Ingredients } from '@/types/ingredients'
+import { AiOutlinePlus } from 'react-icons/ai'
 import { RecipeIngredient, RecipeIngredientError } from '@/types/recipe'
+import { INGREDIENT_UNIT } from '@/constant/unities'
+import { useRecipeActionsContext, useRecipeStateContext } from '@/context/RecipeContext'
+import useUserInfo from '@/hooks/useUserInfo'
+import useGetRecipes from '@/hooks/useGetRecipes'
+import useGetIngredients from '@/hooks/useGetIngredients'
+import RecetaFormProduct from './RecetaFormProduct'
+import Loader from '../../Loader'
+import { createNewRecipe } from '@/services/recipes'
+import {v4 as uuidv4} from 'uuid'
 
 const CreateReceta = () => {
     const toast = useToast()
+    const {setProgress} = useRecipeActionsContext()
+    const { uid } = useUserInfo()
+    const {progress, recipeName, recipeType, recipePeople} = useRecipeStateContext()
     const [productList, setProductList] = useState<RecipeIngredient[]>([])    
-    const [ingredients, setIngredients] = useState<Ingredients[]>([])    
-    const [disabledButton, setDisabledButton] = useState<boolean>(true)    
-    const [refresh, setRefresh] = useState<boolean>(true)    
-    const [loading, setLoading] = useState<boolean>(false)   
-    const savedValue:string | null =  window.localStorage.getItem('recipe') || '[]'
-    const recipe = JSON.parse(savedValue)
-    const savedIngredients:string | null =  window.localStorage.getItem('requirement') || ''
-    const ingredientsList = JSON.parse(savedIngredients)
-    const unidades = ['lt', 'ml', 'kg', 'gr', 'cda', 'cdta', 'unidades']
+    const [ingredientsList, setIngredientsList] = useState<Ingredients[]>([])    
+    const [unitList, setUnitList] = useState<any>([])
+    const { recipes } = useGetRecipes()
+    const { ingredients, loading } = useGetIngredients()
 
     useEffect(()=>{
-        if(recipe){
-            setProductList(recipe)
-        }else{
-            setProductList([])
+        if(ingredients){
+            setIngredientsList(ingredients)
         }
-    },[refresh])
-    useEffect(()=>{
-        if(ingredientsList){
-            setIngredients(ingredientsList)
-        }else{
-            setIngredients([])
-        }
-    },[refresh])
+    },[ingredients])
 
-    const handleSubmit = (values:Ingredients) => {
-        console.log(values)
-        // setLoading(true)
-        // setDisabledButton(true)
-        // const sendrecipe ={
-        //     name: values.name,
-        //     email:values.email,
-        //     phone:values.phoneNumber
-        // }
+    const getIngredientInfo = (ingredient:string | null) => {
+        const ingredientInfo = ingredients.filter((eachIngredient) => (eachIngredient.name === ingredient))
+
+        return ingredientInfo[0].id
     }
+
     const setProducts = (values: RecipeIngredient) => {
         if(isDuplicated(values.name)){
             toast({ status: 'error', description: 'Ingrediente duplicado' })
@@ -64,10 +56,10 @@ const CreateReceta = () => {
             const arrayUpdated = [...productList, {
                 name: values.name,
                 unity: values.unity,
-                amount: values.amount
+                amount: values.amount,
+                productRef: getIngredientInfo(values.name)
             }]
             setProductList(arrayUpdated)
-            window.localStorage.setItem('recipe', JSON.stringify(arrayUpdated))
         }
     }
 
@@ -75,7 +67,6 @@ const CreateReceta = () => {
         const index = productList.indexOf(product)
         const newArray = [...productList]
         newArray.splice(index, 1)
-        window.localStorage.setItem('recipe', JSON.stringify(newArray))
         setProductList(newArray)
     }
 
@@ -84,11 +75,34 @@ const CreateReceta = () => {
         return valueDuplicated.length > 0
     }
 
+    const getUnits = (name:string) => {
+        const units = []
+        const unitsPossibles = ingredientsList.filter((eachIngredient:Ingredients) => (eachIngredient.name === name))
+        units.push(unitsPossibles[0]?.unity)
+        const unitConversion = INGREDIENT_UNIT.filter((eachUnit) => (eachUnit.unit === unitsPossibles[0]?.unity))
+        units.push(unitConversion[0]?.alternative_conversion.unit)
+        setUnitList(units)
+    }
+
+    const handleSaveRecipe = () => {
+        const newRecipe = {
+            id: uuidv4(),
+            recipeName: recipeName,
+            recipeType: recipeType,
+            recipePeople: recipePeople,
+            recipeIngredients: productList
+        }
+        const payload = [...recipes, newRecipe]
+        createNewRecipe(payload, uid).then(() => {
+            setProgress(progress + 1)
+        })
+    }
+
   return (
     <Center>
         {
             loading &&
-            <Spinner/>
+            <Loader/>
         }
         <Box w={['100%','100%','80%' ,'80%']} bg='white' px={[3, 5]} py={[2, 4]} borderRadius={8}>           
             <Box w='100%'>
@@ -96,7 +110,7 @@ const CreateReceta = () => {
                     <Text fontSize='2xl'>Lista de Ingredientes</Text>
                 </Center>
                 <Grid
-                gridTemplateColumns='1fr 80px 80px'
+                gridTemplateColumns='1fr 100px 100px'
                 gap={4}
                 w='100%' 
                 py={2} 
@@ -110,47 +124,18 @@ const CreateReceta = () => {
                     <GridItem textAlign='center'>Acción</GridItem>
                 </Grid>
                 {
-                    productList && productList.map((product, index)=>(
+                    productList.length > 0 
+                    ? (
+                        productList.map((product, index)=>(
+                            <RecetaFormProduct 
+                            key={index}
+                            product={product} 
+                            handleRemoveProduct={handleRemoveProduct} 
+                            />
+                        ))                        
+                    )
+                    : (
                         <Grid 
-                        key={index}
-                        gridTemplateColumns='1fr 80px 80px'
-                        fontSize={['14px', '16px']}
-                        gap={4}
-                        alignContent='center'
-                        alignItems='center'
-                        w='100%' 
-                        py={2} 
-                        px={4}
-                        border='1px solid #e80297'
-                        color='#e80297' 
-                        marginBottom={2}
-                        borderRadius={8}>
-                            <GridItem>
-                                {product.name}
-                            </GridItem>
-                            <GridItem textAlign='center'>
-                                {`${product.amount}${product.unity}`}
-                            </GridItem>
-                            <GridItem
-                            bg='#e80297' 
-                            color='white'
-                            borderRadius={8}
-                            _hover={{
-                                cursor:'pointer',
-                                bg:'white',
-                                color:'#e80297'
-                            }}
-                            onClick={() => handleRemoveProduct(product)}>
-                                <Center px={3}>
-                                    Eliminar
-                                </Center>
-                            </GridItem>
-                        </Grid>
-                    ))
-                }
-                {
-                    productList.length === 0 &&
-                    <Grid 
                         gridTemplateColumns='1fr'
                         w='100%' 
                         py={2} 
@@ -160,19 +145,22 @@ const CreateReceta = () => {
                         marginBottom={2}
                         borderRadius={8}>
                             <GridItem>
-                               Añade ingredientes
+                            Añade ingredientes
                             </GridItem>
                         </Grid>
+                    )
                 }
             </Box>
             <Formik
             initialValues={{
                 name:'',
                 unity:'',
-                amount:0
+                amount:0,
+                productRef: 0
             }}
             validate={(values)=>{
                 const errors: FormikErrors<RecipeIngredientError> = {}
+                getUnits(values.name)
                 if(isDuplicated(values.name)){
                     errors.name = 'Ingrediente duplicado'
                 }
@@ -231,10 +219,11 @@ const CreateReceta = () => {
                                 type='number'
                                 name='unity'
                                 placeholder='selecciona'
+                                disabled={!values.name}
                                 >
                                     {
-                                        unidades.map((unidad, index) => (
-                                            <option key={unidad}>{unidad}</option>
+                                        unitList && unitList.map((unit:any, index:number) => (
+                                            <option key={index}>{unit}</option>
                                         ))
                                     }
                                 </Field>  
@@ -271,9 +260,10 @@ const CreateReceta = () => {
             _hover={{
                 bg:'#17a6bf'
             }}
-            disabled={disabledButton}
+            disabled={productList.length < 1}
+            onClick={handleSaveRecipe}
             >
-                Guardar cambios
+                Guardar receta
             </Button>                        
         </Box>
     </Center>

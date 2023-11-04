@@ -8,6 +8,7 @@ export const saveUser = async (user:any) => {
         email: email,
         rol: 'basic',
         status: 'signedUp',
+        ctzUser: false,
         id: uid
     }
     const userRef =  doc(db, `usuarios/${uid}`)

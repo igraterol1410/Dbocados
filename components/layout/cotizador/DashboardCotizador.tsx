@@ -1,10 +1,13 @@
 import React, {useState} from 'react'
-import { Box, keyframes } from '@chakra-ui/react'
+import { Box, keyframes, Spinner } from '@chakra-ui/react'
 import NavbarDashboard from '@/components/layout/NavbarDashboard'
 import CotizadorAside from './AsideCotizador'
+import JoinCtz from '@/components/modals/JoinCtz'
+import useUserInfo from '@/hooks/useUserInfo'
 
 const CotizadorLayout = ({ children }:{children: React.ReactNode}) => {        
     const [asideOpen, setAsideOpen] = useState(true)
+    const { loading } = useUserInfo()
     const openAside = keyframes`
         0% { padding-left: 64px }
         100% { padding-left: 300px }
@@ -32,18 +35,38 @@ const CotizadorLayout = ({ children }:{children: React.ReactNode}) => {
     h='100vh'
     w='full'
     >
-        <NavbarDashboard asideOpen={asideOpen} setAsideOpen={setAsideOpen} />
-        <CotizadorAside asideOpen={asideOpen} />
-        <Box 
-        h='full' 
-        w='full' 
-        animation={['' ,asideOpen ? openAsideAction : closeAsideAction]}
-        pl={[0 ,asideOpen ? '300px' : '64px']} 
-        pt='50px' 
-        bg='rgb(240, 240, 240)'
-        >
-            {children}
-        </Box>
+        {
+            loading
+            ? (
+                <Spinner
+                position='absolute' 
+                bottom='50%'
+                left='50%'
+                thickness='4px'
+                speed='0.65s'
+                emptyColor='gray.200'
+                color='#e80297'
+                size='xl'
+                />
+            )
+            : (
+                <>
+                    <NavbarDashboard asideOpen={asideOpen} setAsideOpen={setAsideOpen} />
+                    <CotizadorAside asideOpen={asideOpen} />
+                    <Box 
+                    h='full' 
+                    w='full' 
+                    animation={['' ,asideOpen ? openAsideAction : closeAsideAction]}
+                    pl={[0 ,asideOpen ? '300px' : '64px']} 
+                    pt='50px' 
+                    bg='rgb(240, 240, 240)'
+                    >
+                        {children}
+                    </Box>
+                </>
+            )
+        }
+        <JoinCtz />
     </Box>
   )
 }

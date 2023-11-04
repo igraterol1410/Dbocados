@@ -1,22 +1,46 @@
 import PageContainer from '@/components/layout/PageContainer'
 import CreateReceta from '@/components/layout/cotizador/crear-receta/RecetaForm'
 import { useRecipeActionsContext, useRecipeStateContext } from '@/context/RecipeContext'
-import { Box, Button, FormControl, FormLabel, Select, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, useSteps, Stack, Text, Input } from '@chakra-ui/react'
-import React, { useState, useEffect } from 'react'
+import { Box, Button, FormControl, Flex, Select, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, useSteps, Stack, Text, Input, Grid, Center, Heading } from '@chakra-ui/react'
+import React, { useState } from 'react'
+import { MdArrowBackIosNew } from 'react-icons/md'
+import Ilustracion from '@/assets/exito.svg'
+import Link from 'next/link'
+import Image from 'next/image'
 
 const CreateRecipe = () => {
-    const { pageTitle, progress, recipeName, recipePeople, recipeType } = useRecipeStateContext()
+    const { pageTitle, progress } = useRecipeStateContext()
+    const { setProgress } = useRecipeActionsContext()
 
     const recipeProgress = [
       <ChooseType />,
       <ChooseName />,
       <ChoosePeople />,
-      <CreateReceta />
+      <CreateReceta />,
+      <RecipeSuccess />
     ]
   
     const steps = [
-      { title: 'Selecciona el tipo de receta', description: 'Agrega ingredientes' },
-      { title: 'Agrega ingredientes', description: 'Escoge ingredientes dentro de tu lista' }
+      { 
+        title: 'Tipo de receta', 
+        description: 'Selecciona el tipo de receta' 
+      },
+      { 
+        title: 'Nombre', 
+        description: 'Colócale nombre a tu nueva receta' 
+      },
+      { 
+        title: 'Número de personas', 
+        description: 'Indica para cuantas personas rinde esta receta' 
+      },
+      { 
+        title: 'Agrega ingredientes', 
+        description: 'Escoge ingredientes dentro de tu lista' 
+      },
+      { 
+        title: 'Receta creada con exito', 
+        description: 'Receta creada con exito' 
+      }
     ]
   
     const { activeStep } = useSteps({
@@ -24,7 +48,7 @@ const CreateRecipe = () => {
       count: recipeProgress.length,
     })
   
-    const activeStepText = steps[activeStep].description
+    const activeStepText = steps[progress].description
   return (
     <PageContainer title={pageTitle}>          
         <Stack w={['100%','100%','70%' ,'70%']} marginInline='auto'>
@@ -39,25 +63,47 @@ const CreateRecipe = () => {
             ))}
           </Stepper>
           <Text>
-            Step {activeStep + 1}: <b>{activeStepText}</b> {pageTitle} {progress} {recipeName} {recipePeople}, {recipeType}
+            Paso {progress + 1}: <b>{activeStepText}</b>
           </Text>
         </Stack>
-        {
-          recipeProgress[progress]
-        }
+        <Box position='relative'>
+          <Stack p={4} w={['100%','100%','80%' ,'80%']} marginInline='auto'>
+            {
+              (progress + 1) > 1 && (progress + 1) < 5 &&
+              <Flex 
+              cursor='pointer' 
+              position='absolute' 
+              top='-16px' 
+              alignItems='center' 
+              w='auto' 
+              gap={2}
+              _hover={{color: '#e80297'}}
+              onClick={() => setProgress(progress - 1)} 
+              >
+                <MdArrowBackIosNew /> Volver
+              </Flex>
+            }
+          </Stack>
+          {
+            recipeProgress[progress]
+          }
+        </Box>
     </PageContainer>
   )
 }
 
 const ChooseType = () => {
-    const { progress } = useRecipeStateContext()
-    const { setPageTitle, setProgress } = useRecipeActionsContext()
+    const { progress, recipeType } = useRecipeStateContext()
+    const { setPageTitle, setProgress, setRecipeType } = useRecipeActionsContext()
     const recetaTypes = ['Torta', 'Relleno', 'Cobertura']
-    const [recetaType, setRecetaType] = useState<string>('Crear receta')
   
     const handleChooseType = () => {
-      setPageTitle(`Crear receta de ${recetaType}`)
+      setPageTitle(`Crear receta de ${recipeType}`)
       setProgress(progress + 1)
+    }
+
+    const handleRecipeType = (value:string) => {
+      setRecipeType(value)
     }
   
     return (
@@ -73,9 +119,8 @@ const ChooseType = () => {
       flexDirection='column'
       justifyContent='space-between'
       >
-          <FormLabel>Elige el tipo de receta</FormLabel>
         <FormControl>
-          <Select placeholder='Elige uno' onChange={(e) => setRecetaType(e.target.value)}>
+          <Select placeholder='Elige uno' onChange={(e) => handleRecipeType(e.target.value)}>
             {
               recetaTypes.map((type, index) => (
                 <option value={type} key={index}>{type}</option>
@@ -90,7 +135,7 @@ const ChooseType = () => {
         onClick={()=> handleChooseType()}
         bg='#e80297' 
         color='white' 
-        isDisabled={!recetaType}
+        isDisabled={!recipeType}
         >
           Siguente
         </Button>
@@ -100,13 +145,17 @@ const ChooseType = () => {
   
   const ChooseName = () => {
     const { recipeName, progress, pageTitle } = useRecipeStateContext()
-    const { setPageTitle, setProgress } = useRecipeActionsContext()
-    const [receta, setReceta] = useState<string>('')
+    const { setPageTitle, setProgress, setRecipeName } = useRecipeActionsContext()
   
     const handleChooseType = () => {
-      setPageTitle(`${pageTitle} - ${receta}`)
+      setPageTitle(`${pageTitle} - ${recipeName}`)
       setProgress(progress + 1)
     }
+
+    const handleRecipeNAme = (value:string) => {
+      setRecipeName(value)
+    }
+
     return (
       <Box 
       w={['100%','100%','80%' ,'80%']} 
@@ -120,11 +169,10 @@ const ChooseType = () => {
       flexDirection='column'
       justifyContent='space-between'
       >
-          <FormLabel>Colocale un nombre a tu receta</FormLabel>
         <FormControl>
           <Input 
           placeholder='Nombre de tu receta' 
-          onChange={(e) => setReceta(e.target.value)} 
+          onChange={(e) => handleRecipeNAme(e.target.value)} 
           />
         </FormControl>
         <Button 
@@ -134,7 +182,7 @@ const ChooseType = () => {
         onClick={()=> handleChooseType()}
         bg='#e80297' 
         color='white' 
-        isDisabled={!receta}
+        isDisabled={!recipeName}
         >
           Siguente
         </Button>
@@ -143,10 +191,23 @@ const ChooseType = () => {
   }
   
   const ChoosePeople = () => {
-    const { setProgress } = useRecipeActionsContext()
-    const { progress } = useRecipeStateContext()
-    const recetaTypes = ['8 - 12', '13 - 20', '21 - 30', 'Otro']
-    const [peopel, setPeopel] = useState<string>('')
+    const { setProgress, setRecipePeople } = useRecipeActionsContext()
+    const { progress, recipePeople } = useRecipeStateContext()
+    const recetaTypes = ['8', '12', '16', '20', '25', '30', 'Otro']
+    const [showOthers, setShowOthers] = useState<boolean>(false)
+
+    const handlePeopleNumber = (value: string) => {
+      if(value === 'Otro'){
+        setShowOthers(true)
+      } else {
+        setRecipePeople(value)      
+        setShowOthers(false)
+      }
+    }
+    
+    const handlePeopleOtherNumber = (value: string) => {
+      setRecipePeople(value)      
+    }
   
     const handleChooseType = () => {
       setProgress(progress + 1)
@@ -164,10 +225,9 @@ const ChooseType = () => {
       flexDirection='column'
       justifyContent='space-between'
       >
-          <FormLabel>Elige el tipo de receta</FormLabel>
           <Box>
             <FormControl>
-              <Select placeholder='Elige uno' onChange={(e) => setPeopel(e.target.value)}>
+              <Select placeholder='Elige uno' onChange={(e) => handlePeopleNumber(e.target.value)}>
                 {
                   recetaTypes.map((type, index) => (
                     <option value={type} key={index}>{type}</option>
@@ -175,11 +235,17 @@ const ChooseType = () => {
                 }
               </Select>
             </FormControl>
-            {
-              peopel === 'Otro' &&
-              <Box>elige otro</Box>
-            }
           </Box>
+            {
+              showOthers &&
+              <FormControl>
+                <Input 
+                placeholder='Número de personas' 
+                type='number'
+                onChange={(e) => handlePeopleOtherNumber(e.target.value)} 
+                />
+              </FormControl>
+            }
         <Button 
         w='full' 
         marginInline='auto' 
@@ -187,10 +253,54 @@ const ChooseType = () => {
         onClick={()=> handleChooseType()}
         bg='#e80297' 
         color='white' 
-        isDisabled={!peopel}
+        isDisabled={!recipePeople}
         >
           Siguente
         </Button>
+      </Box>
+    )
+  }
+
+  const RecipeSuccess = () => {
+    return (
+      <Box h='100%' w='full' bg='#fcfcfc' borderRadius={[8, 12]} p={6}>
+        <Grid 
+        templateRows={['150px 1fr']}
+        gap={6}
+        h='full'
+        >
+            <Center>
+                <Image
+                src={Ilustracion}
+                alt='Logo dbocados'
+                width={200}
+                />
+            </Center>
+            <Flex direction='column' h='100%' justifyContent='space-between'>
+                <Box
+                w={['85%', '60%']}
+                marginInline='auto'
+                textAlign='center'
+                >
+                    <Heading as='h3' mb={6}>
+                      ¡Receta Creada con Éxito!
+                    </Heading>
+                    <Text>
+                      Felicidades, has completado con éxito el proceso de creación de tu receta. Ahora, estás listo para dar el siguiente paso en tu aventura culinaria. Empieza a crear cotizaciones, calcula costos y abre las puertas a nuevas oportunidades de negocios con tus deliciosos platos. ¡Estamos emocionados de ver a dónde te llevará esta nueva etapa!
+                    </Text>
+                </Box>
+                <Link href='/cotizador'>
+                  <Button 
+                  w='full' 
+                  bg='#e80297' 
+                  color='white' 
+                  mt={6}
+                  >
+                      Finalizar
+                  </Button>
+                </Link>
+            </Flex>
+        </Grid>
       </Box>
     )
   }

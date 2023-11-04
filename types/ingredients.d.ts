@@ -1,7 +1,8 @@
 export interface Ingredients {
+    id: string | number
     name: string | null,
     unity: string | null,
-    amount: number | null | string,
+    amount: number,
     price: number
 }
 

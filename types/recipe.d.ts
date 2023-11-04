@@ -1,14 +1,17 @@
 export interface Recipe {
-    type: string
-    name: string | null,
-    people: string,
-    ingredientes: RecipeIngredient<[]>
+    id: number | string,
+    recipeType: string,
+    recipeName: string | null,
+    recipePeople: string,
+    recipeIngredients: RecipeIngredient<[]>,
+    recipePrice: number
 }
 
 export interface RecipeIngredient {
     name: string | null,
     unity: string | null,
-    amount: number | null | string
+    amount: number,
+    productRef: number | string
 }
 
 export interface RecipeIngredientError {

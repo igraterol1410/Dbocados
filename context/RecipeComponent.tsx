@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { RecipeActionsContext, RecipeStateContext } from './RecipeContext'
 
-import { Text } from '@chakra-ui/react'
-
 interface RecipeProviderProps {
     children: React.ReactNode,
 }

@@ -8,58 +8,48 @@ import {
   Button,
   FormLabel,
   Text,
-  useToast,
-  Spinner,
-  Select
+  Spinner
 } from '@chakra-ui/react'
 import { Formik,Form,Field, FormikErrors } from 'formik'
-import { Ingredients, IngredientsError } from '@/types/ingredients'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { currencyFormatter } from '@/functions/financeFunctions'
-import { INGREDIENT_UNIT } from '@/constant/unities'
 import useUserInfo from '@/hooks/useUserInfo'
-import { createIngredientsList } from '@/services/ingredientList'
-import useGetIngredients from '@/hooks/useGetIngredients'
-import {v4 as uuidv4} from 'uuid'
+import { setExtraExpenses } from '@/services/ingredientList'
+import useGetExpenses from '@/hooks/useGetExpenses'
+import { Expenses, ExpensesError } from '@/types/extraExpenses'
 
 interface SetupProps {
     setShowList: React.Dispatch<SetStateAction<number>>,
     showList: number
 }
 
-const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
-    const toast = useToast()
+const ExtraExpenses:React.FC<SetupProps> = ({setShowList, showList}) => {
     const { uid } = useUserInfo()
-    const { ingredients } = useGetIngredients()
-    const [productList, setProductList] = useState<Ingredients[]>([])    
-    const [disabledButton, setDisabledButton] = useState<boolean>(true)    
-    const [refresh, setRefresh] = useState<boolean>(true)    
-    const [loading, setLoading] = useState<boolean>(false)  
+    const { extraExpenses, loading } = useGetExpenses()
+    const [productList, setProductList] = useState<Expenses[]>([])
     
     useEffect(() => {
-        if(ingredients){
-            setProductList(ingredients)
+        if(extraExpenses){
+            setProductList(extraExpenses)
         }
-    }, [ingredients])
+    }, [extraExpenses])
 
     const handleSaveIngredientsList = () => {
         const currentIngredients = productList
-        createIngredientsList(currentIngredients, uid).then(() => {
+        setExtraExpenses(currentIngredients, uid).then(() => {
             setShowList(showList + 1)
         })
     }
-    const setProducts = (values: Ingredients) => {
+    const setProducts = (values: Expenses) => {
         const arrayUpdated = [...productList, {
-            id: uuidv4(),
+            id: productList.length + 1,
             name: values.name,
-            unity: values.unity,
-            amount: values.amount,
             price: values.price
         }]
         setProductList(arrayUpdated)
     }
 
-    const handleRemoveProduct = (product:Ingredients) => {
+    const handleRemoveProduct = (product:Expenses) => {
         const index = productList.indexOf(product)
         const newArray = [...productList]
         newArray.splice(index, 1)
@@ -68,7 +58,6 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
 
     const isDuplicated = (name:string | null) => {
         const valueDuplicated = productList.filter((eachProduct) => eachProduct.name?.toLocaleLowerCase() === name?.toLocaleLowerCase())
-        console.log(valueDuplicated)
         return valueDuplicated.length > 0
     }
 
@@ -81,7 +70,7 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
         <Box w={['100%','100%','80%' ,'80%']} bg='white' px={[3, 5]} py={[2, 4]} borderRadius={8}>           
             <Box w='100%'>
                 <Center mb={4}>
-                    <Text fontSize='2xl'>Lista de Ingredientes</Text>
+                    <Text fontSize='2xl'>Agrega aquí tu gastos indirectos</Text>
                 </Center>
                 <Grid
                 gridTemplateColumns='1fr 80px 80px'
@@ -114,7 +103,7 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                         marginBottom={2}
                         borderRadius={8}>
                             <GridItem>
-                                {product.name} {`(${product.amount}${product.unity})`}
+                                {product.name}
                             </GridItem>
                             <GridItem textAlign='right'>
                                 {currencyFormatter(product.price)}
@@ -157,12 +146,10 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
             initialValues={{
                 id: 0,
                 name:'',
-                unity:'',
-                amount:0,
                 price: 0
             }}
             validate={(values)=>{
-                const errors: FormikErrors<IngredientsError> = {}
+                const errors: FormikErrors<ExpensesError> = {}
                 if(isDuplicated(values.name)){
                     errors.name = 'Ingrediente duplicado'
                 }
@@ -175,7 +162,7 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
             >
                 {({values,errors,touched})=>(
                     <Form>
-                        <Grid w='100%' templateColumns={['1fr', '1fr 80px 80px 80px 40px']} gap={4} alignItems='center' justifyContent='center' mb={6}>
+                        <Grid w='100%' templateColumns={['1fr', '1fr 80px 80px']} gap={4} alignItems='center' justifyContent='center' mb={6}>
                             <GridItem position='relative'>
                                 <FormLabel>Ingrediente</FormLabel>
                                 <Field 
@@ -196,32 +183,6 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                                         {errors.name}
                                     </Text>
                                 } 
-                            </GridItem>
-                            <GridItem>
-                                <FormLabel>Cantidad</FormLabel>
-                                <Field 
-                                as={Input}
-                                focusBorderColor='#e80297'
-                                type='number'
-                                name='amount'
-                                placeholder='0'
-                                />
-                            </GridItem>
-                            <GridItem>
-                                <FormLabel>Unidad</FormLabel>
-                                <Field 
-                                as={Select}
-                                focusBorderColor='#e80297'
-                                type='number'
-                                name='unity'
-                                placeholder='selecciona'
-                                >
-                                    {
-                                        INGREDIENT_UNIT.map((unidad, index) => (
-                                            <option key={index}>{unidad.unit}</option>
-                                        ))
-                                    }
-                                </Field>  
                             </GridItem>
                             <GridItem>
                                 <FormLabel>Precio</FormLabel>
@@ -245,10 +206,8 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                                     bg:'#17a6bf'
                                 }}
                                 isDisabled={
-                                    !values.amount || 
                                     !values.name || 
-                                    !values.price || 
-                                    !values.unity
+                                    !values.price
                                 }
                                 >
                                     <AiOutlinePlus />
@@ -266,7 +225,7 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
             _hover={{
                 bg:'#17a6bf'
             }}
-            disabled={disabledButton}
+            disabled={productList.length < 1}
             onClick={handleSaveIngredientsList}
             >
                 Guardar cambios
@@ -276,4 +235,4 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
   )
 }
 
-export default SetupCotizador
+export default ExtraExpenses

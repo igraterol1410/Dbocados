@@ -32,7 +32,7 @@ const CotizadorAside = ({ asideOpen }:{ asideOpen:boolean }) => {
         {
             title:'Cotizaciones',
             icon:<MdOutlineRequestQuote />,
-            link:'/dashboard/cursos-virtuales'
+            link:'/cotizador/cotizaciones'
         },
         {
             title:'Recetas',
