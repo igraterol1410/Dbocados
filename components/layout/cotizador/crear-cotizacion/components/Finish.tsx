@@ -4,7 +4,7 @@ import React, {useEffect} from 'react'
 import { useCtzActionsContext, useCtzStateContext } from '@/context/CotizacionContext'
 import useCtzPrice from '@/hooks/useCtzPrice'
 import Loader from '@/components/layout/Loader'
-import FiSave from 'react-icons/fi'
+// import FiSave from 'react-icons/fi'
 
 const Finish = () => {
   const { ctzWorkHand, progress, ctzCake, ctzCoverage, ctzFilling, ctzExtra, ctzPeople, ctzEarn } = useCtzStateContext()
@@ -111,7 +111,7 @@ const Finish = () => {
                         color='#e80297' 
                         bg='white' 
                         borderColor='#e80297'
-                        leftIcon={<FiSave />}
+                        // leftIcon={<FiSave />}
                         >
                             BlackAlpha
                         </Button>
