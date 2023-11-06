@@ -14,7 +14,7 @@ const DashboardLayout = ({ children }:{children: React.ReactNode}) => {
         <NavbarDashboard asideOpen={asideOpen} setAsideOpen={setAsideOpen} />
         <DashboardAside asideOpen={asideOpen} />
         <Box h='full' w='full' pl={asideOpen ? '261px' : '20px'} pt='50px' bg='rgb(240, 240, 240)'>
-            {children}
+          {children}
         </Box>
     </Box>
   )

@@ -5,6 +5,7 @@ import { Recipe } from '@/types/recipe'
 import RecipeCard from '@/components/layout/cotizador/recetas/RecipeCard'
 import Link from 'next/link'
 import useGetRecipes from '@/hooks/useGetRecipes'
+import { AiOutlinePlus } from 'react-icons/ai'
 
 const Cotizador = () => {
   const { recipes } = useGetRecipes()
@@ -53,7 +54,7 @@ const Cotizador = () => {
           <Text fontWeight='bold' textAlign='center'>
             Tus Recetas
           </Text>
-          <Grid templateColumns={['1fr 1fr 1fr']} gap={4} mt={4}>
+          <Grid templateColumns={['1fr', '1fr 1fr 1fr']} gap={4} mt={4}>
             {
               recipes && recipes.map((eachRecipe:Recipe, index:number) => (
                 <RecipeCard key={index} recipe={eachRecipe} />
@@ -71,7 +72,21 @@ const Cotizador = () => {
           </Link>
         </GridItem>
       </Grid>
-      <Button position='fixed' bottom='40px' right='20px' alignSelf='end' justifySelf='self-end'>Crear Cotización</Button>
+      <Button
+      position='fixed' 
+      bottom='40px' 
+      right='20px'
+      borderRadius={100}
+      bg='#e80297' 
+      color='white'
+      fontSize={22} 
+      marginTop={4}
+      _hover={{
+          bg:'rgb(240, 2, 180)'
+      }}
+      >
+          <AiOutlinePlus />
+      </Button> 
     </Flex>
   )
 }

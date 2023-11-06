@@ -1,6 +1,7 @@
 import React from 'react'
-import { Box, Button, ButtonGroup, GridItem, Text } from '@chakra-ui/react'
+import { Badge, Box, Button, Center, GridItem, Text } from '@chakra-ui/react'
 import { Recipe } from '@/types/recipe'
+import { RECIPE_TYPES } from '@/constant/recipeTypes'
 
 const RecipeCard= ({recipe}:{recipe: Recipe}) => {
   return (
@@ -12,17 +13,14 @@ const RecipeCard= ({recipe}:{recipe: Recipe}) => {
     py={2}
     >
         <Box pb={3}>
-            <Text fontWeight='bold'>
+            <Text fontWeight='bold' textAlign='center'>
                 {recipe.recipeName}
             </Text>
-            <Text>
-                {recipe.recipeType}
-            </Text>
+            <Badge variant='subtle' colorScheme={recipe.recipeType === RECIPE_TYPES[0] ? 'green' : (recipe.recipeType === RECIPE_TYPES[1] ? 'red' : 'purple')}>{recipe.recipeType}</Badge>
         </Box>
-        <ButtonGroup w='full'>
-            <Button w='full'>Editar</Button>
-            <Button w='full'>Eliminar</Button>
-        </ButtonGroup>
+        <Center>
+            <Button>Ver detalles</Button>
+        </Center>
     </GridItem>
   )
 }

@@ -1,8 +1,10 @@
-import { Box, Button, Flex, Grid, Heading, Table, TableContainer, Tbody, Td, Text, Tr } from '@chakra-ui/react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Box, Button, ButtonGroup, Flex, Grid, Heading, Table, TableContainer, Tbody, Td, Text, Tr } from '@chakra-ui/react'
 import React, {useEffect} from 'react'
 import { useCtzActionsContext, useCtzStateContext } from '@/context/CotizacionContext'
 import useCtzPrice from '@/hooks/useCtzPrice'
 import Loader from '@/components/layout/Loader'
+import FiSave from 'react-icons/fi'
 
 const Finish = () => {
   const { ctzWorkHand, progress, ctzCake, ctzCoverage, ctzFilling, ctzExtra, ctzPeople, ctzEarn } = useCtzStateContext()
@@ -25,7 +27,6 @@ const Finish = () => {
           templateRows={['1fr auto']}
           alignItems='center'
           gap={6}
-          h='full'
           >
               <Flex direction='column' h='100%' justifyContent='space-between'>
                   <Box
@@ -43,7 +44,7 @@ const Finish = () => {
                         )
                         : (
                             <TableContainer>
-                                <Table variant='simple'>
+                                <Table variant='simple' overflowY='scroll'>
                                     <Tbody>
                                         <Tr>
                                             <Td><b>Numero de personas: </b></Td>
@@ -103,15 +104,24 @@ const Finish = () => {
                         )
                       }
                   </Box>
-                  <Button 
-                  w='full' 
-                  bg='#e80297' 
-                  color='white' 
-                  mt={6}
-                  onClick={handleNext}
-                  >
-                      Continuar
-                  </Button>
+                    <ButtonGroup justifyContent='center' gap='4'>
+                        <Button 
+                        colorScheme='blackAlpha'
+                        variant='outline'
+                        color='#e80297' 
+                        bg='white' 
+                        borderColor='#e80297'
+                        leftIcon={<FiSave />}
+                        >
+                            BlackAlpha
+                        </Button>
+                        <Button 
+                        bg='#e80297' 
+                        color='white' 
+                        >
+                            BlackAlpha
+                        </Button>
+                    </ButtonGroup>
               </Flex>
           </Grid>
       </Box>

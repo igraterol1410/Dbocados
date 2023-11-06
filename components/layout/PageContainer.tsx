@@ -12,7 +12,9 @@ const PageContainer:React.FC<PageProps> = ({ title, children }) => {
     gap={['32px', '64px']}
     px={[4, 6]}
     py={[2, 6]}
-    h={['auto','full']}
+    pt={['50px']}
+    h={['auto','calc(100vh - 50px)']}
+    w={['auto','full']}
     overflowY='scroll'
     position='relative'
     >

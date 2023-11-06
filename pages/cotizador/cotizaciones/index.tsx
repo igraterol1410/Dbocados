@@ -27,7 +27,7 @@ const Introduccion:React.FC<introduccionProps> = ({showList, setShowList}) => {
     }
 
     return (
-        <Box h='100%' w='full' bg='#fcfcfc' borderRadius={[8, 12]} p={6}>
+        <Box w='full' h='full' bg='#fcfcfc' borderRadius={[8, 12]} p={6} marginY='auto'>
             <Grid 
             templateRows={['1fr auto']}
             gap={6}
@@ -39,11 +39,11 @@ const Introduccion:React.FC<introduccionProps> = ({showList, setShowList}) => {
                         <Image
                         src={Ilustracion}
                         alt='Logo dbocados'
-                        width={200}
+                        height={200}
                         />
                     </Center>
                     <Box
-                    w={['85%', '60%']}
+                    w={['85%', '80%']}
                     marginInline='auto'
                     textAlign='center'
                     >

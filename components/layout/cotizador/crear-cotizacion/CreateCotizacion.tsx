@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React from 'react'
 import Cake from './components/Cake'
 import People from './components/People'
@@ -66,7 +67,7 @@ const CreateCotizacion = () => {
         },
         { 
             title: 'Cotización creada', 
-            description: 'La cotización ha sido creada con éxito' 
+            description: 'Resumen de tu cotización' 
         },
         { 
             title: '¿Deseas guardar esta cotización?', 
@@ -86,7 +87,7 @@ const CreateCotizacion = () => {
     const activeStepText = steps[progress].description
   return (
     <PageContainer title={pageTitle}>          
-      <Stack w={['100%','100%','70%' ,'70%']} marginInline='auto' position='relative'>
+      <Stack w={['100vw','100vw','70%' ,'70%']} marginInline='auto' position='relative'>
         {
           (progress + 1) > 1 && (progress + 1) < recipeProgress.length &&
           <Flex 

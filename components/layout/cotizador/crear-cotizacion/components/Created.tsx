@@ -1,24 +1,47 @@
 import { Box, Button, Flex, Grid, Heading, Table, TableContainer, Tbody, Td, Text, Tr } from '@chakra-ui/react'
-import React from 'react'
+import React, { useRef } from 'react'
 import { useCtzActionsContext, useCtzStateContext } from '@/context/CotizacionContext'
+import html2canvas from 'html2canvas'
+import jsPDF from 'jspdf'
 
 const Created = () => {
-  const { progress, ctzExtra, ctzPeople, ctzInfo } = useCtzStateContext()
-  const { setProgress } = useCtzActionsContext()
+    const { progress, ctzExtra, ctzPeople, ctzInfo } = useCtzStateContext()
+    const { setProgress } = useCtzActionsContext()
+    const pdfRef:any = useRef()
 
-  const handleNext = () => {
+    const handleNext = () => {
     setProgress(progress + 1)
-  }
+    }
+    const downloadPdfCtz = () => {
+        const input = pdfRef.current
+        html2canvas(input).then((canvas) =>{
+            const imageData = canvas.toDataURL('image/png')
+            const pdf = new jsPDF('p','mm', 'a4', true)
+            const pdfWidth = pdf.internal.pageSize.getWidth()
+            const pdfHeight = pdf.internal.pageSize.getHeight()
+            const imgWidth = canvas.width
+            const imgHeight = canvas.height
+            const ratio = Math.min(pdfWidth / imgWidth , pdfHeight / imgHeight)
+            const imgX = (pdfWidth - imgWidth * ratio) / 2
+            const imgY = 30
+            pdf.addImage(imageData, 'PNG', imgX, imgY, imgWidth*ratio, imgHeight*ratio)
+            pdf.save('cotizacion.pdf')
+        })
+    }
+
+
   return (
     <Box h='100%' w='full' bg='#fcfcfc' borderRadius={[8, 12]} p={6}>
-          <Grid 
+          <Grid
           templateRows={['1fr auto']}
           alignItems='center'
           gap={6}
           h='full'
+        //   overflowY='scroll'
           >
               <Flex direction='column' h='100%' justifyContent='space-between'>
-                  <Box
+                  <Box 
+                  ref={pdfRef}
                   w={['85%', '60%']}
                   marginInline='auto'
                   textAlign='center'
@@ -68,9 +91,9 @@ const Created = () => {
                   bg='#e80297' 
                   color='white' 
                   mt={6}
-                  onClick={handleNext}
+                  onClick={downloadPdfCtz}
                   >
-                      Continuar
+                      Descargar
                   </Button>
               </Flex>
           </Grid>
