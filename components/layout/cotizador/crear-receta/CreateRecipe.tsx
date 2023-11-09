@@ -13,11 +13,21 @@ const CreateRecipe = () => {
     const { setProgress } = useRecipeActionsContext()
 
     const recipeProgress = [
-      <ChooseType />,
-      <ChooseName />,
-      <ChoosePeople />,
-      <CreateReceta />,
-      <RecipeSuccess />
+      {
+        component:<ChooseType />
+      },
+      {
+        component:<ChooseName />
+      },
+      {
+        component:<ChoosePeople />
+      },
+      {
+        component:<CreateReceta />
+      },
+      {
+        component:<RecipeSuccess />
+      }      
     ]
   
     const steps = [
@@ -85,7 +95,7 @@ const CreateRecipe = () => {
             }
           </Stack>
           {
-            recipeProgress[progress]
+            recipeProgress[progress].component
           }
         </Box>
     </PageContainer>
