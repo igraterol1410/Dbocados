@@ -83,7 +83,7 @@ const CreateCotizacion = () => {
     <PageContainer title={pageTitle}>
       <Flex 
       marginInline='auto' 
-      w={['100%','100%','60%' ,'60%']} 
+      w={['100%','100%','80%' ,'80%']} 
       alignItems='center' 
       position='relative'
       gap={4}
