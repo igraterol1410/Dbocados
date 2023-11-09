@@ -5,10 +5,11 @@ import { Grid, Button } from '@chakra-ui/react'
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 
 
-const OnboardingScreener = () => {
+const OnboardingScreener = () => {         
+  const [asideOpen, setAsideOpen] = useState(true)
   const router = useRouter()
   const auth = getAuth(firebaseApp)
 
@@ -22,7 +23,7 @@ const OnboardingScreener = () => {
   }, [])
   return (
     <Layout>
-        <NavbarDashboard />
+        <NavbarDashboard asideOpen={asideOpen} setAsideOpen={setAsideOpen} />
         <Grid 
         alignItems='center' 
         justifyContent='center'            
