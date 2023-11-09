@@ -2,19 +2,19 @@ import Seo from '@/components/seo/Seo'
 import { Box, Button, Center, FormControl, FormHelperText, FormLabel, Grid, GridItem, Heading, Input, Text, useToast } from '@chakra-ui/react'
 import { Field, Form, Formik } from 'formik'
 import React, { useState } from 'react'
-import CursoPost from '@/assets/cubierta-chocolate.jpg'
+import CursoPost from '@/assets/inscripciones/cotizador-repostero.jpg'
 import DbocadosLogo from '@/assets/logo.svg'
 import Image from 'next/image'
 import { createNewStudent } from '@/services/students'
 import { AiOutlineWhatsApp } from "react-icons/ai";
 
-const CubiertaChocolate = () => {
+const CotizadorRepostero = () => {
     const toast = useToast()
     const [success, setSuccess] = useState(false)
     const [loading, setLoading] = useState(false)
     const handleSubmit = (values: {}) => {
         setLoading(true)
-        createNewStudent(values, 'virtual-course-3').then(() => {
+        createNewStudent(values, 'cotizador-repostero').then(() => {
             setSuccess(true)
             toast({
                 title: 'Genial',
@@ -29,7 +29,7 @@ const CubiertaChocolate = () => {
     }
   return (
     <Seo
-    title='Cubierta de chocolate'
+    title='Cotizador Repostero'
     description='Curso virtual de cubierta de chocolate especial'
     >
         <Grid w='full' templateColumns={['1fr', '1fr 1fr']} alignContent='center'>
@@ -39,9 +39,10 @@ const CubiertaChocolate = () => {
             alignItems='center'             
             h={['100%','100vh']}
             >
+                {/* <Heading textAlign='center' mb={4} color='#683c10'>Curso de cubierta especial de Chocolate</Heading> */}
                 <Image
                 src={CursoPost}
-                alt='Post de curso virtual de cubierta especial de chocolate'
+                alt='Post de curso virtual de cotizador repostero'
                 />
             </GridItem>
             <GridItem 
@@ -82,7 +83,7 @@ const CubiertaChocolate = () => {
                                     <Text fontSize='xl' fontWeight='bold'>Bienvenido</Text>
                                 </Center>
                                 <Center mt={4}>
-                                    <a href="https://chat.whatsapp.com/L3DMeXNaAUK9tpo5oj1SdA">
+                                    <a href="https://chat.whatsapp.com/H7uM32BTVUzJW2317o6vEZ">
                                         <Button 
                                         bg='#25D366' 
                                         color='white' 
@@ -117,7 +118,6 @@ const CubiertaChocolate = () => {
                                                 <FormLabel>Nombre completo</FormLabel>
                                                 <Field
                                                 as={Input}
-                                                required
                                                 name='name'
                                                 type='text'
                                                 placeholder='Nombre'
@@ -128,7 +128,6 @@ const CubiertaChocolate = () => {
                                                 <FormLabel>Correo</FormLabel>
                                                 <Field
                                                 as={Input}
-                                                required
                                                 name='email'
                                                 type='email'
                                                 placeholder='Correo'
@@ -139,9 +138,8 @@ const CubiertaChocolate = () => {
                                                 <FormLabel>Número de teléfono</FormLabel>
                                                 <Field
                                                 as={Input}
-                                                required
                                                 name='phone'
-                                                type='tel'
+                                                type='number'
                                                 placeholder='Teléfono'
                                                 />
                                                 {
@@ -176,4 +174,4 @@ const CubiertaChocolate = () => {
   )
 }
 
-export default CubiertaChocolate
+export default CotizadorRepostero

@@ -22,18 +22,42 @@ const CreateCotizacion = () => {
     const { setProgress } = useCtzActionsContext()
 
     const recipeProgress = [
-        <People />,
-        <Cake />,
-        <Filling />,
-        <Coverage />,
-        <Extras />,
-        <WorkHand />,
-        <Earn />,
-        <Finish />,
-        <Created />,
-        <Save />,
-        <SendToClient />,
-        <Approve />
+      {
+        component:<People />
+      },
+      {
+        component:<Cake />
+      },
+      {
+        component:<Filling />
+      },
+      {
+        component:<Coverage />
+      },
+      {
+        component:<Extras />
+      },
+      {
+        component:<WorkHand />
+      },
+      {
+        component:<Earn />
+      },
+      {
+        component:<Finish />
+      },
+      {
+        component:<Created />
+      },
+      {
+        component:<Save />
+      },
+      {
+        component:<SendToClient />
+      },
+      {
+        component:<Approve />
+      }
     ]
   
     const steps = [
@@ -114,7 +138,7 @@ const CreateCotizacion = () => {
         </Box>
       </Flex>
         {
-          recipeProgress[progress]
+          recipeProgress[progress].component
         }
     </PageContainer>
   )

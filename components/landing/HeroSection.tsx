@@ -32,7 +32,7 @@ const HeroSection = () => {
               <Heading mb={0} as='h1' fontSize={['1.75rem','2.9rem']} color='white'>Conviértete en un profesional de la repostería con nuestros cursos.</Heading>
               <br />
               <Text mb={0} color='white'>Te llevamos paso a paso para que logres esa meta tan importante</Text>
-              <Link href="/cursos-virtuales/CubiertaChocolate">
+              {/* <Link href="/signup">
                 <Button 
                 alignSelf='flex-end' 
                 bg='pink.500' 
@@ -41,7 +41,7 @@ const HeroSection = () => {
                 mt={6}>
                   Inscríbete aquí
                 </Button>
-              </Link>
+              </Link> */}
             </GridItem>
             <GridItem>
             </GridItem>

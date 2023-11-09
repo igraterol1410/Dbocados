@@ -13,11 +13,21 @@ const CreateRecipe = () => {
     const { setProgress } = useRecipeActionsContext()
 
     const recipeProgress = [
-      <ChooseType />,
-      <ChooseName />,
-      <ChoosePeople />,
-      <CreateReceta />,
-      <RecipeSuccess />
+      {
+        component:<ChooseType />
+      },
+      {
+        component:<ChooseName />
+      },
+      {
+        component:<ChoosePeople />
+      },
+      {
+        component:<CreateReceta />
+      },
+      {
+        component:<RecipeSuccess />
+      }      
     ]
   
     const steps = [
@@ -85,7 +95,7 @@ const CreateRecipe = () => {
             }
           </Stack>
           {
-            recipeProgress[progress]
+            recipeProgress[progress].component
           }
         </Box>
     </PageContainer>
@@ -123,7 +133,7 @@ const ChooseType = () => {
           <Select placeholder='Elige uno' onChange={(e) => handleRecipeType(e.target.value)}>
             {
               recetaTypes.map((type, index) => (
-                <option value={type} key={index}>{type}</option>
+                <option key={index} value={type}>{type}</option>
               ))
             }
           </Select>
@@ -230,7 +240,7 @@ const ChooseType = () => {
               <Select placeholder='Elige uno' onChange={(e) => handlePeopleNumber(e.target.value)}>
                 {
                   recetaTypes.map((type, index) => (
-                    <option value={type} key={index}>{type}</option>
+                    <option key={index} value={type}>{type}</option>
                   ))
                 }
               </Select>
