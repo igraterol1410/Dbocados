@@ -230,7 +230,7 @@ const ChooseType = () => {
               <Select placeholder='Elige uno' onChange={(e) => handlePeopleNumber(e.target.value)}>
                 {
                   recetaTypes.map((type, index) => (
-                    <option value={type} key={index}>{type}</option>
+                    <option key={index} value={type}>{type}</option>
                   ))
                 }
               </Select>
