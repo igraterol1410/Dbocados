@@ -1,8 +1,8 @@
 import React from 'react'
-import { Box, Flex } from '@chakra-ui/react'
+import { Box, Flex, Button } from '@chakra-ui/react'
 import DbocadosLogo from '@/assets/logo.svg'
 import Image from 'next/image'
-// import Link from 'next/link'
+import Link from 'next/link'
 
 const Navbar = () => {
   return (
@@ -14,9 +14,7 @@ const Navbar = () => {
     position='fixed'
     w='full'
     top={0}
-    zIndex={1000}
-    // bg='white'
-    // boxShadow='dark-lg'
+    zIndex={10000}
     >
       <Box>
         <Image 
@@ -25,15 +23,17 @@ const Navbar = () => {
         alt='logo'
         />
       </Box>
-      {/* <Flex
+      <Flex
       gap={4}>
-      <Link href="/login">
-        <Button variant='outline'>Inicio de sesión</Button>
-      </Link>
+        <Button variant='outline'>
+          <Link href="/login">
+            Inicio de sesión
+          </Link>
+        </Button>
       <Link href="/signup">
         <Button variant='outline'>Registro</Button>
       </Link>
-      </Flex> */}
+      </Flex>
     </Flex>
   )
 }

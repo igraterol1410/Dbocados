@@ -39,7 +39,6 @@ const CubiertaChocolate = () => {
             alignItems='center'             
             h={['100%','100vh']}
             >
-                {/* <Heading textAlign='center' mb={4} color='#683c10'>Curso de cubierta especial de Chocolate</Heading> */}
                 <Image
                 src={CursoPost}
                 alt='Post de curso virtual de cubierta especial de chocolate'
@@ -118,6 +117,7 @@ const CubiertaChocolate = () => {
                                                 <FormLabel>Nombre completo</FormLabel>
                                                 <Field
                                                 as={Input}
+                                                required
                                                 name='name'
                                                 type='text'
                                                 placeholder='Nombre'
@@ -128,6 +128,7 @@ const CubiertaChocolate = () => {
                                                 <FormLabel>Correo</FormLabel>
                                                 <Field
                                                 as={Input}
+                                                required
                                                 name='email'
                                                 type='email'
                                                 placeholder='Correo'
@@ -138,8 +139,9 @@ const CubiertaChocolate = () => {
                                                 <FormLabel>Número de teléfono</FormLabel>
                                                 <Field
                                                 as={Input}
+                                                required
                                                 name='phone'
-                                                type='number'
+                                                type='tel'
                                                 placeholder='Teléfono'
                                                 />
                                                 {
