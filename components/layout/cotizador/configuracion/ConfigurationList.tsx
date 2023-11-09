@@ -9,18 +9,18 @@ import {
   FormLabel,
   Text,
   useToast,
-  Spinner,
   Select
 } from '@chakra-ui/react'
 import { Formik,Form,Field, FormikErrors } from 'formik'
 import { Ingredients, IngredientsError } from '@/types/ingredients'
-import { AiOutlinePlus } from 'react-icons/ai'
+import { AiOutlineDelete, AiOutlineEdit, AiOutlinePlus } from 'react-icons/ai'
 import { currencyFormatter } from '@/functions/financeFunctions'
 import { INGREDIENT_UNIT } from '@/constant/unities'
-import useUserInfo from '@/hooks/useUserInfo'
 import { createIngredientsList } from '@/services/ingredientList'
 import useGetIngredients from '@/hooks/useGetIngredients'
 import {v4 as uuidv4} from 'uuid'
+import { useCotizadorActionsContext, useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
+import Loader from '../../Loader'
 
 interface SetupProps {
     setShowList: React.Dispatch<SetStateAction<number>>,
@@ -29,34 +29,81 @@ interface SetupProps {
 
 const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
     const toast = useToast()
-    const { uid } = useUserInfo()
-    const { ingredients } = useGetIngredients()
+    const initivialValuesRef = {
+        id: 0,
+        name:'',
+        unity:'',
+        amount:0,
+        price: 0
+    }
+    const { ingredients: currentIngredients, loading: ingredientsLoading } = useGetIngredients()
+    const { ingredients, uid, ctzUser } = useCotizadorStateContext()
+    const { setIngredients } = useCotizadorActionsContext()
     const [productList, setProductList] = useState<Ingredients[]>([])    
+    const [editProduct, setEditProduct] = useState<number | null>(null)    
+    const [initialValues, setInitialValues] = useState<Ingredients>(initivialValuesRef)    
     const [disabledButton, setDisabledButton] = useState<boolean>(true)    
-    const [refresh, setRefresh] = useState<boolean>(true)    
-    const [loading, setLoading] = useState<boolean>(false)  
+    const [refresh, setRefresh] = useState<boolean>(true)
     
     useEffect(() => {
-        if(ingredients){
-            setProductList(ingredients)
+        if(currentIngredients.length !== ingredients.length){
+            setProductList(currentIngredients)
+            setIngredients(currentIngredients)
         }
-    }, [ingredients])
+    }, [currentIngredients])
 
     const handleSaveIngredientsList = () => {
-        const currentIngredients = productList
-        createIngredientsList(currentIngredients, uid).then(() => {
-            setShowList(showList + 1)
-        })
+        if(ctzUser){
+            const currentIngredients = productList
+            createIngredientsList(currentIngredients, uid).then(() => {
+                setShowList(showList + 1)
+            })
+        } else {
+            toast({ status: 'error', description: 'No puedes realizar esta acción' })
+            setTimeout(() => {
+                window.location.reload()                
+            }, 2000);
+        }
     }
     const setProducts = (values: Ingredients) => {
-        const arrayUpdated = [...productList, {
-            id: uuidv4(),
-            name: values.name,
-            unity: values.unity,
-            amount: values.amount,
-            price: values.price
-        }]
-        setProductList(arrayUpdated)
+        if(editProduct !== null){
+            const updatedArray = productList.map((eachProduct) => (
+                {
+                    id: eachProduct.id,
+                    name: eachProduct.id === productList[editProduct].id ? values.name : eachProduct.name,
+                    unity: eachProduct.id === productList[editProduct].id ? values.unity : eachProduct.unity,
+                    amount: eachProduct.id === productList[editProduct].id ? values.amount : eachProduct.amount,
+                    price: eachProduct.id === productList[editProduct].id ? values.price : eachProduct.price
+                }
+            ))
+            setProductList(updatedArray)
+            setInitialValues(initivialValuesRef)
+            setEditProduct(null)
+        } else {
+            const arrayUpdated = [...productList, {
+                id: uuidv4(),
+                name: values.name,
+                unity: values.unity,
+                amount: values.amount,
+                price: values.price
+            }]
+            setProductList(arrayUpdated)
+        }
+    }
+
+    const handleEditProduct = (product:Ingredients) => {
+        const index = productList.indexOf(product)
+        setInitialValues({
+            id: productList[index].id,
+            name:productList[index].name,
+            unity:productList[index].unity,
+            amount:productList[index].amount,
+            price: productList[index].price
+        })
+        setEditProduct(index)
+        // const newArray = [...productList]
+        // newArray.splice(index, 1)
+        // setProductList(newArray)
     }
 
     const handleRemoveProduct = (product:Ingredients) => {
@@ -68,16 +115,11 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
 
     const isDuplicated = (name:string | null) => {
         const valueDuplicated = productList.filter((eachProduct) => eachProduct.name?.toLocaleLowerCase() === name?.toLocaleLowerCase())
-        console.log(valueDuplicated)
         return valueDuplicated.length > 0
     }
 
   return (
-    <Center marginTop={6}>
-        {
-            loading &&
-            <Spinner/>
-        }
+    <Center marginTop={6} position='relative'>
         <Box w={['100%','100%','80%' ,'80%']} bg='white' px={[3, 5]} py={[2, 4]} borderRadius={8}>           
             <Box w='100%'>
                 <Center mb={4}>
@@ -97,6 +139,13 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                     <GridItem textAlign='right'>Precio</GridItem>
                     <GridItem textAlign='center'>Acción</GridItem>
                 </Grid>
+                {
+                    ingredientsLoading 
+                    ? (
+                        <Loader />
+                    )
+                    : (
+                        <>
                 {
                     productList && productList.map((product, index)=>(
                         <Grid 
@@ -120,18 +169,33 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                                 {currencyFormatter(product.price)}
                             </GridItem>
                             <GridItem
-                            bg='#e80297' 
-                            color='white'
                             borderRadius={8}
+                            display='flex'
+                            justifyContent='space-around'
                             _hover={{
                                 cursor:'pointer',
                                 bg:'white',
                                 color:'#e80297'
                             }}
-                            onClick={() => handleRemoveProduct(product)}>
-                                <Center px={3}>
-                                    Eliminar
-                                </Center>
+                            >
+                                    <Box 
+                                    bg='#e80297' 
+                                    color='white' 
+                                    borderRadius={8}
+                                    p={2}
+                                    onClick={() => handleEditProduct(product)}
+                                    >
+                                        <AiOutlineEdit />
+                                    </Box>
+                                    <Box                                    
+                                    bg='#e80297' 
+                                    color='white' 
+                                    borderRadius={8}
+                                    p={2}
+                                    onClick={() => handleRemoveProduct(product)}
+                                    >
+                                        <AiOutlineDelete />
+                                    </Box>
                             </GridItem>
                         </Grid>
                     ))
@@ -148,22 +212,19 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                         marginBottom={2}
                         borderRadius={8}>
                             <GridItem>
-                               Añade ingredientes
+                            Añade ingredientes
                             </GridItem>
                         </Grid>
                 }
+                        </>
+                    )
+                }
             </Box>
             <Formik
-            initialValues={{
-                id: 0,
-                name:'',
-                unity:'',
-                amount:0,
-                price: 0
-            }}
+            initialValues={initialValues}
             validate={(values)=>{
                 const errors: FormikErrors<IngredientsError> = {}
-                if(isDuplicated(values.name)){
+                if(isDuplicated(values.name) && editProduct === null){
                     errors.name = 'Ingrediente duplicado'
                 }
                 return errors
@@ -172,6 +233,7 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                 setProducts(values)
                 actions.resetForm()
             }}
+            enableReinitialize
             >
                 {({values,errors,touched})=>(
                     <Form>

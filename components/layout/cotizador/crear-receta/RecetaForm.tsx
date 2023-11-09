@@ -17,24 +17,22 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import { RecipeIngredient, RecipeIngredientError } from '@/types/recipe'
 import { INGREDIENT_UNIT } from '@/constant/unities'
 import { useRecipeActionsContext, useRecipeStateContext } from '@/context/RecipeContext'
-import useUserInfo from '@/hooks/useUserInfo'
 import useGetRecipes from '@/hooks/useGetRecipes'
-import useGetIngredients from '@/hooks/useGetIngredients'
 import RecetaFormProduct from './RecetaFormProduct'
 import Loader from '../../Loader'
 import { createNewRecipe } from '@/services/recipes'
 import {v4 as uuidv4} from 'uuid'
+import { useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
 
 const CreateReceta = () => {
     const toast = useToast()
     const {setProgress} = useRecipeActionsContext()
-    const { uid } = useUserInfo()
+    const { ingredients, ctzUser, uid, ingredientsLoading } = useCotizadorStateContext()
     const {progress, recipeName, recipeType, recipePeople} = useRecipeStateContext()
     const [productList, setProductList] = useState<RecipeIngredient[]>([])    
     const [ingredientsList, setIngredientsList] = useState<Ingredients[]>([])    
     const [unitList, setUnitList] = useState<any>([])
     const { recipes } = useGetRecipes()
-    const { ingredients, loading } = useGetIngredients()
 
     useEffect(()=>{
         if(ingredients){
@@ -85,23 +83,30 @@ const CreateReceta = () => {
     }
 
     const handleSaveRecipe = () => {
-        const newRecipe = {
-            id: uuidv4(),
-            recipeName: recipeName,
-            recipeType: recipeType,
-            recipePeople: recipePeople,
-            recipeIngredients: productList
+        if(ctzUser){
+            const newRecipe = {
+                id: uuidv4(),
+                recipeName: recipeName,
+                recipeType: recipeType,
+                recipePeople: recipePeople,
+                recipeIngredients: productList
+            }
+            const payload = [...recipes, newRecipe]
+            createNewRecipe(payload, uid).then(() => {
+                setProgress(progress + 1)
+            })
+        } else {
+            toast({ status: 'error', description: 'No puedes realizar esta acción' })
+            setTimeout(() => {
+                window.location.reload()                
+            }, 2000);
         }
-        const payload = [...recipes, newRecipe]
-        createNewRecipe(payload, uid).then(() => {
-            setProgress(progress + 1)
-        })
     }
 
   return (
     <Center>
         {
-            loading &&
+            ingredientsLoading &&
             <Loader/>
         }
         <Box w={['100%','100%','80%' ,'80%']} bg='white' px={[3, 5]} py={[2, 4]} borderRadius={8}>           

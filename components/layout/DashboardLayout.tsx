@@ -8,7 +8,7 @@ const DashboardLayout = ({ children }:{children: React.ReactNode}) => {
   return (
     <Box
     position='relative'
-    h='100vh'
+    minH='100vh'
     w='full'
     >
         <NavbarDashboard asideOpen={asideOpen} setAsideOpen={setAsideOpen} />

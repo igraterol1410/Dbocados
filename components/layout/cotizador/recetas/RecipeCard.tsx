@@ -2,8 +2,10 @@ import React from 'react'
 import { Badge, Box, Button, Center, GridItem, Text } from '@chakra-ui/react'
 import { Recipe } from '@/types/recipe'
 import { RECIPE_TYPES } from '@/constant/recipeTypes'
+import { useCotizadorActionsContext } from '@/context/CotizadorGlobalContext'
 
 const RecipeCard= ({recipe}:{recipe: Recipe}) => {
+  const { setRecipeToShow } = useCotizadorActionsContext()
   return (
     <GridItem 
     borderRadius={12} 
@@ -19,7 +21,7 @@ const RecipeCard= ({recipe}:{recipe: Recipe}) => {
             <Badge variant='subtle' colorScheme={recipe.recipeType === RECIPE_TYPES[0] ? 'green' : (recipe.recipeType === RECIPE_TYPES[1] ? 'red' : 'purple')}>{recipe.recipeType}</Badge>
         </Box>
         <Center>
-            <Button>Ver detalles</Button>
+            <Button onClick={() => setRecipeToShow(recipe)}>Ver detalles</Button>
         </Center>
     </GridItem>
   )

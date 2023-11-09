@@ -2,12 +2,11 @@ import { Box, Flex, List, ListItem, Text, Tooltip, keyframes, Center } from '@ch
 import { usePathname } from 'next/navigation'
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
-import { AiOutlineCalculator, AiOutlineShop } from 'react-icons/ai';
-import { FaChalkboardTeacher } from "react-icons/fa";
+import { AiOutlineShop } from 'react-icons/ai';
+import { FaCalculator, FaChalkboardTeacher } from "react-icons/fa";
 import { HiOutlineDesktopComputer } from "react-icons/hi";
 import { LiaUsersSolid } from "react-icons/lia";
-import { PiBooks } from "react-icons/pi";
-import { BiHomeAlt2, BiUserCircle } from "react-icons/bi";
+import { BiHomeAlt2 } from "react-icons/bi";
 import { motion } from 'framer-motion'
 
 import DbocadosLogo from '@/assets/logo.svg'
@@ -62,7 +61,7 @@ const DashboardAside = ({ asideOpen }:{ asideOpen:boolean }) => {
         },
         {
             title:'Cotizador',
-            icon:<AiOutlineCalculator />,
+            icon:<FaCalculator />,
             link:'/cotizador'
         }
         // {

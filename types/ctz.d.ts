@@ -12,3 +12,14 @@ export interface CtzInfoProp {
     ctzTotalPrice: string,
     ctzRoundedAmount: string
   }
+
+  export interface CtzGlobalProp {
+    id: string | number,
+    ctzWorkHand: ctzWorkHand, 
+    ctzCake: ctzCake, 
+    ctzCoverage: ctzCoverage, 
+    ctzFilling: ctzFilling, 
+    ctzExtra: ctzExtra, 
+    ctzPeople: ctzPeople, 
+    ctzEarn: ctzEarn
+  }

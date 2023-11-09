@@ -1,8 +1,10 @@
-import { Box, Button, Flex, Grid, Heading, Table, TableContainer, Tbody, Td, Text, Tr } from '@chakra-ui/react'
+import { Box, Button, ButtonGroup, Flex, Grid, Heading, Table, TableContainer, Tbody, Td, Text, Tr } from '@chakra-ui/react'
 import React, { useRef } from 'react'
 import { useCtzActionsContext, useCtzStateContext } from '@/context/CotizacionContext'
 import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
+import { BsCloudDownload } from 'react-icons/bs'
+import { MdOutlineVerified } from 'react-icons/md'
 
 const Created = () => {
     const { progress, ctzExtra, ctzPeople, ctzInfo } = useCtzStateContext()
@@ -12,7 +14,7 @@ const Created = () => {
     const handleNext = () => {
     setProgress(progress + 1)
     }
-    const downloadPdfCtz = () => {
+    const downloadPdfCtz:any = () => {
         const input = pdfRef.current
         html2canvas(input).then((canvas) =>{
             const imageData = canvas.toDataURL('image/png')
@@ -42,11 +44,11 @@ const Created = () => {
               <Flex direction='column' h='100%' justifyContent='space-between'>
                   <Box 
                   ref={pdfRef}
-                  w={['85%', '60%']}
+                  w={['100%', '60%']}
                   marginInline='auto'
                   textAlign='center'
                   >
-                      <Heading as='h3' mb={6}>
+                      <Heading as='h3' mb={6} fontSize={['16px', '22px']}>
                           Cotización de tu pedido
                       </Heading>
                       <TableContainer>
@@ -86,15 +88,28 @@ const Created = () => {
                         </Table>
                     </TableContainer>
                   </Box>
-                  <Button 
-                  w='full' 
-                  bg='#e80297' 
-                  color='white' 
-                  mt={6}
-                  onClick={downloadPdfCtz}
-                  >
-                      Descargar
-                  </Button>
+                  <ButtonGroup justifyContent='center' gap='4' mt={6}>
+                    <Button 
+                    variant='outline'
+                    w='30%'
+                    color='#e80297' 
+                    bg='white' 
+                    borderColor='#e80297'
+                    onClick={downloadPdfCtz}
+                    leftIcon={<BsCloudDownload />}
+                    >
+                        Descargar
+                    </Button>                    
+                    <Button 
+                    bg='#e80297' 
+                    w='30%'
+                    color='white' 
+                    onClick={handleNext}
+                    leftIcon={<MdOutlineVerified />}
+                    >
+                        Aprobar
+                    </Button>                    
+                  </ButtonGroup>
               </Flex>
           </Grid>
       </Box>

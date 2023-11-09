@@ -23,7 +23,7 @@ const EmptyState = ({option}:{option:string}) => {
                 Ahora no cuentas con {option}
             </Heading>
             <Text>
-                Si necesitas un/una {option}, crea una nueva receta aquí
+                Si necesitas {option}, crea una nueva receta aquí
             </Text>
             <Link href='/cotizador/crear-receta'>
                 <Button>Crear receta</Button>

@@ -12,7 +12,7 @@ import SendToClient from './components/SendToClient'
 import WorkHand from './components/WorkHand'
 import Approve from './components/Approve'
 import Created from './components/Created'
-import { Box, Flex, Stack, Step, StepIcon, StepIndicator, StepSeparator, StepStatus, Stepper, Text, useSteps } from '@chakra-ui/react'
+import { Box, CircularProgress, CircularProgressLabel, Flex, Stack, Step, StepIcon, StepIndicator, StepSeparator, StepStatus, Stepper, Text, useSteps } from '@chakra-ui/react'
 import PageContainer from '../../PageContainer'
 import { MdArrowBackIosNew } from 'react-icons/md'
 import { useCtzActionsContext, useCtzStateContext } from '@/context/CotizacionContext'
@@ -55,7 +55,7 @@ const CreateCotizacion = () => {
         },
         { 
             title: 'Extras', 
-            description: 'Agrega los extras que llevará este pedido' 
+            description: 'Agrega los extras de este pedido' 
         },
         { 
             title: 'Mano de obra', 
@@ -75,19 +75,19 @@ const CreateCotizacion = () => {
         },
         { 
             title: '¿Deseas enviar esta cotización a tu cliente?', 
-            description: 'Puedes guardar esta cotización para que la proxima vez sea mucho mas rápido' 
+            description: 'Contización aprobada' 
         }
     ]
-  
-    const { activeStep } = useSteps({
-      index: 0,
-      count: recipeProgress.length,
-    })
-  
-    const activeStepText = steps[progress].description
+
   return (
-    <PageContainer title={pageTitle}>          
-      <Stack w={['100vw','100vw','70%' ,'70%']} marginInline='auto' position='relative'>
+    <PageContainer title={pageTitle}>
+      <Flex 
+      marginInline='auto' 
+      w={['100%','100%','60%' ,'60%']} 
+      alignItems='center' 
+      position='relative'
+      gap={4}
+      >
         {
           (progress + 1) > 1 && (progress + 1) < recipeProgress.length &&
           <Flex 
@@ -103,20 +103,16 @@ const CreateCotizacion = () => {
             <MdArrowBackIosNew /> Volver
           </Flex>
         }
-        <Stepper size='sm' index={progress} gap='0'>
-          {recipeProgress.map((step, index) => (
-            <Step key={index}>
-              <StepIndicator>
-                <StepStatus complete={<StepIcon />} />
-              </StepIndicator>
-              <StepSeparator />
-            </Step>
-          ))}
-        </Stepper>
-        <Text>
-          Paso {progress + 1}: <b>{activeStepText}</b>
-        </Text>
-      </Stack>
+        <Box>
+          <CircularProgress size='80px' value={(progress/recipeProgress.length)*100} color='pink.500'>
+            <CircularProgressLabel fontWeight='bold' color='pink.500'>{progress + 1}/{recipeProgress.length}</CircularProgressLabel>
+          </CircularProgress>
+        </Box>
+        <Box >
+          <Text fontWeight='bold'>{steps[progress].title}</Text>
+          <Text maxW='250px' overflowWrap='break-word'>{steps[progress].description}</Text>
+        </Box>
+      </Flex>
         {
           recipeProgress[progress]
         }

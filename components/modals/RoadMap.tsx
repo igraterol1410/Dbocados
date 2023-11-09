@@ -1,4 +1,3 @@
-import useUserInfo from '@/hooks/useUserInfo'
 import {
     Modal,
     ModalOverlay,
@@ -11,23 +10,32 @@ import {
     Box,
     Center,
     Heading,
+    useDisclosure,
   } from '@chakra-ui/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
-import Ilustracion from '@/assets/no-access.svg'
+import React, { useEffect } from 'react'
+import Ilustracion from '@/assets/road.svg'
 import { useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
+import { usePathname } from 'next/navigation'
 
-const JoinCtz = () => { 
-    const { ctzUser, userLoading } = useCotizadorStateContext()
+const RoadMap = () => {
+    const { ingredients, ingredientsLoading } = useCotizadorStateContext()
+    const { onClose, onOpen, isOpen } = useDisclosure()
+    const pathname = usePathname()
+
+    useEffect(() => {
+        if(ingredients && ingredients.length === 0 && !ingredientsLoading && !pathname.includes('configuracion')){
+            onOpen()
+        }
+    },[ingredients, pathname])
+
     return (
         <Modal 
         isCentered 
         size='5xl' 
-        isOpen={!ctzUser && !userLoading} 
-        onClose={()=>{}} 
-        closeOnEsc={false} 
-        closeOnOverlayClick={false}
+        isOpen={isOpen} 
+        onClose={onClose} 
         >
           <ModalOverlay />
           <ModalContent>
@@ -52,36 +60,31 @@ const JoinCtz = () => {
                     textAlign='center'
                     >
                         <Heading as='h3' mb={6}>
-                            ¡Estás muy cerca de tener acceso!
+                            ¡Estás muy cerca de crear cotizaciones de forma fácil!
                         </Heading>
                         <Text>
-                            Lamentablemente, parece que no tienes acceso a esta sección de la plataforma en este momento. No te preocupes, estamos aquí para ayudarte a desbloquear esta función y llevarte un paso más cerca de tus objetivos. Puedes ponerte en contacto con nuestro equipo de soporte para obtener acceso o, si lo prefieres, simplemente regresar a la página anterior para explorar otras áreas de la plataforma. Estamos ansiosos por ayudarte a tener una experiencia increíble.
+                            Solo debes realizar la configuración del cotizador, necesitarás a la mano algunos precios referenciales para esta pequeña tarea, haz clic, en el botón de abajo para iniciar.
                         </Text>
                     </Box>
                 </Box>
                 <Flex 
                 w={['90%', '50%']} 
                 marginInline='auto'
-                direction='column' 
                 h='100%' 
-                justifyContent='space-between'
+                justifyContent='center'
                 >
-                    <a target='_blank' href='https://wa.me/584241411047'>
+                    <Link href='/cotizador/configuracion'>
                       <Button 
-                      w='full' 
-                      bg='#e80297' 
-                      color='white' 
                       mt={6}
+                      marginInline='auto'
+                      bg='pink.500'
+                      color='white'
+                      _hover={{
+                        bg:'pink.400'
+                      }}
+                      onClick={onClose}
                       >
-                          Contáctanos
-                      </Button>
-                    </a>
-                    <Link href='/dashboard'>
-                      <Button 
-                      w='full'
-                      mt={6}
-                      >
-                          Regresar
+                          Configrar cotizador
                       </Button>
                     </Link>
                 </Flex>
@@ -92,4 +95,4 @@ const JoinCtz = () => {
     )
 }
 
-export default JoinCtz
+export default RoadMap
