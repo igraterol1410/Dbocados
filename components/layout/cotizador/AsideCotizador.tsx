@@ -2,11 +2,7 @@ import { Box, Flex, List, ListItem, Text, Tooltip, keyframes, Center } from '@ch
 import { usePathname } from 'next/navigation'
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
-import { MdOutlineRequestQuote } from 'react-icons/md';
-import { FaChalkboardTeacher } from "react-icons/fa";
-import { GrConfigure } from "react-icons/gr";
-import { BiFoodMenu } from "react-icons/bi";
-import { BiHomeAlt2 } from "react-icons/bi";
+import { FaCalculator, FaCog, FaLongArrowAltLeft, FaReceipt, FaShoppingBag } from "react-icons/fa";
 import { motion } from 'framer-motion'
 
 import DbocadosLogo from '@/assets/logo.svg'
@@ -30,23 +26,28 @@ const CotizadorAside = ({ asideOpen }:{ asideOpen:boolean }) => {
     }, [])
     const items = [
         {
+            title:'Inicio',
+            icon:<FaCalculator />,
+            link:'/cotizador'
+        },
+        {
             title:'Cotizaciones',
-            icon:<MdOutlineRequestQuote />,
+            icon:<FaShoppingBag />,
             link:'/cotizador/cotizaciones'
         },
         {
             title:'Recetas',
-            icon:<BiFoodMenu />,
+            icon:<FaReceipt />,
             link:'/cotizador/recetas'
         },
         {
             title:'Configuración',
-            icon:<GrConfigure />,
+            icon:<FaCog />,
             link:'/cotizador/configuracion'
         },
         {
             title:'Ir al panel',
-            icon:<BiHomeAlt2 />,
+            icon:<FaLongArrowAltLeft />,
             link:'/dashboard'
         }
     ]
@@ -147,7 +148,7 @@ const CotizadorAside = ({ asideOpen }:{ asideOpen:boolean }) => {
                                 as={motion.div}
                                 transition='all ease .5s'
                                 _hover={{
-                                    color:'#e80297'
+                                    color:`${pathname === item.link ? 'white' :'#e80297'}`
                                 }}
                                 borderBottom='1px solid rgba(255, 255, 255, .85)'
                                 >

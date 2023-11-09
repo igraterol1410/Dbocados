@@ -54,20 +54,23 @@ const Coverage = () => {
       gridTemplateRows='1fr auto'
       alignItems='center'
       >
+        <HStack justifyContent='center' {...group} mb={8}>
+          {options.map((value) => {
+            const radio = getRadioProps({ value })
+            return (
+              <RadioCard key={value} {...radio}>
+                {value}
+              </RadioCard>
+            )
+          })}
+        </HStack>
         {
-            coverages.length > 0
+            coverages.length === 0 && coverageOptions === options[1]
             ? (
+              <EmptyState option='una cobertura' />
+            )
+            : (
                 <Box>
-                  <HStack justifyContent='center' {...group} mb={8}>
-                    {options.map((value) => {
-                      const radio = getRadioProps({ value })
-                      return (
-                        <RadioCard key={value} {...radio}>
-                          {value}
-                        </RadioCard>
-                      )
-                    })}
-                  </HStack>
                   {
                     coverageOptions === options[1] &&
                       <FormControl>
@@ -81,9 +84,6 @@ const Coverage = () => {
                       </FormControl>
                   }
                 </Box>
-            )
-            : (
-                <EmptyState option='cobertura' />
             )
         }
         <Button 

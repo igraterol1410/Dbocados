@@ -1,4 +1,4 @@
-import { Flex, Heading } from '@chakra-ui/react'
+import { Grid, Heading } from '@chakra-ui/react'
 import React from 'react'
 
 interface PageProps {
@@ -7,12 +7,14 @@ interface PageProps {
 }
 const PageContainer:React.FC<PageProps> = ({ title, children }) => {
   return (
-    <Flex
-    direction='column'
-    gap={['32px', '64px']}
+    <Grid
+    gap={['32px', '48px']}
     px={[4, 6]}
     py={[2, 6]}
-    h={['auto','full']}
+    pt={['50px']}
+    templateRows={['auto auto 1fr']}
+    minH={['auto','calc(100vh - 50px)']}
+    w={['auto','full']}
     overflowY='scroll'
     position='relative'
     >
@@ -20,7 +22,7 @@ const PageContainer:React.FC<PageProps> = ({ title, children }) => {
             {title}
         </Heading>
         {children}
-    </Flex>
+    </Grid>
   )
 }
 

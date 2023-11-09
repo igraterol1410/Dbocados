@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Box, Button, Center, Flex, Grid, Heading, Input, Text } from '@chakra-ui/react'
 import PageContainer from '@/components/layout/PageContainer'

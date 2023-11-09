@@ -4,6 +4,8 @@ import NavbarDashboard from '@/components/layout/NavbarDashboard'
 import CotizadorAside from './AsideCotizador'
 import JoinCtz from '@/components/modals/JoinCtz'
 import useUserInfo from '@/hooks/useUserInfo'
+import RoadMap from '@/components/modals/RoadMap'
+import RecipeDetails from '@/components/modals/RecipeDetails'
 
 const CotizadorLayout = ({ children }:{children: React.ReactNode}) => {        
     const [asideOpen, setAsideOpen] = useState(true)
@@ -32,7 +34,7 @@ const CotizadorLayout = ({ children }:{children: React.ReactNode}) => {
   return (
     <Box
     position='relative'
-    h='100vh'
+    minH='100vh'
     w='full'
     >
         {
@@ -67,6 +69,8 @@ const CotizadorLayout = ({ children }:{children: React.ReactNode}) => {
             )
         }
         <JoinCtz />
+        <RoadMap />
+        <RecipeDetails />
     </Box>
   )
 }

@@ -3,6 +3,7 @@ import { useCtzActionsContext, useCtzStateContext } from '@/context/CotizacionCo
 import useGetRecipes from '@/hooks/useGetRecipes'
 import { Box, Button, FormControl, HStack, Select, useRadioGroup } from '@chakra-ui/react'
 import React, {useState} from 'react'
+import EmptyState from './EmptyState'
 
 const Filling = () => {
     const { progress, ctzFilling } = useCtzStateContext()
@@ -66,17 +67,27 @@ const Filling = () => {
              })}
            </HStack>
            {
-             fillingsOptions === options[1] &&
-               <FormControl>
-                 <Select placeholder='Elige uno' onChange={(e) => handleCakeFilling(e.target.value)}>
-                   {
-                     fillings && fillings.map((filling, index) => (
-                       <option value={filling.id} key={index}>{filling.recipeName}</option>
-                     ))
-                   }
-                 </Select>
-               </FormControl>
-           }
+            fillings.length === 0 && fillingsOptions === options[1]
+            ? (
+              <EmptyState option='un relleno' />
+            )
+            : (
+                <Box>                  
+                  {
+                    fillingsOptions === options[1] &&
+                      <FormControl>
+                        <Select placeholder='Elige uno' onChange={(e) => handleCakeFilling(e.target.value)}>
+                          {
+                            fillings && fillings.map((filling, index) => (
+                              <option value={filling.id} key={index}>{filling.recipeName}</option>
+                            ))
+                          }
+                        </Select>
+                      </FormControl>
+                  }
+                </Box>
+            )
+            }
           </Box>
         <Button 
         w='full' 

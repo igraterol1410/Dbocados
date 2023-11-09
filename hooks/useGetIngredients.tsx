@@ -5,7 +5,7 @@ import { Ingredients } from '@/types/ingredients'
 
 export default function useGetIngredients () {
   const [ingredients, setIngredients] = useState<Ingredients[]>([])
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(true)
   const { uid } = useUserInfo()
 
   useEffect(() => {

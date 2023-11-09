@@ -4,7 +4,7 @@ import PageContainer from '@/components/layout/PageContainer'
 import Image from 'next/image'
 import Ilustracion from '@/assets/cotizaciones.svg'
 import Link from 'next/link'
-import { BiPlus } from 'react-icons/bi'
+import { FaPlus } from 'react-icons/fa'
 
 const Cotizaciones = () => {
     const [showList, setShowList] = useState<boolean>(false)
@@ -27,7 +27,7 @@ const Introduccion:React.FC<introduccionProps> = ({showList, setShowList}) => {
     }
 
     return (
-        <Box h='100%' w='full' bg='#fcfcfc' borderRadius={[8, 12]} p={6}>
+        <Box w='full' h='full' bg='#fcfcfc' borderRadius={[8, 12]} p={6} marginY='auto'>
             <Grid 
             templateRows={['1fr auto']}
             gap={6}
@@ -39,11 +39,11 @@ const Introduccion:React.FC<introduccionProps> = ({showList, setShowList}) => {
                         <Image
                         src={Ilustracion}
                         alt='Logo dbocados'
-                        width={200}
+                        height={200}
                         />
                     </Center>
                     <Box
-                    w={['85%', '60%']}
+                    w={['85%', '80%']}
                     marginInline='auto'
                     textAlign='center'
                     >
@@ -55,15 +55,15 @@ const Introduccion:React.FC<introduccionProps> = ({showList, setShowList}) => {
                         </Text>
                     </Box>                   
                 </Box>
-                <Flex direction='column' h='100%' justifyContent='space-between'>
+                <Flex direction='column' h='100%' justifyContent='center' marginInline='auto'>
                     <Link href='crear-cotizacion'>
                       <Button 
-                      w='full' 
-                      bg='#e80297' 
+                      bg='pink.500' 
+                      _hover={{bg: 'pink.400'}}
                       color='white' 
                       mt={6}
                       onClick={handleInformation}
-                      rightIcon={<BiPlus />}
+                      leftIcon={<FaPlus />}
                       >
                           Crear una cotización
                       </Button>
