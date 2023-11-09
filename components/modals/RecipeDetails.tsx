@@ -66,8 +66,8 @@ const RecipeDetails = () => {
                         </Thead>
                         <Tbody>
                             {
-                                recipeToShow?.recipeIngredients.map((eachIngredient: Ingredients) => (
-                                    <Tr>
+                                recipeToShow?.recipeIngredients.map((eachIngredient: Ingredients, index:number) => (
+                                    <Tr key={index}>
                                         <Td textAlign='center'>{eachIngredient.name}</Td>
                                         <Td textAlign='center'>{eachIngredient.amount}({eachIngredient.unity})</Td>
                                     </Tr>
