@@ -34,7 +34,7 @@ const CotizadorLayout = ({ children }:{children: React.ReactNode}) => {
   return (
     <Box
     position='relative'
-    minH='100vh'
+    h='100vh'
     w='full'
     >
         {
@@ -56,7 +56,7 @@ const CotizadorLayout = ({ children }:{children: React.ReactNode}) => {
                     <NavbarDashboard asideOpen={asideOpen} setAsideOpen={setAsideOpen} />
                     <CotizadorAside asideOpen={asideOpen} />
                     <Box 
-                    h='full' 
+                    h='100%' 
                     w='full' 
                     animation={['' ,asideOpen ? openAsideAction : closeAsideAction]}
                     pl={[0 ,asideOpen ? '300px' : '64px']} 

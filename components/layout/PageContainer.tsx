@@ -13,8 +13,8 @@ const PageContainer:React.FC<PageProps> = ({ title, children }) => {
     py={[2, 6]}
     pt={['50px']}
     templateRows={['auto auto 1fr']}
-    minH={['auto','calc(100vh - 50px)']}
-    w={['auto','full']}
+    minH={['calc(100vh - 50px)']}
+    w={['full','full']}
     overflowY='scroll'
     position='relative'
     >
