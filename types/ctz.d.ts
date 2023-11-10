@@ -21,5 +21,6 @@ export interface CtzInfoProp {
     ctzFilling: ctzFilling, 
     ctzExtra: ctzExtra, 
     ctzPeople: ctzPeople, 
-    ctzEarn: ctzEarn
+    ctzEarn: ctzEarn,
+    ctzName: ctzName,
   }

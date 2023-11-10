@@ -42,62 +42,61 @@ const Coverage = () => {
       setProgress(progress + 1)
     }
     return (
-      <Box 
-      w={['100%','100%','80%' ,'80%']} 
-      h='100%'
-      bg='white' 
-      px={[3, 5]} 
-      py={[2, 4]} 
-      borderRadius={8}
-      marginInline='auto'
-      display='grid'
-      gridTemplateRows='1fr auto'
-      alignItems='center'
-      >
-        <HStack justifyContent='center' {...group} mb={8}>
-          {options.map((value) => {
-            const radio = getRadioProps({ value })
-            return (
-              <RadioCard key={value} {...radio}>
-                {value}
-              </RadioCard>
-            )
-          })}
-        </HStack>
-        {
-            coverages.length === 0 && coverageOptions === options[1]
-            ? (
-              <EmptyState option='una cobertura' />
-            )
-            : (
-                <Box>
-                  {
-                    coverageOptions === options[1] &&
-                      <FormControl>
-                      <Select placeholder='Elige uno' onChange={(e) => handleCakeFilling(e.target.value)}>
-                          {
-                          coverages && coverages.map((coverage, index) => (
-                              <option value={coverage.id} key={index}>{coverage.recipeName}</option>
-                          ))
-                          }
-                      </Select>
-                      </FormControl>
-                  }
-                </Box>
-            )
-        }
-        <Button 
-        w='full' 
-        marginInline='auto' 
-        mt={6}
-        onClick={()=> handleChooseType()}
-        bg='#e80297' 
-        color='white' 
-        isDisabled={disabledButton}
+        <Box 
+        w={['100%','100%','80%' ,'80%']}
+        bg='white' 
+        px={[3, 5]} 
+        py={[2, 4]} 
+        borderRadius={8}
+        marginInline='auto'
+        display='grid'
+        gridTemplateRows='1fr auto'
+        alignItems='center'
         >
-          Siguente
-        </Button>
-      </Box>
+          <HStack justifyContent='center' {...group} mb={8}>
+            {options.map((value) => {
+              const radio = getRadioProps({ value })
+              return (
+                <RadioCard key={value} {...radio}>
+                  {value}
+                </RadioCard>
+              )
+            })}
+          </HStack>
+          {
+              coverages.length === 0 && coverageOptions === options[1]
+              ? (
+                <EmptyState option='una cobertura' />
+              )
+              : (
+                  <Box>
+                    {
+                      coverageOptions === options[1] &&
+                        <FormControl>
+                        <Select placeholder='Elige uno' onChange={(e) => handleCakeFilling(e.target.value)}>
+                            {
+                            coverages && coverages.map((coverage, index) => (
+                                <option value={coverage.id} key={index}>{coverage.recipeName}</option>
+                            ))
+                            }
+                        </Select>
+                        </FormControl>
+                    }
+                  </Box>
+              )
+          }
+          <Button 
+          w='full' 
+          marginInline='auto' 
+          mt={6}
+          onClick={()=> handleChooseType()}
+          bg='#e80297' 
+          color='white' 
+          isDisabled={disabledButton}
+          >
+            Siguente
+          </Button>
+        </Box>
     )
 }
 

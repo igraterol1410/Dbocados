@@ -1,10 +1,10 @@
 import React from 'react'
 import { Badge, Box, Button, Center, GridItem, Text } from '@chakra-ui/react'
-import { Recipe } from '@/types/recipe'
-import { RECIPE_TYPES } from '@/constant/recipeTypes'
 import { CtzGlobalProp } from '@/types/ctz'
+import { useCotizadorActionsContext } from '@/context/CotizadorGlobalContext'
 
 const CtzCard= ({ctz}:{ctz: CtzGlobalProp}) => {
+  const { setCtzToShow } = useCotizadorActionsContext()
   return (
     <GridItem 
     borderRadius={12} 
@@ -15,12 +15,12 @@ const CtzCard= ({ctz}:{ctz: CtzGlobalProp}) => {
     >
         <Box pb={3}>
             <Text fontWeight='bold' textAlign='center'>
-                Para: {ctz.ctzPeople}
+                Cotización: {ctz.ctzName}
             </Text>
             <Badge variant='subtle' colorScheme='green'>{ctz.ctzPeople}</Badge>
         </Box>
         <Center>
-            <Button>Ver detalles</Button>
+            <Button onClick={() => setCtzToShow(ctz)}>Ver detalles</Button>
         </Center>
     </GridItem>
   )

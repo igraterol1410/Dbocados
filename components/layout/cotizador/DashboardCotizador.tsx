@@ -6,9 +6,13 @@ import JoinCtz from '@/components/modals/JoinCtz'
 import useUserInfo from '@/hooks/useUserInfo'
 import RoadMap from '@/components/modals/RoadMap'
 import RecipeDetails from '@/components/modals/RecipeDetails'
+import { useCotizadorActionsContext, useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
+import CtzDetails from '@/components/modals/CtzDetails'
 
-const CotizadorLayout = ({ children }:{children: React.ReactNode}) => {        
-    const [asideOpen, setAsideOpen] = useState(true)
+const CotizadorLayout = ({ children }:{children: React.ReactNode}) => {
+    const {asideOpen} = useCotizadorStateContext()
+    const {setAsideOpen} = useCotizadorActionsContext()
+    const {ctzToShow} = useCotizadorStateContext()
     const { loading } = useUserInfo()
     const openAside = keyframes`
         0% { padding-left: 64px }
@@ -36,6 +40,7 @@ const CotizadorLayout = ({ children }:{children: React.ReactNode}) => {
     position='relative'
     h='100vh'
     w='full'
+    bg='rgb(240, 240, 240)'
     >
         {
             loading
@@ -60,8 +65,7 @@ const CotizadorLayout = ({ children }:{children: React.ReactNode}) => {
                     w='full' 
                     animation={['' ,asideOpen ? openAsideAction : closeAsideAction]}
                     pl={[0 ,asideOpen ? '300px' : '64px']} 
-                    pt='50px' 
-                    bg='rgb(240, 240, 240)'
+                    pt='50px'
                     >
                         {children}
                     </Box>
@@ -71,6 +75,10 @@ const CotizadorLayout = ({ children }:{children: React.ReactNode}) => {
         <JoinCtz />
         <RoadMap />
         <RecipeDetails />
+        {
+            ctzToShow &&
+            <CtzDetails />
+        }
     </Box>
   )
 }

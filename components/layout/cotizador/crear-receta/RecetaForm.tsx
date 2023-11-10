@@ -265,7 +265,7 @@ const CreateReceta = () => {
             _hover={{
                 bg:'#17a6bf'
             }}
-            disabled={productList.length < 1}
+            isDisabled={productList.length < 1}
             onClick={handleSaveRecipe}
             >
                 Guardar receta
