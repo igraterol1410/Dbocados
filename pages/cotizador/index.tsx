@@ -7,7 +7,6 @@ import Link from 'next/link'
 import useGetRecipes from '@/hooks/useGetRecipes'
 import { AiOutlinePlus } from 'react-icons/ai'
 import useGetCtz from '@/hooks/useGetCtz'
-import CtzCard from '@/components/layout/cotizador/configuracion/CtzCard'
 import { CtzGlobalProp } from '@/types/ctz'
 import Image from 'next/image'
 import Ilustracion from '@/assets/no-data.svg'
@@ -15,6 +14,7 @@ import Loader from '@/components/layout/Loader'
 import AddNew from '@/components/layout/cotizador/AddNew'
 import { FaPlus, FaReceipt, FaShoppingBag } from 'react-icons/fa'
 import { useCotizadorActionsContext, useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
+import CtzCard from '@/components/layout/cotizador/cotizaciones/CtzCard'
 
 const Cotizador = () => {
   const { recipes: currentRecipes, loading: recipeLoading } = useGetRecipes()  
@@ -60,7 +60,6 @@ const Cotizador = () => {
         bg='#fcfcfc'
         display='grid'
         gridTemplateRows={['auto 1fr auto']}
-        alignItems='center'
         >
           <Text fontWeight='bold' textAlign='center'>
             Tus Cotizaciones
@@ -78,7 +77,7 @@ const Cotizador = () => {
                   {
                     ctzs && ctzs.length > 0
                     ? (
-                      <Grid templateColumns={['1fr', '1fr']} gap={4} mt={4}>
+                      <Grid alignSelf='self-start' templateColumns={['1fr', '1fr 1fr']} gap={4} mt={4}>
                         {
                           ctzs.map((eachCtz:CtzGlobalProp, index:number) => (
                             <CtzCard key={index} ctz={eachCtz} />
@@ -123,7 +122,6 @@ const Cotizador = () => {
         bg='#fcfcfc'
         display='grid'
         gridTemplateRows={['auto 1fr auto']}
-        alignItems='center'
         >
           <Text fontWeight='bold' textAlign='center'>
             Tus Recetas

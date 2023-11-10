@@ -12,6 +12,7 @@ import { setBussinesGoal } from '@/services/goal'
 import useUserInfo from '@/hooks/useUserInfo'
 import Link from 'next/link'
 import useGetGoal from '@/hooks/useGetGoal'
+import { FaCashRegister, FaCog, FaFlag, FaListUl, FaStar } from 'react-icons/fa'
 
 const Configuracion = () => {
     const [showList, setShowList] = useState<number>(0)
@@ -30,8 +31,26 @@ const Configuracion = () => {
         'Meta mensual de pedidos',
         '¡Buenisimo!'
     ]
+
+    const titleIcons = [
+        {
+            icon: <FaCog />,
+        },
+        {
+            icon: <FaListUl />,
+        },
+        {
+            icon: <FaCashRegister />,
+        },
+        {
+            icon: <FaFlag />,
+        },
+        {
+            icon: <FaStar />,
+        }
+    ]
   return (
-    <PageContainer title={titleProcess[showList]}>
+    <PageContainer title={titleProcess[showList]} titleIcon={titleIcons[showList].icon}>
         {
             configurationProcess[showList]
         }

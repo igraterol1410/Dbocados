@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Button, ButtonGroup, Flex, Grid, Heading, Table, TableContainer, Tbody, Td, Text, Tr, useToast } from '@chakra-ui/react'
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useCtzActionsContext, useCtzStateContext } from '@/context/CotizacionContext'
 import useCtzPrice from '@/hooks/useCtzPrice'
 import Loader from '@/components/layout/Loader'
@@ -9,14 +9,16 @@ import { createNewCtz } from '@/services/cotizaciones'
 import {v4 as uuidv4} from 'uuid'
 import useGetCtz from '@/hooks/useGetCtz'
 import { useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
+import ConfirmCreateCtz from '@/components/modals/ConfirmCreateCtz'
 
 const Finish = () => {
     const toast = useToast()
     const { ctzUser, uid } = useCotizadorStateContext()
-    const { ctzWorkHand, progress, ctzCake, ctzCoverage, ctzFilling, ctzExtra, ctzPeople, ctzEarn } = useCtzStateContext()
+    const { ctzWorkHand, progress, ctzCake, ctzCoverage, ctzFilling, ctzExtra, ctzPeople, ctzEarn, ctzName } = useCtzStateContext()
     const { setProgress, setCtzInfo } = useCtzActionsContext()
     const { cyzInfo, loading } = useCtzPrice(ctzWorkHand, ctzCake, ctzCoverage, ctzFilling, ctzExtra, ctzPeople, ctzEarn)
     const { ctz } = useGetCtz()
+    const [showPopUp, setShowPopUp] = useState<boolean>(false)
 
   useEffect(() => {
     if(cyzInfo){
@@ -24,7 +26,7 @@ const Finish = () => {
     }
   },[cyzInfo])
 
-  const handleSaveCtz = () => {
+  const createCtz = () => {
     if(ctzUser){
         const newCtz = {
             id: uuidv4(),
@@ -34,11 +36,13 @@ const Finish = () => {
             ctzFilling: ctzFilling, 
             ctzExtra: ctzExtra, 
             ctzPeople: ctzPeople, 
-            ctzEarn: ctzEarn
+            ctzEarn: ctzEarn,
+            ctzName: ctzName
         }
         const payload = [...ctz, newCtz]
         createNewCtz(payload, uid).then(() => {
-            setProgress(progress + 1)
+            toast({ status: 'success', description: 'Cotización guardada' })
+            setShowPopUp(false)
         })
     } else {
         toast({ status: 'error', description: 'No puedes realizar esta acción' })
@@ -48,12 +52,17 @@ const Finish = () => {
     }
 }
 
+const handleSaveCtz = () => {
+    setShowPopUp(true)
+}
+
   const handleNext = () => {
     setProgress(progress + 1)
   }
 
   return (
     <Box maxW='95vw' bg='#fcfcfc' borderRadius={[8, 12]} p={[2, 6]} overflowY='scroll'>
+        <ConfirmCreateCtz showPopUp={showPopUp} setShowPopUp={setShowPopUp} createCtz={createCtz} />
         <Grid 
         templateRows={['1fr auto']}
         alignItems='center'

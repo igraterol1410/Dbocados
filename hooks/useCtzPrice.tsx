@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react'
 import { WorkHand } from '@/types/workHand'
 import { RecipeIngredient } from '@/types/recipe'
@@ -59,7 +60,7 @@ export default function useCtzPrice (
 
   useEffect(() => {
     setLoading(true)
-    if(recipes && ingredients && goal && totalExpense){
+    if(recipes && ingredients && goal && totalExpense && ctzWorkHand){
       if(ctzCake !== ''){
         const currentCake = recipes.filter((eachRecipe) => eachRecipe.id === ctzCake)
         cakeName = currentCake[0]?.recipeName
@@ -109,7 +110,7 @@ export default function useCtzPrice (
       })
       setLoading(false)
     }
-  }, [ingredients, recipes, totalExpense])
+  }, [ingredients, recipes, totalExpense, ctzWorkHand])
 
   return { cyzInfo, loading }
 }

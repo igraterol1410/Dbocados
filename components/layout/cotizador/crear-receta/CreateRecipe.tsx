@@ -1,12 +1,13 @@
 import PageContainer from '@/components/layout/PageContainer'
 import CreateReceta from '@/components/layout/cotizador/crear-receta/RecetaForm'
 import { useRecipeActionsContext, useRecipeStateContext } from '@/context/RecipeContext'
-import { Box, Button, FormControl, Flex, Select, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, useSteps, Stack, Text, Input, Grid, Center, Heading } from '@chakra-ui/react'
+import { Box, Button, FormControl, Flex, Select, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, useSteps, Stack, Text, Input, Grid, Center, Heading, CircularProgress, CircularProgressLabel, FormLabel } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { MdArrowBackIosNew } from 'react-icons/md'
 import Ilustracion from '@/assets/exito.svg'
 import Link from 'next/link'
 import Image from 'next/image'
+import { RECIPE_TYPES } from '@/constant/recipeTypes'
 
 const CreateRecipe = () => {
     const { pageTitle, progress } = useRecipeStateContext()
@@ -48,7 +49,7 @@ const CreateRecipe = () => {
         description: 'Escoge ingredientes dentro de tu lista' 
       },
       { 
-        title: 'Receta creada con exito', 
+        title: 'Felicidades', 
         description: 'Receta creada con exito' 
       }
     ]
@@ -60,44 +61,47 @@ const CreateRecipe = () => {
   
     const activeStepText = steps[progress].description
   return (
-    <PageContainer title={pageTitle}>          
-        <Stack w={['100%','100%','70%' ,'70%']} marginInline='auto'>
-          <Stepper size='sm' index={progress} gap='0'>
-            {recipeProgress.map((step, index) => (
-              <Step key={index}>
-                <StepIndicator>
-                  <StepStatus complete={<StepIcon />} />
-                </StepIndicator>
-                <StepSeparator />
-              </Step>
-            ))}
-          </Stepper>
-          <Text>
-            Paso {progress + 1}: <b>{activeStepText}</b>
-          </Text>
-        </Stack>
-        <Box position='relative'>
-          <Stack p={4} w={['100%','100%','80%' ,'80%']} marginInline='auto'>
-            {
-              (progress + 1) > 1 && (progress + 1) < 5 &&
-              <Flex 
-              cursor='pointer' 
-              position='absolute' 
-              top='-16px' 
-              alignItems='center' 
-              w='auto' 
-              gap={2}
-              _hover={{color: '#e80297'}}
-              onClick={() => setProgress(progress - 1)} 
-              >
-                <MdArrowBackIosNew /> Volver
-              </Flex>
-            }
-          </Stack>
+    <PageContainer title={pageTitle} titleIcon={<></>}>     
+      <Grid
+      templateRows='auto 1fr'
+      alignItems='center'
+      >
+        <Flex 
+        marginInline='auto' 
+        w={['100%','100%','80%' ,'80%']} 
+        alignItems='center' 
+        position='relative'
+        gap={4}
+        >
+          {
+            (progress + 1) > 1 && (progress + 1) < recipeProgress.length &&
+            <Flex 
+            cursor='pointer' 
+            position='absolute' 
+            top='-32px' 
+            alignItems='center' 
+            w='auto' 
+            gap={2}
+            _hover={{color: '#e80297'}}
+            onClick={() => setProgress(progress - 1)} 
+            >
+              <MdArrowBackIosNew /> Volver
+            </Flex>
+          }
+          <Box>
+            <CircularProgress size='80px' value={((progress + 1)/recipeProgress.length)*100} color='pink.500'>
+              <CircularProgressLabel fontWeight='bold' color='pink.500'>{progress + 1}/{recipeProgress.length}</CircularProgressLabel>
+            </CircularProgress>
+          </Box>
+          <Box >
+            <Text fontWeight='bold'>{steps[progress].title}</Text>
+            <Text maxW='250px' overflowWrap='break-word'>{steps[progress].description}</Text>
+          </Box>
+        </Flex>
           {
             recipeProgress[progress].component
           }
-        </Box>
+      </Grid>     
     </PageContainer>
   )
 }
@@ -105,7 +109,6 @@ const CreateRecipe = () => {
 const ChooseType = () => {
     const { progress, recipeType } = useRecipeStateContext()
     const { setPageTitle, setProgress, setRecipeType } = useRecipeActionsContext()
-    const recetaTypes = ['Torta', 'Relleno', 'Cobertura']
   
     const handleChooseType = () => {
       setPageTitle(`Crear receta de ${recipeType}`)
@@ -119,20 +122,22 @@ const ChooseType = () => {
     return (
       <Box 
       w={['100%','100%','80%' ,'80%']} 
-      h='100%'
+      h='90%'
       bg='white' 
       px={[3, 5]} 
       py={[2, 4]} 
       borderRadius={8}
       marginInline='auto'
-      display='flex'
-      flexDirection='column'
-      justifyContent='space-between'
+      display='grid'
+      gridTemplateRows='1fr auto'
       >
         <FormControl>
+          <FormLabel>
+            <Box textAlign='center'>Indíca el tipo de receta</Box>
+          </FormLabel>
           <Select placeholder='Elige uno' onChange={(e) => handleRecipeType(e.target.value)}>
             {
-              recetaTypes.map((type, index) => (
+              RECIPE_TYPES.map((type, index) => (
                 <option key={index} value={type}>{type}</option>
               ))
             }
@@ -175,9 +180,8 @@ const ChooseType = () => {
       py={[2, 4]} 
       borderRadius={8}
       marginInline='auto'
-      display='flex'
-      flexDirection='column'
-      justifyContent='space-between'
+      display='grid'
+      gridTemplateRows='1fr auto'
       >
         <FormControl>
           <Input 
@@ -275,7 +279,7 @@ const ChooseType = () => {
     return (
       <Box h='100%' w='full' bg='#fcfcfc' borderRadius={[8, 12]} p={6}>
         <Grid 
-        templateRows={['150px 1fr']}
+        templateRows={['auto 1fr']}
         gap={6}
         h='full'
         >

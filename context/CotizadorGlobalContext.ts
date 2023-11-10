@@ -14,7 +14,9 @@ export type RecipeContentState = {
     userInfo: any,
     ingredientsLoading: boolean,
     userLoading: boolean,
-    recipeToShow: Recipe | null
+    recipeToShow: Recipe | null,
+    ctzToShow: CtzGlobalProp | null,
+    asideOpen: boolean
   }
 
 export type RecipeContentActions = {
@@ -22,7 +24,9 @@ export type RecipeContentActions = {
   setCtzs: Dispatch<SetStateAction<CtzGlobalProp[]>>,
   setIngredients: Dispatch<SetStateAction<Ingredients[]>>,
   setExpenses: Dispatch<SetStateAction<Expenses[]>>,
-  setRecipeToShow: Dispatch<SetStateAction<Recipe | null>>
+  setRecipeToShow: Dispatch<SetStateAction<Recipe | null>>,
+  setCtzToShow: Dispatch<SetStateAction<CtzGlobalProp | null>>,
+  setAsideOpen: Dispatch<SetStateAction<boolean>>
 }
 
 export const CotizadorStateContext = createContext<RecipeContentState>({
@@ -35,7 +39,9 @@ export const CotizadorStateContext = createContext<RecipeContentState>({
     userInfo: '',
     ingredientsLoading: false,
     userLoading: false,
-    recipeToShow: null
+    recipeToShow: null,
+    ctzToShow: null,
+    asideOpen: false
 })
 
 export const CotizadorActionsContext = createContext<RecipeContentActions>({
@@ -43,7 +49,9 @@ export const CotizadorActionsContext = createContext<RecipeContentActions>({
     setCtzs: () => {},
     setIngredients: () => {},
     setExpenses: () => {},
-    setRecipeToShow: () => {}
+    setRecipeToShow: () => {},
+    setCtzToShow: () => {},
+    setAsideOpen: () => {}
 })
 
 export const useCotizadorStateContext = () => useContext(CotizadorStateContext)

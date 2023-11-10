@@ -13,7 +13,7 @@ import { Recipe } from '@/types/recipe'
 const Recetas = () => {
     const { recipes, loading } = useGetRecipes()
   return (
-    <PageContainer title={'Recetas'}>
+    <PageContainer title={'Recetas'} titleIcon={<FaReceipt />}>
         {
             recipes.length === 0 && !loading
             ? (
@@ -26,67 +26,67 @@ const Recetas = () => {
                 py={[2, 4]}
                 bg='#fcfcfc'
                 display='grid'
+                h='100%'
                 gridTemplateRows={['auto 1fr auto']}
-                alignItems='center'
                 >
-                <Text fontWeight='bold' textAlign='center'>
-                    Tus Recetas
-                </Text>
-                <Grid templateColumns={['1fr', '1fr']} gap={4} mt={4}>
-                    {
-                    loading
-                    ? (
-                        <Box position='relative'>
-                        <Loader />
-                        </Box>
-                    )
-                    : (
-                        <>
+                    <Text fontWeight='bold' textAlign='center'>
+                        Tus Recetas
+                    </Text>
+                    <Grid templateColumns={['1fr', '1fr']} gap={4} mt={4}>
                         {
-                            recipes && recipes.length > 0
-                            ? (
-                            <Grid alignSelf='self-start' templateColumns={['1fr', '1fr 1fr 1fr']} gap={4} mt={4}>                  
-                                {
-                                recipes && recipes.map((eachRecipe:Recipe, index:number) => (
-                                    <RecipeCard key={index} recipe={eachRecipe} />
-                                ))
-                                }
-                            </Grid>
-                            )
-                            : (
-                            <Box>
-                                <Center>
-                                <Image
-                                src={Ilustracion}
-                                alt='Empty state'
-                                width={100}
-                                />
-                                </Center>
-                                <Center>
-                                <Text>Aún no tienes recetas, crea la primera aquí</Text>
-                                </Center>
+                        loading
+                        ? (
+                            <Box position='relative'>
+                            <Loader />
                             </Box>
-                            ) 
+                        )
+                        : (
+                            <>
+                            {
+                                recipes && recipes.length > 0
+                                ? (
+                                <Grid alignSelf='self-start' templateColumns={['1fr', '1fr 1fr 1fr']} gap={4} mt={4}>                  
+                                    {
+                                    recipes && recipes.map((eachRecipe:Recipe, index:number) => (
+                                        <RecipeCard key={index} recipe={eachRecipe} />
+                                    ))
+                                    }
+                                </Grid>
+                                )
+                                : (
+                                <Box>
+                                    <Center>
+                                    <Image
+                                    src={Ilustracion}
+                                    alt='Empty state'
+                                    width={100}
+                                    />
+                                    </Center>
+                                    <Center>
+                                    <Text>Aún no tienes recetas, crea la primera aquí</Text>
+                                    </Center>
+                                </Box>
+                                ) 
+                            }
+                            </>
+                        )
                         }
-                        </>
-                    )
-                    }
-                </Grid>
-                <Center>
-                    <Link href='/cotizador/crear-receta'>
-                        <Button 
-                        bg='pink.500'
-                        color='white'
-                        _hover={{
-                            bg:'pink.400'
-                        }}
-                        mt={4}
-                        leftIcon={<FaPlus />}
-                        >
-                        Crear Receta
-                        </Button>
-                    </Link>
-                </Center>
+                    </Grid>
+                    <Center>
+                        <Link href='/cotizador/crear-receta'>
+                            <Button 
+                            bg='pink.500'
+                            color='white'
+                            _hover={{
+                                bg:'pink.400'
+                            }}
+                            mt={4}
+                            leftIcon={<FaPlus />}
+                            >
+                            Crear Receta
+                            </Button>
+                        </Link>
+                    </Center>
                 </GridItem>
             )
         }

@@ -21,31 +21,43 @@ const Earn = () => {
   }
 
   return (
-      <Box h='100%' w='full' bg='#fcfcfc' borderRadius={[8, 12]} p={6}>
+      <Box
+      h='100%' 
+      w={['100%','100%','80%' ,'80%']} 
+      bg='#fcfcfc' 
+      borderRadius={[8, 12]} 
+      p={6}
+      marginInline='auto'
+      >
           <Grid 
-          templateRows={['150px 1fr']}
+          templateRows={['auto 1fr']}
           gap={6}
           h='full'
           >
-              <Center>
-                  <Image
-                  src={EarnIcon}
-                  alt='Logo dbocados'
-                  width={200}
-                  />
-              </Center>
+            <Flex alignItems='center' gap={6} direction={['column', 'row']}>
+                <Center>
+                    <Box position='relative' w={['100px', '150px']}>
+                        <Image
+                        src={EarnIcon}
+                        alt='Logo dbocados'
+                        />
+                    </Box>
+                </Center>
+                <Box>
+                    <Heading as='h3' mb={6} fontSize={['20px', '24px']} textAlign={['center', 'left']}>
+                        ¿Cuantos te gustaría ganar en este pedido?
+                    </Heading>
+                    <Text textAlign={['center', 'left']}>
+                        Este paso es muy <b>importante</b>
+                    </Text>
+                </Box>
+            </Flex>
               <Flex direction='column' h='100%' justifyContent='space-between'>
                   <Box
                   w={['85%', '60%']}
                   marginInline='auto'
                   textAlign='center'
                   >
-                      <Heading as='h3' mb={6}>
-                          ¿Cuantos te gustaría ganar en este pedido?
-                      </Heading>
-                      <Text>
-                          Este paso es muy <b>importante</b>
-                      </Text>
                       <Flex gap={4} mt={6} alignItems='center' w='60%' marginInline='auto'>
                           <Input
                           marginInline='auto'

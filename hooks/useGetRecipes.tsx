@@ -16,7 +16,7 @@ export default function useGetRecipes () {
     setLoading(true)
     if(uid){
       getUserRecipes(uid).then((res) => {
-        const differentsCakes = res.filter((eachRecipe:Recipe) => (eachRecipe.recipeType === RECIPE_TYPES_VALUES.cake))
+        const differentsCakes = res.filter((eachRecipe:Recipe) => (eachRecipe.recipeType === RECIPE_TYPES_VALUES.cake || eachRecipe.recipeType === RECIPE_TYPES_VALUES.otherMain))
         const differentsFillings = res.filter((eachRecipe:Recipe) => (eachRecipe.recipeType === RECIPE_TYPES_VALUES.filling))
         const differentsCoverages = res.filter((eachRecipe:Recipe) => (eachRecipe.recipeType === RECIPE_TYPES_VALUES.coverage))
         setRecipes(res)
