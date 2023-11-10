@@ -17,7 +17,9 @@ const CotizadorGlobalComponent:React.FC<CotizadorProviderProps> = ({ children })
     const [expenses, setExpenses] = useState<Expenses[]>([])
     const [ctzs, setCtzs] = useState<CtzGlobalProp[]>([])    
     const [ingredients, setIngredients] = useState<Ingredients[]>([])    
-    const [recipeToShow, setRecipeToShow] = useState<Recipe | null>(null)
+    const [recipeToShow, setRecipeToShow] = useState<Recipe | null>(null)        
+    const [ctzToShow, setCtzToShow] = useState<CtzGlobalProp | null>(null)        
+    const [asideOpen, setAsideOpen] = useState<boolean>(true)
     const { ingredients: currentIngredientes, loading:ingredientsLoading } = useGetIngredients()
 
     useEffect(() => {
@@ -33,7 +35,9 @@ const CotizadorGlobalComponent:React.FC<CotizadorProviderProps> = ({ children })
         setExpenses,
         setCtzs,
         setIngredients,
-        setRecipeToShow
+        setRecipeToShow,
+        setCtzToShow,
+        setAsideOpen
       }}
       >
         <CotizadorStateContext.Provider
@@ -47,7 +51,9 @@ const CotizadorGlobalComponent:React.FC<CotizadorProviderProps> = ({ children })
             userInfo,
             userLoading,
             ingredientsLoading,
-            recipeToShow
+            recipeToShow,
+            ctzToShow,
+            asideOpen
         }}
         >
             {children}  

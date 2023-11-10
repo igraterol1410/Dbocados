@@ -10,8 +10,10 @@ import Image from 'next/image';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { firebaseApp } from '@/firebase';
 import { getUserData } from '@/services/users';
+import { useCotizadorActionsContext } from '@/context/CotizadorGlobalContext';
 
 const CotizadorAside = ({ asideOpen }:{ asideOpen:boolean }) => {
+    const { setAsideOpen } = useCotizadorActionsContext()
     const [user, setUser] = useState<any>({})
     const pathname = usePathname()
     const auth = getAuth(firebaseApp)
@@ -132,8 +134,13 @@ const CotizadorAside = ({ asideOpen }:{ asideOpen:boolean }) => {
             >
                 {
                     items.map((item, index) => (
-                        <Link href={item.link} key={index}>
-                            <Center>
+                        <Link 
+                        href={item.link} 
+                        key={index}
+                        onClick={()=>{setAsideOpen(false)}}
+                        >
+                            <Center 
+                            >
                                 <ListItem 
                                 w='100%'
                                 display='flex' 

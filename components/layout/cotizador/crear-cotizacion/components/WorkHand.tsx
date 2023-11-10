@@ -23,32 +23,44 @@ const WorkHand = () => {
   }
 
   return (
-      <Box h='100%' w='full' bg='#fcfcfc' borderRadius={[8, 12]} p={6}>
+      <Box 
+      h='100%' 
+      w={['100%','100%','80%' ,'80%']} 
+      bg='#fcfcfc' 
+      borderRadius={[8, 12]} 
+      p={6}
+      marginInline='auto'
+      >
           <Grid 
-          templateRows={['150px 1fr']}
+          templateRows={['auto 1fr']}
           alignItems='center'
           gap={6}
           h='full'
           >
+            <Flex alignItems='center' gap={6}>
               <Center pt={4}>
-                  <Image
-                  src={Work}
-                  alt='Logo dbocados'
-                  width={200}
-                  />
+                <Box position='relative' w={['100px', '150px']}>
+                    <Image
+                    src={Work}
+                    alt='Logo dbocados'
+                />
+                </Box>
               </Center>
+              <Box>
+                <Heading as='h3' mb={6} fontSize={['20px', '24px']}>
+                  ¿Cuantos tiempo se llevará elaborar este pedido?
+                </Heading>
+                  <Text>
+                      Indica también el precio que cuesta cada hora de trabajo
+                  </Text>
+              </Box>
+            </Flex>
               <Flex direction='column' h='100%' justifyContent='space-between'>
                   <Box
                   w={['85%', '60%']}
                   marginInline='auto'
                   textAlign='center'
                   >
-                      <Heading as='h3' mb={6}>
-                          ¿Cuantos tiempo se llevará elaborar este pedido?
-                      </Heading>
-                      <Text>
-                          Indica también el precio que cuesta cada hora de trabajo
-                      </Text>
                       <Flex gap={4} mt={6} alignItems='center' w='60%' marginInline='auto'>
                           <Input
                           marginInline='auto'

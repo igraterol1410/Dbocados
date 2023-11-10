@@ -12,7 +12,7 @@ import SendToClient from './components/SendToClient'
 import WorkHand from './components/WorkHand'
 import Approve from './components/Approve'
 import Created from './components/Created'
-import { Box, CircularProgress, CircularProgressLabel, Flex, Stack, Step, StepIcon, StepIndicator, StepSeparator, StepStatus, Stepper, Text, useSteps } from '@chakra-ui/react'
+import { Box, CircularProgress, CircularProgressLabel, Flex, Grid, Stack, Step, StepIcon, StepIndicator, StepSeparator, StepStatus, Stepper, Text, useSteps } from '@chakra-ui/react'
 import PageContainer from '../../PageContainer'
 import { MdArrowBackIosNew } from 'react-icons/md'
 import { useCtzActionsContext, useCtzStateContext } from '@/context/CotizacionContext'
@@ -66,8 +66,8 @@ const CreateCotizacion = () => {
           description: 'Indica para cuantas personas será la torta' 
         },
         { 
-            title: 'Bizcocho/Torta', 
-            description: 'Selecciona el tipo de bizcocho o torta' 
+            title: 'Receta principal', 
+            description: 'Selecciona la receta principal del pedido' 
         },
         { 
             title: 'Relleno', 
@@ -104,42 +104,47 @@ const CreateCotizacion = () => {
     ]
 
   return (
-    <PageContainer title={pageTitle}>
-      <Flex 
-      marginInline='auto' 
-      w={['100%','100%','80%' ,'80%']} 
-      alignItems='center' 
-      position='relative'
+    <PageContainer title={pageTitle} titleIcon={<></>}>
+      <Grid
+      templateRows={['auto 1fr']}
       gap={4}
       >
-        {
-          (progress + 1) > 1 && (progress + 1) < recipeProgress.length &&
-          <Flex 
-          cursor='pointer' 
-          position='absolute' 
-          top='-32px' 
-          alignItems='center' 
-          w='auto' 
-          gap={2}
-          _hover={{color: '#e80297'}}
-          onClick={() => setProgress(progress - 1)} 
-          >
-            <MdArrowBackIosNew /> Volver
-          </Flex>
-        }
-        <Box>
-          <CircularProgress size='80px' value={(progress/recipeProgress.length)*100} color='pink.500'>
-            <CircularProgressLabel fontWeight='bold' color='pink.500'>{progress + 1}/{recipeProgress.length}</CircularProgressLabel>
-          </CircularProgress>
-        </Box>
-        <Box >
-          <Text fontWeight='bold'>{steps[progress].title}</Text>
-          <Text maxW='250px' overflowWrap='break-word'>{steps[progress].description}</Text>
-        </Box>
-      </Flex>
-        {
-          recipeProgress[progress].component
-        }
+        <Flex 
+        marginInline='auto' 
+        w={['100%','100%','80%' ,'80%']} 
+        alignItems='center' 
+        position='relative'
+        gap={4}
+        >
+          {
+            (progress + 1) > 1 && (progress + 1) < recipeProgress.length &&
+            <Flex 
+            cursor='pointer' 
+            position='absolute' 
+            top='-32px' 
+            alignItems='center' 
+            w='auto' 
+            gap={2}
+            _hover={{color: '#e80297'}}
+            onClick={() => setProgress(progress - 1)} 
+            >
+              <MdArrowBackIosNew /> Volver
+            </Flex>
+          }
+          <Box>
+            <CircularProgress size='80px' value={((progress + 1)/recipeProgress.length)*100} color='pink.500'>
+              <CircularProgressLabel fontWeight='bold' color='pink.500'>{progress + 1}/{recipeProgress.length}</CircularProgressLabel>
+            </CircularProgress>
+          </Box>
+          <Box >
+            <Text fontWeight='bold'>{steps[progress].title}</Text>
+            <Text maxW='250px' overflowWrap='break-word'>{steps[progress].description}</Text>
+          </Box>
+        </Flex>
+          {
+            recipeProgress[progress].component
+          }
+      </Grid>
     </PageContainer>
   )
 }

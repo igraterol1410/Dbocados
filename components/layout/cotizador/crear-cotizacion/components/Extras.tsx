@@ -54,8 +54,17 @@ const Extras = () => {
   }
 
 return (
-  <Center marginTop={6}>
-      <Box w={['100%','100%','80%' ,'80%']} bg='white' px={[3, 5]} py={[2, 4]} borderRadius={8}>           
+      <Box 
+      w={['100%','100%','80%' ,'80%']} 
+      bg='white' 
+      px={[3, 5]} 
+      py={[2, 4]} 
+      borderRadius={8} 
+      marginInline='auto'
+      display='grid'
+      gridTemplateRows={['1fr auto']}
+      > 
+        <Box>
           <Box w='100%'>
               <Center mb={4}>
                   <Text fontSize='2xl' fontWeight='bold'>Agrega aquí los extras de tu pedido</Text>
@@ -205,6 +214,7 @@ return (
                   </Form>
               )}
           </Formik>
+        </Box>          
           <Button 
           bg='#e80297' 
           color='white'  
@@ -219,7 +229,6 @@ return (
               Guardar cambios
           </Button>                        
       </Box>
-  </Center>
 )
 }
 
