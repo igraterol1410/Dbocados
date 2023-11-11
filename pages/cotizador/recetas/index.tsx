@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Box, Button, Center, Flex, Grid, GridItem, Heading, Text } from '@chakra-ui/react'
 import PageContainer from '@/components/layout/PageContainer'
 import Image from 'next/image'
@@ -9,9 +9,17 @@ import useGetRecipes from '@/hooks/useGetRecipes'
 import Loader from '@/components/layout/Loader'
 import RecipeCard from '@/components/layout/cotizador/recetas/RecipeCard'
 import { Recipe } from '@/types/recipe'
+import { useCotizadorActionsContext, useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
 
 const Recetas = () => {
-    const { recipes, loading } = useGetRecipes()
+    const { recipes:currentRecipes, loading } = useGetRecipes()
+    const { recipes } = useCotizadorStateContext()
+    const { setRecipes } = useCotizadorActionsContext()
+    useEffect(() =>{
+        if(currentRecipes){
+            setRecipes(currentRecipes)
+        }
+    },[currentRecipes])
   return (
     <PageContainer title={'Recetas'} titleIcon={<FaReceipt />}>
         {
@@ -108,22 +116,13 @@ const Introduccion = () => {
                     <Center>
                         <Image
                         src={Ilustracion}
-                        alt='Logo dbocados'
-                        width={200}
+                        alt='Empty state'
+                        width={100}
                         />
                     </Center>
-                    <Box
-                    w={['85%', '60%']}
-                    marginInline='auto'
-                    textAlign='center'
-                    >
-                        <Heading as='h3' mb={6}>
-                            ¡Estás a un paso de comenzar a generar cotizaciones!
-                        </Heading>
-                        <Text>
-                            Antes de continuar, vamos a personalizar tu cotizador. Esto implica ingresar algunos precios referenciales. Esta configuración te permitirá crear cotizaciones precisas en el futuro. Empecemos.
-                        </Text>
-                    </Box>
+                    <Center>
+                          <Text>Aún no tienes Recetas, crea la primera aquí</Text>
+                    </Center>
                 </Box>
                 <Flex direction='column' h='100%' justifyContent='center' marginInline='auto'>
                     <Link href='crear-receta'>
