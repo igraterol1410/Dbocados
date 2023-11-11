@@ -20,15 +20,16 @@ import { useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
 import { usePathname } from 'next/navigation'
 
 const RoadMap = () => {
-    const { ingredients, ingredientsLoading } = useCotizadorStateContext()
+    const { userLoading, userInfo } = useCotizadorStateContext()
     const { onClose, onOpen, isOpen } = useDisclosure()
     const pathname = usePathname()
+    const showPopup = userInfo.ctzUser && !(userInfo.hasIngredients && userInfo.hasExpenses && userInfo.hasGoal)
 
     useEffect(() => {
-        if(ingredients && ingredients.length === 0 && !ingredientsLoading && !pathname.includes('configuracion')){
+        if(showPopup && !userLoading && !pathname.includes('configuracion')){
             onOpen()
         }
-    },[ingredients, pathname])
+    },[showPopup, pathname])
 
     return (
         <Modal 

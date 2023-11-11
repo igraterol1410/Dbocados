@@ -6,6 +6,8 @@ import { Expenses } from '@/types/extraExpenses'
 import { Ingredients } from '@/types/ingredients'
 import useGetIngredients from '@/hooks/useGetIngredients'
 import useUserInfo from '@/hooks/useUserInfo'
+import useGetExpenses from '@/hooks/useGetExpenses'
+import useGetGoal from '@/hooks/useGetGoal'
 
 interface CotizadorProviderProps {
     children: React.ReactNode,

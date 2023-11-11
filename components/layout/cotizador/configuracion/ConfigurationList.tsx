@@ -21,6 +21,7 @@ import useGetIngredients from '@/hooks/useGetIngredients'
 import {v4 as uuidv4} from 'uuid'
 import { useCotizadorActionsContext, useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
 import Loader from '../../Loader'
+import { updateUser } from '@/services/users'
 
 interface SetupProps {
     setShowList: React.Dispatch<SetStateAction<number>>,
@@ -37,13 +38,12 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
         price: 0
     }
     const { ingredients: currentIngredients, loading: ingredientsLoading } = useGetIngredients()
-    const { ingredients, uid, ctzUser } = useCotizadorStateContext()
+    const { ingredients, uid, ctzUser, userInfo } = useCotizadorStateContext()
     const { setIngredients } = useCotizadorActionsContext()
     const [productList, setProductList] = useState<Ingredients[]>([])    
     const [editProduct, setEditProduct] = useState<number | null>(null)    
     const [initialValues, setInitialValues] = useState<Ingredients>(initivialValuesRef)    
-    const [disabledButton, setDisabledButton] = useState<boolean>(true)    
-    const [refresh, setRefresh] = useState<boolean>(true)
+    const [disabledButton, setDisabledButton] = useState<boolean>(true)  
     
     useEffect(() => {
         if(currentIngredients.length !== ingredients.length){
@@ -56,7 +56,10 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
         if(ctzUser){
             const currentIngredients = productList
             createIngredientsList(currentIngredients, uid).then(() => {
-                setShowList(showList + 1)
+                const payload = {...userInfo, hasIngredients: true}
+                updateUser(payload, uid).then(() => {
+                    setShowList(showList + 1)
+                })
             })
         } else {
             toast({ status: 'error', description: 'No puedes realizar esta acción' })

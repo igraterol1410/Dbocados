@@ -56,7 +56,7 @@ const Login = () => {
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if(user){
-                router.push('/dashboard')
+                router.push('/cotizador')
             }
         })
     }, [])
