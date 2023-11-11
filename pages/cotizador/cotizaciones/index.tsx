@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { useEffect, Dispatch, SetStateAction, useState } from 'react'
 import { Box, Button, Center, Flex, Grid, GridItem, Heading, Text } from '@chakra-ui/react'
 import PageContainer from '@/components/layout/PageContainer'
 import Image from 'next/image'
@@ -9,13 +9,23 @@ import useGetCtz from '@/hooks/useGetCtz'
 import Loader from '@/components/layout/Loader'
 import CtzCard from '@/components/layout/cotizador/cotizaciones/CtzCard'
 import { CtzGlobalProp } from '@/types/ctz'
+import { useCotizadorActionsContext, useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
 
 const Cotizaciones = () => {
     const { ctz, loading } = useGetCtz()
+    const { setCtzs } = useCotizadorActionsContext()
+    const { ctzs } = useCotizadorStateContext()
+
+    useEffect(() => {
+        if(ctz){
+          setCtzs(ctz)
+        }
+    }, [ctz])
+    
   return (
     <PageContainer title={'Cotizaciones'} titleIcon={<FaShoppingBag />}>
         {
-            ctz.length === 0 && !loading
+            ctzs.length === 0 && !loading
             ? (
                 <Introduccion />
             )
@@ -30,7 +40,7 @@ const Cotizaciones = () => {
                 gridTemplateRows={['auto 1fr auto']}
                 >
                     <Text fontWeight='bold' textAlign='center'>
-                        Tus Recetas
+                        Tus Cotizaciones
                     </Text>
                     <Grid templateColumns={['1fr', '1fr']} gap={4} mt={4}>
                         {
@@ -43,11 +53,11 @@ const Cotizaciones = () => {
                         : (
                             <>
                             {
-                                ctz && ctz.length > 0
+                                ctzs && ctzs.length > 0
                                 ? (
                                 <Grid alignSelf='self-start' templateColumns={['1fr', '1fr 1fr 1fr']} gap={4} mt={4}>                  
                                     {
-                                    ctz && ctz.map((eachCtz:CtzGlobalProp, index:number) => (
+                                    ctzs && ctzs.map((eachCtz:CtzGlobalProp, index:number) => (
                                         <CtzCard key={index} ctz={eachCtz} />
                                     ))
                                     }
@@ -63,7 +73,7 @@ const Cotizaciones = () => {
                                     />
                                     </Center>
                                     <Center>
-                                    <Text>Aún no tienes recetas, crea la primera aquí</Text>
+                                    <Text>Aún no tienes Cotizaciones, crea la primera aquí</Text>
                                     </Center>
                                 </Box>
                                 ) 
@@ -106,25 +116,15 @@ const Introduccion = () => {
             >
                 <Box>
                     <Center>
-                        <Box w={['100px', '200px']} position='relative'>
-                            <Image
-                            src={Ilustracion}
-                            alt='Logo dbocados'
-                            />
-                        </Box>
+                        <Image
+                        src={Ilustracion}
+                        alt='Empty state'
+                        width={100}
+                        />
                     </Center>
-                    <Box
-                    w={['85%', '80%']}
-                    marginInline='auto'
-                    textAlign='center'
-                    >
-                        <Heading as='h3' mb={6}>
-                            ¡Estás a un paso de comenzar a generar cotizaciones!
-                        </Heading>
-                        <Text>
-                            Antes de continuar, vamos a personalizar tu cotizador. Esto implica ingresar algunos precios referenciales. Esta configuración te permitirá crear cotizaciones precisas en el futuro. Empecemos.
-                        </Text>
-                    </Box>                   
+                    <Center>
+                        <Text>Aún no tienes cotizaciones, crea la primera aquí</Text>
+                    </Center>
                 </Box>
                 <Flex direction='column' h='100%' justifyContent='center' marginInline='auto'>
                     <Link href='crear-cotizacion'>

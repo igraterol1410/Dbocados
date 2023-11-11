@@ -18,7 +18,7 @@ import { setExtraExpenses } from '@/services/ingredientList'
 import useGetExpenses from '@/hooks/useGetExpenses'
 import { Expenses, ExpensesError } from '@/types/extraExpenses'
 import { updateUser } from '@/services/users'
-import { useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
+import { useCotizadorActionsContext, useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
 
 interface SetupProps {
     setShowList: React.Dispatch<SetStateAction<number>>,
@@ -27,6 +27,7 @@ interface SetupProps {
 
 const ExtraExpenses:React.FC<SetupProps> = ({setShowList, showList}) => {
     const { uid, userInfo } = useCotizadorStateContext()
+    const { setGlobalUser } = useCotizadorActionsContext()
     const { extraExpenses, loading } = useGetExpenses()
     const [productList, setProductList] = useState<Expenses[]>([])
     
@@ -41,6 +42,7 @@ const ExtraExpenses:React.FC<SetupProps> = ({setShowList, showList}) => {
         setExtraExpenses(currentIngredients, uid).then(() => {
             const payload = {...userInfo, hasExpenses: true}
             updateUser(payload, uid).then(() => {
+                setGlobalUser(payload)
                 setShowList(showList + 1)
             })
         })

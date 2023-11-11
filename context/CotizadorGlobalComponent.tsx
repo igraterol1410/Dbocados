@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { CotizadorActionsContext, CotizadorStateContext } from './CotizadorGlobalContext'
 import { Recipe } from '@/types/recipe'
@@ -8,6 +9,7 @@ import useGetIngredients from '@/hooks/useGetIngredients'
 import useUserInfo from '@/hooks/useUserInfo'
 import useGetExpenses from '@/hooks/useGetExpenses'
 import useGetGoal from '@/hooks/useGetGoal'
+import { User } from '@/types/user'
 
 interface CotizadorProviderProps {
     children: React.ReactNode,
@@ -16,6 +18,7 @@ interface CotizadorProviderProps {
 const CotizadorGlobalComponent:React.FC<CotizadorProviderProps> = ({ children }) => {  
     const { uid, userInfo, ctzUser, loading: userLoading } = useUserInfo()
     const [recipes, setRecipes] = useState<Recipe[]>([])
+    const [golbalUser, setGlobalUser] = useState<User | null| {}>(null)
     const [expenses, setExpenses] = useState<Expenses[]>([])
     const [ctzs, setCtzs] = useState<CtzGlobalProp[]>([])    
     const [ingredients, setIngredients] = useState<Ingredients[]>([])    
@@ -30,6 +33,12 @@ const CotizadorGlobalComponent:React.FC<CotizadorProviderProps> = ({ children })
       }
     },[currentIngredientes])
 
+    useEffect(() => {
+      if(userInfo && !golbalUser && !userLoading) {
+        setGlobalUser(userInfo)
+      }
+    },[userInfo])
+
   return (
     <CotizadorActionsContext.Provider
       value={{            
@@ -39,6 +48,7 @@ const CotizadorGlobalComponent:React.FC<CotizadorProviderProps> = ({ children })
         setIngredients,
         setRecipeToShow,
         setCtzToShow,
+        setGlobalUser,
         setAsideOpen
       }}
       >
@@ -50,7 +60,7 @@ const CotizadorGlobalComponent:React.FC<CotizadorProviderProps> = ({ children })
             ingredients,
             ctzUser,
             uid,
-            userInfo,
+            userInfo: golbalUser,
             userLoading,
             ingredientsLoading,
             recipeToShow,
