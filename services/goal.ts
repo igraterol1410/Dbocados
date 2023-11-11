@@ -15,7 +15,7 @@ export const getUserGoal = async (uid:string) => {
     let userGoal: any = []
     const myPromise = new Promise <number> ((resolve, reject) => {
         setTimeout(() => {
-            if (docSnap.exists()) {
+            if (docSnap.exists() && docSnap.data()?.data) {
                 resolve(parseFloat(docSnap.data()?.data))
             } else {
                 resolve(userGoal)

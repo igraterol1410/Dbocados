@@ -9,8 +9,16 @@ export const saveUser = async (user:any) => {
         rol: 'basic',
         status: 'signedUp',
         ctzUser: false,
-        id: uid
+        id: uid,
+        hasIngredients: false,
+        hasExpenses: false,
+        hasGoal:false
     }
+    const userRef =  doc(db, `usuarios/${uid}`)
+    setDoc(userRef, payload)
+}
+
+export const updateUser = async (payload:any, uid:string) => {
     const userRef =  doc(db, `usuarios/${uid}`)
     setDoc(userRef, payload)
 }

@@ -15,7 +15,7 @@ export const getUserRecipes = async (uid:string) => {
     let allRecipes: any = []
     const myPromise = new Promise <[]> ((resolve, reject) => {
         setTimeout(() => {
-            if (docSnap.exists()) {
+            if (docSnap.exists() && docSnap.data()?.recipeData) {
                 resolve(JSON.parse(docSnap.data()?.recipeData))
             } else {
                 resolve(allRecipes)

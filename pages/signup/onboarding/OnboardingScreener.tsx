@@ -30,7 +30,7 @@ const OnboardingScreener = () => {
         h={['100%','100vh']}
         w='full'
         >
-          <Link href="/dashboard">
+          <Link href="/cotizador">
             <Button>Ir al panel</Button>
           </Link>
         </Grid>

@@ -2,6 +2,7 @@ import { CtzGlobalProp } from '@/types/ctz'
 import { Expenses } from '@/types/extraExpenses'
 import { Ingredients } from '@/types/ingredients'
 import { Recipe } from '@/types/recipe'
+import { User } from '@/types/user'
 import { createContext, useContext, Dispatch, SetStateAction } from 'react'
 
 export type RecipeContentState = {
@@ -26,6 +27,7 @@ export type RecipeContentActions = {
   setExpenses: Dispatch<SetStateAction<Expenses[]>>,
   setRecipeToShow: Dispatch<SetStateAction<Recipe | null>>,
   setCtzToShow: Dispatch<SetStateAction<CtzGlobalProp | null>>,
+  setGlobalUser: Dispatch<SetStateAction<User | null>>,
   setAsideOpen: Dispatch<SetStateAction<boolean>>
 }
 
@@ -51,6 +53,7 @@ export const CotizadorActionsContext = createContext<RecipeContentActions>({
     setExpenses: () => {},
     setRecipeToShow: () => {},
     setCtzToShow: () => {},
+    setGlobalUser: () => {},
     setAsideOpen: () => {}
 })
 

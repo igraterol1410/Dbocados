@@ -17,7 +17,7 @@ export const getUserIngredients = async (uid:string) => {
     let ingredientsList: any = []
     const myPromise = new Promise <[]> ((resolve, reject) => {
         setTimeout(() => {
-            if (docSnap.exists()) {
+            if (docSnap.exists() && docSnap.data()?.data) {
                 resolve(JSON.parse(docSnap.data()?.data))
             } else {
                 resolve(ingredientsList)
@@ -39,7 +39,7 @@ export const getUserExtraExpenses = async (uid:string) => {
     let extraExpensesList: any = []
     const myPromise = new Promise <[]> ((resolve, reject) => {
         setTimeout(() => {
-            if (docSnap.exists()) {
+            if (docSnap.exists() && docSnap.data()?.data) {
                 resolve(JSON.parse(docSnap.data()?.data))
             } else {
                 resolve(extraExpensesList)

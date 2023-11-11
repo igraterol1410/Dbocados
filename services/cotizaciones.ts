@@ -15,7 +15,7 @@ export const getUserCtzs = async (uid:string) => {
     let allCtzs: any = []
     const myPromise = new Promise <[]> ((resolve, reject) => {
         setTimeout(() => {
-            if (docSnap.exists()) {
+            if (docSnap.exists() && docSnap.data()?.ctzData) {
                 resolve(JSON.parse(docSnap.data()?.ctzData))
             } else {
                 resolve(allCtzs)
