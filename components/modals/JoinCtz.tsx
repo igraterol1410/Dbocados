@@ -69,7 +69,7 @@ const JoinCtz = () => {
                     <a target='_blank' href='https://wa.me/584241411047'>
                       <Button 
                       w='full' 
-                      bg='#e80297' 
+                      bg='pinkPrimary' 
                       color='white' 
                       mt={6}
                       >

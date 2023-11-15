@@ -58,7 +58,7 @@ const NavbarDashboard:React.FC<NavbarProps> = ({asideOpen, setAsideOpen}) => {
         as={motion.div}
         transition='all ease .5s'
         _hover={{
-          color: '#e80297'
+          color: 'pinkPrimary'
         }}
         onClick={() => setAsideOpen(!asideOpen)}
         >
@@ -68,7 +68,7 @@ const NavbarDashboard:React.FC<NavbarProps> = ({asideOpen, setAsideOpen}) => {
         as={motion.div}
         transition='all ease .5s'
         _hover={{
-          color: '#e80297'
+          color: 'pinkPrimary'
         }}
         onClick={handleLogOut}
         >

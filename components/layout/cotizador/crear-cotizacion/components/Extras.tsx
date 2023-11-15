@@ -55,7 +55,7 @@ const Extras = () => {
 
 return (
       <Box 
-      w={['100%','100%','80%' ,'80%']} 
+      w={['100%','100%','90%' ,'90%']} 
       bg='white' 
       px={[3, 5]} 
       py={[2, 4]} 
@@ -75,7 +75,7 @@ return (
               w='100%' 
               py={2} 
               px={4}
-              bg='#e80297' 
+              bg='pinkPrimary' 
               color='white' 
               marginBottom={2}
               borderRadius={8}>
@@ -95,8 +95,8 @@ return (
                       w='100%' 
                       py={2} 
                       px={4}
-                      border='1px solid #e80297'
-                      color='#e80297' 
+                      border='1px solid #BA346E'
+                      color='pinkPrimary' 
                       marginBottom={2}
                       borderRadius={8}>
                           <GridItem>
@@ -106,13 +106,13 @@ return (
                               {currencyFormatter(product.price)}
                           </GridItem>
                           <GridItem
-                          bg='#e80297' 
+                          bg='pinkPrimary' 
                           color='white'
                           borderRadius={8}
                           _hover={{
                               cursor:'pointer',
                               bg:'white',
-                              color:'#e80297'
+                              color:'pinkPrimary'
                           }}
                           onClick={() => handleRemoveProduct(product)}>
                               <Center px={3}>
@@ -129,8 +129,8 @@ return (
                       w='100%' 
                       py={2} 
                       px={4}
-                      border='1px solid #e80297'
-                      color='#e80297' 
+                      border='1px solid #BA346E'
+                      color='pinkPrimary' 
                       marginBottom={2}
                       borderRadius={8}>
                           <GridItem>
@@ -164,7 +164,7 @@ return (
                               <FormLabel>Producto</FormLabel>
                               <Field 
                               as={Input}
-                              focusBorderColor='#e80297'
+                              focusBorderColor='pinkPrimary'
                               type='text'
                               name='name'
                               placeholder='Nombre del Producto'
@@ -185,7 +185,7 @@ return (
                               <FormLabel>Precio</FormLabel>
                               <Field 
                               as={Input}
-                              focusBorderColor='#e80297'
+                              focusBorderColor='pinkPrimary'
                               type='number'
                               name='price'
                               placeholder='0'
@@ -194,13 +194,13 @@ return (
                           <GridItem alignSelf='end'>
                               <Button
                               type='submit'
-                              bg='#e80297' 
+                              bg='pinkPrimary' 
                               color='white'
                               fontSize={22}
                               w='100%' 
                               marginTop={4}
                               _hover={{
-                                  bg:'#17a6bf'
+                                  bg:'pink.400'
                               }}
                               isDisabled={
                                   !values.name || 
@@ -216,12 +216,12 @@ return (
           </Formik>
         </Box>          
           <Button 
-          bg='#e80297' 
+          bg='pinkPrimary' 
           color='white'  
           w='100%' 
           marginTop={4}
           _hover={{
-              bg:'#17a6bf'
+              bg:'pink.400'
           }}
           disabled={productList.length < 1}
           onClick={handleSaveIngredientsList}

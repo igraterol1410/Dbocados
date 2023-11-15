@@ -68,7 +68,7 @@ const CreateRecipe = () => {
       >
         <Flex 
         marginInline='auto' 
-        w={['100%','100%','80%' ,'80%']} 
+        w={['100%','100%','90%' ,'90%']} 
         alignItems='center' 
         position='relative'
         gap={4}
@@ -82,15 +82,15 @@ const CreateRecipe = () => {
             alignItems='center' 
             w='auto' 
             gap={2}
-            _hover={{color: '#e80297'}}
+            _hover={{color: 'pinkPrimary'}}
             onClick={() => setProgress(progress - 1)} 
             >
               <MdArrowBackIosNew /> Volver
             </Flex>
           }
           <Box>
-            <CircularProgress size='80px' value={((progress + 1)/recipeProgress.length)*100} color='pink.500'>
-              <CircularProgressLabel fontWeight='bold' color='pink.500'>{progress + 1}/{recipeProgress.length}</CircularProgressLabel>
+            <CircularProgress size='80px' value={((progress + 1)/recipeProgress.length)*100} color='pinkPrimary'>
+              <CircularProgressLabel fontWeight='bold' color='pinkPrimary'>{progress + 1}/{recipeProgress.length}</CircularProgressLabel>
             </CircularProgress>
           </Box>
           <Box >
@@ -121,7 +121,7 @@ const ChooseType = () => {
   
     return (
       <Box 
-      w={['100%','100%','80%' ,'80%']} 
+      w={['100%','100%','90%' ,'90%']} 
       h='90%'
       bg='white' 
       px={[3, 5]} 
@@ -148,7 +148,7 @@ const ChooseType = () => {
         marginInline='auto' 
         mt={6}
         onClick={()=> handleChooseType()}
-        bg='#e80297' 
+        bg='pinkPrimary' 
         color='white' 
         isDisabled={!recipeType}
         >
@@ -173,7 +173,7 @@ const ChooseType = () => {
 
     return (
       <Box 
-      w={['100%','100%','80%' ,'80%']} 
+      w={['100%','100%','90%' ,'90%']} 
       h='100%'
       bg='white' 
       px={[3, 5]} 
@@ -194,7 +194,7 @@ const ChooseType = () => {
         marginInline='auto' 
         mt={6}
         onClick={()=> handleChooseType()}
-        bg='#e80297' 
+        bg='pinkPrimary' 
         color='white' 
         isDisabled={!recipeName}
         >
@@ -228,7 +228,7 @@ const ChooseType = () => {
     }
     return (
       <Box 
-      w={['100%','100%','80%' ,'80%']} 
+      w={['100%','100%','90%' ,'90%']} 
       h='100%'
       bg='white' 
       px={[3, 5]} 
@@ -265,7 +265,7 @@ const ChooseType = () => {
         marginInline='auto' 
         mt={6}
         onClick={()=> handleChooseType()}
-        bg='#e80297' 
+        bg='pinkPrimary' 
         color='white' 
         isDisabled={!recipePeople}
         >
@@ -306,7 +306,7 @@ const ChooseType = () => {
                 <Link href='/cotizador'>
                   <Button 
                   w='full' 
-                  bg='#e80297' 
+                  bg='pinkPrimary' 
                   color='white' 
                   mt={6}
                   >

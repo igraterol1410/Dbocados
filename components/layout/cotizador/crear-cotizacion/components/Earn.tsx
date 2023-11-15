@@ -23,7 +23,7 @@ const Earn = () => {
   return (
       <Box
       h='100%' 
-      w={['100%','100%','80%' ,'80%']} 
+      w={['100%','100%','90%' ,'90%']} 
       bg='#fcfcfc' 
       borderRadius={[8, 12]} 
       p={6}
@@ -71,7 +71,7 @@ const Earn = () => {
                   </Box>
                   <Button 
                   w='full' 
-                  bg='#e80297' 
+                  bg='pinkPrimary' 
                   color='white' 
                   mt={6}
                   isDisabled={moneyEarn <= 0 }

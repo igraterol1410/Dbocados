@@ -44,7 +44,7 @@ const Filling = () => {
     }
     return (
       <Box 
-      w={['100%','100%','80%' ,'80%']} 
+      w={['100%','100%','90%' ,'90%']} 
       h='100%'
       bg='white' 
       px={[3, 5]} 
@@ -94,7 +94,7 @@ const Filling = () => {
         marginInline='auto' 
         mt={6}
         onClick={()=> handleChooseType()}
-        bg='#e80297' 
+        bg='pinkPrimary' 
         color='white' 
         isDisabled={disabledButton}
         >

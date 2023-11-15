@@ -73,15 +73,15 @@ const ConfirmCreateCtz = ({showPopUp, setShowPopUp, createCtz}:{showPopUp:boolea
                     <Button 
                     colorScheme='blackAlpha'
                     variant='outline'
-                    color='#e80297' 
+                    color='pinkPrimary' 
                     bg='white' 
-                    borderColor='#e80297'
+                    borderColor='pinkPrimary'
                     onClick={handleClose} 
                     >
                         Descartar
                     </Button>
                     <Button 
-                    bg='#e80297' 
+                    bg='pinkPrimary' 
                     color='white'
                     onClick={createCtz}
                     leftIcon={<FiSave />}

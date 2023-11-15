@@ -109,7 +109,7 @@ const CreateReceta = () => {
             ingredientsLoading &&
             <Loader/>
         }
-        <Box w={['100%','100%','80%' ,'80%']} bg='white' px={[3, 5]} py={[2, 4]} borderRadius={8}>           
+        <Box w={['100%','100%','90%' ,'90%']} bg='white' px={[3, 5]} py={[2, 4]} borderRadius={8}>           
             <Box w='100%'>
                 <Center mb={4}>
                     <Text fontSize='2xl'>Lista de Ingredientes</Text>
@@ -120,7 +120,7 @@ const CreateReceta = () => {
                 w='100%' 
                 py={2} 
                 px={4}
-                bg='#e80297' 
+                bg='pinkPrimary' 
                 color='white' 
                 marginBottom={2}
                 borderRadius={8}>
@@ -145,8 +145,8 @@ const CreateReceta = () => {
                         w='100%' 
                         py={2} 
                         px={4}
-                        border='1px solid #e80297'
-                        color='#e80297' 
+                        border='1px solid #BA346E'
+                        color='pinkPrimary' 
                         marginBottom={2}
                         borderRadius={8}>
                             <GridItem>
@@ -183,7 +183,7 @@ const CreateReceta = () => {
                                 <FormLabel>Ingrediente</FormLabel>
                                 <Field 
                                 as={Select}
-                                focusBorderColor='#e80297'
+                                focusBorderColor='pinkPrimary'
                                 type='text'
                                 name='name'
                                 placeholder='Nombre del Ingrediente'
@@ -210,7 +210,7 @@ const CreateReceta = () => {
                                 <FormLabel>Cantidad</FormLabel>
                                 <Field 
                                 as={Input}
-                                focusBorderColor='#e80297'
+                                focusBorderColor='pinkPrimary'
                                 type='number'
                                 name='amount'
                                 placeholder='0'
@@ -220,7 +220,7 @@ const CreateReceta = () => {
                                 <FormLabel>Unidad</FormLabel>
                                 <Field 
                                 as={Select}
-                                focusBorderColor='#e80297'
+                                focusBorderColor='pinkPrimary'
                                 type='number'
                                 name='unity'
                                 placeholder='selecciona'
@@ -236,13 +236,13 @@ const CreateReceta = () => {
                             <GridItem alignSelf='end'>
                                 <Button
                                 type='submit'
-                                bg='#e80297' 
+                                bg='pinkPrimary' 
                                 color='white'
                                 fontSize={22}
                                 w='100%' 
                                 marginTop={4}
                                 _hover={{
-                                    bg:'#17a6bf'
+                                    bg:'pink.400'
                                 }}
                                 isDisabled={
                                     !values.amount || 
@@ -258,12 +258,12 @@ const CreateReceta = () => {
                 )}
             </Formik>
             <Button 
-            bg='#e80297' 
+            bg='pinkPrimary' 
             color='white'  
             w='100%' 
             marginTop={4}
             _hover={{
-                bg:'#17a6bf'
+                bg:'pink.400'
             }}
             isDisabled={productList.length < 1}
             onClick={handleSaveRecipe}

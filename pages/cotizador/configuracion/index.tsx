@@ -103,7 +103,7 @@ const Introduccion:React.FC<introduccionProps> = ({showList, setShowList}) => {
                 <Flex direction='column' h='100%' justifyContent='space-between'>
                     <Button 
                     w='full' 
-                    bg='#e80297' 
+                    bg='pinkPrimary' 
                     color='white' 
                     mt={6}
                     onClick={handleInformation}
@@ -151,7 +151,7 @@ const Success = () => {
                     <Link href='/cotizador'>
                         <Button 
                         w='full' 
-                        bg='#e80297' 
+                        bg='pinkPrimary' 
                         color='white' 
                         mt={6}
                         >
@@ -228,7 +228,7 @@ const MonthlyGoal:React.FC<GoalProps> = ({showList, setShowList}) => {
                     </Box>
                     <Button 
                     w='full' 
-                    bg='#e80297' 
+                    bg='pinkPrimary' 
                     color='white' 
                     mt={6}
                     isDisabled={monthlyGoal <= 0}

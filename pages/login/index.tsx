@@ -130,7 +130,7 @@ const Login = () => {
                                         type={password ? 'password' : 'text' }
                                         placeholder='Contraseña'
                                         />
-                                        <InputRightAddon color='#e80297' onClick={() => setPassword(!password)} >
+                                        <InputRightAddon color='pinkPrimary' onClick={() => setPassword(!password)} >
                                             {password ? <AiFillEyeInvisible /> : <AiFillEye />}
                                         </InputRightAddon>
                                     </InputGroup>
@@ -139,7 +139,7 @@ const Login = () => {
                                 <Button 
                                 mt={5} 
                                 w='full'
-                                bg='#e80297' 
+                                bg='pinkPrimary' 
                                 color='white'
                                 type='submit'
                                 isLoading={loading}

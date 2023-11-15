@@ -154,16 +154,16 @@ const handleSaveCtz = () => {
                 <Button 
                 colorScheme='blackAlpha'
                 variant='outline'
-                color='#e80297' 
+                color='pinkPrimary' 
                 bg='white' 
-                borderColor='#e80297'
+                borderColor='pinkPrimary'
                 onClick={handleSaveCtz}
                 leftIcon={<FiSave />}
                 >
                     Guardar
                 </Button>
                 <Button 
-                bg='#e80297' 
+                bg='pinkPrimary' 
                 color='white'
                 onClick={handleNext} 
                 >

@@ -18,8 +18,8 @@ const RecetaFormProduct:React.FC<ProductProps> = ({product, handleRemoveProduct}
     w='100%' 
     py={2} 
     px={4}
-    border='1px solid #e80297'
-    color='#e80297' 
+    border='1px solid #BA346E'
+    color='pinkPrimary' 
     marginBottom={2}
     borderRadius={8}>
         <GridItem>
@@ -29,13 +29,13 @@ const RecetaFormProduct:React.FC<ProductProps> = ({product, handleRemoveProduct}
             {`${product.amount}${product.unity}`}
         </GridItem>
         <GridItem
-        bg='#e80297' 
+        bg='pinkPrimary' 
         color='white'
         borderRadius={8}
         _hover={{
             cursor:'pointer',
             bg:'white',
-            color:'#e80297'
+            color:'pinkPrimary'
         }}
         onClick={() => handleRemoveProduct(product)}>
             <Center px={3}>

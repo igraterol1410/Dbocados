@@ -16,11 +16,11 @@ const RadioCard = (props:any) => {
           borderWidth='1px'
           borderRadius='md'
           boxShadow='md'
-          borderColor='#e80297'
+          borderColor='pinkPrimary'
           _checked={{
-            bg: '#e80297',
+            bg: 'pinkPrimary',
             color: 'white',
-            borderColor: '#e80297',
+            borderColor: 'pinkPrimary',
           }}
           _focus={{
             boxShadow: 'outline',
