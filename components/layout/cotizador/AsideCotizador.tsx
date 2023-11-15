@@ -2,7 +2,7 @@ import { Box, Flex, List, ListItem, Text, Tooltip, keyframes, Center } from '@ch
 import { usePathname } from 'next/navigation'
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
-import { FaCalculator, FaCog, FaLongArrowAltLeft, FaReceipt, FaShoppingBag } from "react-icons/fa";
+import { FaCalculator, FaCog, FaDatabase, FaLongArrowAltLeft, FaQuestionCircle, FaReceipt, FaShoppingBag } from "react-icons/fa";
 import { motion } from 'framer-motion'
 
 import DbocadosLogo from '@/assets/logo.svg'
@@ -42,15 +42,15 @@ const CotizadorAside = ({ asideOpen }:{ asideOpen:boolean }) => {
             icon:<FaReceipt />,
             link:'/cotizador/recetas'
         },
+        // {
+        //     title:'Configuración',
+        //     icon:<FaCog />,
+        //     link:'/cotizador/configuracion'
+        // },
         {
-            title:'Configuración',
-            icon:<FaCog />,
-            link:'/cotizador/configuracion'
-        },
-        {
-            title:'Ir al panel',
-            icon:<FaLongArrowAltLeft />,
-            link:'/dashboard'
+            title:'Inventario',
+            icon:<FaDatabase />,
+            link:'/cotizador/inventario'
         }
     ]
     const openAside = keyframes`
@@ -176,6 +176,43 @@ const CotizadorAside = ({ asideOpen }:{ asideOpen:boolean }) => {
                         </Link>
                     ))
                 }
+                <Link 
+                href='' 
+                onClick={()=>{setAsideOpen(false)}}
+                >
+                    <Center 
+                    >
+                        <ListItem 
+                        w='100%'
+                        display='flex' 
+                        gap={4} 
+                        alignItems='center'
+                        py={3}
+                        px={5}
+                        maxW='100%'
+                        fontSize='lg'
+                        as={motion.div}
+                        transition='all ease .5s'
+                        _hover={{
+                            color:'pinkPrimary'
+                        }}
+                        borderBottom='1px solid rgba(255, 255, 255, .85)'
+                        >
+                        <Tooltip hasArrow label='Atención' placement='right'>
+                            <Text fontSize='2xl' m={0}>
+                                <FaQuestionCircle />
+                            </Text>
+                        </Tooltip>
+                            <Text
+                            as={motion.div}
+                            animation={asideOpen ? appearTextAction : disappearTexttAction}
+                            display={ asideOpen ? 'inline' : 'none'}
+                            >
+                                Atención al cliente
+                            </Text>
+                        </ListItem>
+                    </Center>
+                </Link>
             </List>
         </Flex>     
     </Box>

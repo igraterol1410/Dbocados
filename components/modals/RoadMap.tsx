@@ -23,7 +23,7 @@ const RoadMap = () => {
     const { userLoading, userInfo } = useCotizadorStateContext()
     const { onClose, onOpen, isOpen } = useDisclosure()
     const pathname = usePathname()
-    const showPopup = userInfo.ctzUser && !(userInfo.hasIngredients && userInfo.hasExpenses && userInfo.hasGoal)
+    const showPopup = userInfo?.ctzUser && !(userInfo.hasIngredients && userInfo.hasExpenses && userInfo.hasGoal)
 
     useEffect(() => {
         if(showPopup && !userLoading && !pathname.includes('configuracion')){

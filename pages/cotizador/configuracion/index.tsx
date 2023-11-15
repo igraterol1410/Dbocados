@@ -14,7 +14,7 @@ import Link from 'next/link'
 import useGetGoal from '@/hooks/useGetGoal'
 import { FaCashRegister, FaCog, FaFlag, FaListUl, FaStar } from 'react-icons/fa'
 import { updateUser } from '@/services/users'
-import { useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
+import { useCotizadorActionsContext, useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
 
 const Configuracion = () => {
     const [showList, setShowList] = useState<number>(0)
@@ -172,6 +172,7 @@ interface GoalProps {
 const MonthlyGoal:React.FC<GoalProps> = ({showList, setShowList}) => {
     const [monthlyGoal, setMonthlyGoal] = useState<number>(0)
     const { uid, userInfo } = useCotizadorStateContext()
+    const { setGlobalUser } = useCotizadorActionsContext()
     const { goal } = useGetGoal()
 
     useEffect(() => {
@@ -184,6 +185,7 @@ const MonthlyGoal:React.FC<GoalProps> = ({showList, setShowList}) => {
         setBussinesGoal(monthlyGoal, uid).then(() => {
             const payload = {...userInfo, hasGoal: true}
             updateUser(payload, uid).then(() => {
+                setGlobalUser(payload)
                 setShowList(showList + 1)
             })
         })

@@ -12,10 +12,16 @@ const Button: ComponentStyleConfig = {
   variants: {
     solid: (props: StyleFunctionProps) => ({
       bg: props.colorScheme === 'pinkPrimary' ? 'pinkPrimary' : props.bg,
-      color: props.colorScheme === 'pinkPrimary' ? 'purple' : props.bg,
+      color: props.colorScheme === 'pinkPrimary' ? 'white' : props.bg,
+      _hover: {
+        bg: 'pink.500',
+        border: '3px solid #BA346E',
+        color: 'white'
+      }
     }),
     outline: (props: StyleFunctionProps) => ({
       color: props.colorScheme === 'pinkPrimary' ? 'pinkPrimary' : props.bg,
+      bg: props.colorScheme === 'pinkPrimary' ? 'transparent' : props.bg,
     }),
     purpleButton: () => ({
       transition: 'all ease-in-out .2s',

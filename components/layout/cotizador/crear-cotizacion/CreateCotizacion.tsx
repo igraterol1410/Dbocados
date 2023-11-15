@@ -52,12 +52,6 @@ const CreateCotizacion = () => {
       {
         component:<Save />
       },
-      {
-        component:<SendToClient />
-      },
-      {
-        component:<Approve />
-      }
     ]
   
     const steps = [
@@ -94,11 +88,11 @@ const CreateCotizacion = () => {
             description: 'Resumen de tu cotización' 
         },
         { 
-            title: '¿Deseas guardar esta cotización?', 
-            description: 'Puedes guardar esta cotización para que la proxima vez sea mucho mas rápido' 
+            title: 'Comparte esta cotización', 
+            description: 'Puedes descargar y enviar esta cotización a tu cliente' 
         },
         { 
-            title: '¿Deseas enviar esta cotización a tu cliente?', 
+            title: 'Felicitaciones', 
             description: 'Contización aprobada' 
         }
     ]

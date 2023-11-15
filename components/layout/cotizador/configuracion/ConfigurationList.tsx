@@ -23,6 +23,7 @@ import { useCotizadorActionsContext, useCotizadorStateContext } from '@/context/
 import Loader from '../../Loader'
 import { updateUser } from '@/services/users'
 import { FaPlus } from 'react-icons/fa'
+import AlertDelete from '@/components/modals/AlertDelete'
 
 interface SetupProps {
     setShowList: React.Dispatch<SetStateAction<number>>,
@@ -40,11 +41,13 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
     }
     const { ingredients: currentIngredients, loading: ingredientsLoading } = useGetIngredients()
     const { ingredients, uid, ctzUser, userInfo } = useCotizadorStateContext()
-    const { setIngredients } = useCotizadorActionsContext()
+    const { setIngredients, setGlobalUser } = useCotizadorActionsContext()
     const [productList, setProductList] = useState<Ingredients[]>([])    
     const [editProduct, setEditProduct] = useState<number | null>(null)    
+    const [itemToDelete, setItemToDelete] = useState<Ingredients | null>(null)    
     const [initialValues, setInitialValues] = useState<Ingredients>(initivialValuesRef)    
-    const [disabledButton, setDisabledButton] = useState<boolean>(true)  
+    const [disabledButton, setDisabledButton] = useState<boolean>(true) 
+    console.log(userInfo) 
     
     useEffect(() => {
         if(currentIngredients.length !== ingredients.length){
@@ -59,6 +62,8 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
             createIngredientsList(currentIngredients, uid).then(() => {
                 const payload = {...userInfo, hasIngredients: true}
                 updateUser(payload, uid).then(() => {
+                    setIngredients(currentIngredients)
+                    setGlobalUser(payload)
                     setShowList(showList + 1)
                 })
             })
@@ -115,6 +120,7 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
         const newArray = [...productList]
         newArray.splice(index, 1)
         setProductList(newArray)
+        setItemToDelete(null)
     }
 
     const isDuplicated = (name:string | null) => {
@@ -203,7 +209,7 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                                     color='white' 
                                     borderRadius={8}
                                     p={2}
-                                    onClick={() => handleRemoveProduct(product)}
+                                    onClick={() => setItemToDelete(product)}
                                     >
                                         <AiOutlineDelete />
                                     </Box>
