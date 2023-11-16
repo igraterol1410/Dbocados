@@ -135,7 +135,7 @@ const ChooseType = () => {
           <FormLabel>
             <Box textAlign='center'>Indíca el tipo de receta</Box>
           </FormLabel>
-          <Select placeholder='Elige uno' onChange={(e) => handleRecipeType(e.target.value)}>
+          <Select value={recipeType} placeholder='Elige uno' onChange={(e) => handleRecipeType(e.target.value)}>
             {
               RECIPE_TYPES.map((type, index) => (
                 <option key={index} value={type}>{type}</option>
@@ -186,6 +186,7 @@ const ChooseType = () => {
         <FormControl>
           <Input 
           placeholder='Nombre de tu receta' 
+          value={recipeName}
           onChange={(e) => handleRecipeNAme(e.target.value)} 
           />
         </FormControl>
@@ -241,7 +242,7 @@ const ChooseType = () => {
       >
           <Box>
             <FormControl>
-              <Select placeholder='Elige uno' onChange={(e) => handlePeopleNumber(e.target.value)}>
+              <Select value={recipePeople} placeholder='Elige uno' onChange={(e) => handlePeopleNumber(e.target.value)}>
                 {
                   recetaTypes.map((type, index) => (
                     <option key={index} value={type}>{type}</option>
@@ -276,6 +277,7 @@ const ChooseType = () => {
   }
 
   const RecipeSuccess = () => {
+    const { rid } = useRecipeStateContext()
     return (
       <Box h='100%' w='full' bg='#fcfcfc' borderRadius={[8, 12]} p={6}>
         <Grid 
@@ -297,10 +299,10 @@ const ChooseType = () => {
                 textAlign='center'
                 >
                     <Heading as='h3' mb={6}>
-                      ¡Receta Creada con Éxito!
+                      ¡Receta {rid ? 'Editada' : 'Creada'} con Éxito!
                     </Heading>
                     <Text>
-                      Felicidades, has completado con éxito el proceso de creación de tu receta. Ahora, estás listo para dar el siguiente paso en tu aventura culinaria. Empieza a crear cotizaciones, calcula costos y abre las puertas a nuevas oportunidades de negocios con tus deliciosos platos. ¡Estamos emocionados de ver a dónde te llevará esta nueva etapa!
+                      Felicidades, has completado con éxito el proceso de {rid ? 'edición' : 'creación'} de tu receta. Ahora, estás listo para dar el siguiente paso en tu aventura culinaria. Empieza a crear cotizaciones, calcula costos y abre las puertas a nuevas oportunidades de negocios con tus deliciosos platos. ¡Estamos emocionados de ver a dónde te llevará esta nueva etapa!
                     </Text>
                 </Box>
                 <Link href='/cotizador'>

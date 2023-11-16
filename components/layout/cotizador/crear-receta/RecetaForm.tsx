@@ -23,9 +23,11 @@ import Loader from '../../Loader'
 import { createNewRecipe } from '@/services/recipes'
 import {v4 as uuidv4} from 'uuid'
 import { useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
+import { useRouter } from 'next/router'
 
 const CreateReceta = () => {
-    const toast = useToast()
+    const toast = useToast()    
+    const router = useRouter()
     const {setProgress} = useRecipeActionsContext()
     const { ingredients, ctzUser, uid, ingredientsLoading } = useCotizadorStateContext()
     const {progress, recipeName, recipeType, recipePeople} = useRecipeStateContext()
@@ -39,6 +41,15 @@ const CreateReceta = () => {
             setIngredientsList(ingredients)
         }
     },[ingredients])
+    
+    useEffect(()=>{
+        if(router.query.rid && recipes){
+            const recipeData = recipes.filter((eachRecipe) => (eachRecipe.id === router.query.rid))
+            if(recipeData.length > 0 && recipeData[0]?.recipeName){
+                setProductList(recipeData[0]?.recipeIngredients)
+            }
+        }
+    },[router.query.rid, recipes])
 
     const getIngredientInfo = (ingredient:string | null) => {
         const ingredientInfo = ingredients.filter((eachIngredient) => (eachIngredient.name === ingredient))
@@ -84,17 +95,33 @@ const CreateReceta = () => {
 
     const handleSaveRecipe = () => {
         if(ctzUser){
-            const newRecipe = {
-                id: uuidv4(),
-                recipeName: recipeName,
-                recipeType: recipeType,
-                recipePeople: recipePeople,
-                recipeIngredients: productList
+            if(router.query.rid){
+                const editedRecipe = recipes.map((eachRecipe) => (
+                    {
+                        id: eachRecipe.id,
+                        recipeName: router.query.rid === eachRecipe.id ? recipeName : eachRecipe.recipeName,
+                        recipeType: router.query.rid === eachRecipe.id ? recipeType : eachRecipe.recipeType,
+                        recipePeople: router.query.rid === eachRecipe.id ? recipePeople : eachRecipe.recipePeople,
+                        recipeIngredients: router.query.rid === eachRecipe.id ? productList : eachRecipe.recipeIngredients
+                    }
+                ))
+                const payload = editedRecipe
+                createNewRecipe(payload, uid).then(() => {
+                    setProgress(progress + 1)
+                })
+            } else {
+                const newRecipe = {
+                    id: uuidv4(),
+                    recipeName: recipeName,
+                    recipeType: recipeType,
+                    recipePeople: recipePeople,
+                    recipeIngredients: productList
+                }
+                const payload = [...recipes, newRecipe]
+                createNewRecipe(payload, uid).then(() => {
+                    setProgress(progress + 1)
+                })
             }
-            const payload = [...recipes, newRecipe]
-            createNewRecipe(payload, uid).then(() => {
-                setProgress(progress + 1)
-            })
         } else {
             toast({ status: 'error', description: 'No puedes realizar esta acción' })
             setTimeout(() => {

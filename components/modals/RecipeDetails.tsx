@@ -23,6 +23,7 @@ import { Ingredients } from '@/types/ingredients'
 import RecipeDelete from './RecipeDelete'
 import { createNewRecipe } from '@/services/recipes'
 import { Recipe } from '@/types/recipe'
+import Link from 'next/link'
 
 const RecipeDetails = () => {
     const toast = useToast()
@@ -98,6 +99,11 @@ const RecipeDetails = () => {
                     </TableContainer>
                     <ModalFooter gap={4}>
                         <Button onClick={handleClose}>Cerrar</Button>
+                        <Link href={`cotizador/editar-receta/${recipeToShow?.id}`}>
+                            <Button onClick={handleClose} variant='outline'>
+                                Editar
+                            </Button>
+                        </Link>
                         <Button variant='outline' onClick={() => setRecipeToDelete(recipeToShow)}>Eliminar</Button>
                     </ModalFooter>
                 </ModalBody>
