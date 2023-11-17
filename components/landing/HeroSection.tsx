@@ -35,7 +35,7 @@ const HeroSection = () => {
               {/* <Link href="/signup">
                 <Button 
                 alignSelf='flex-end' 
-                bg='pink.500' 
+                bg='pinkPrimary' 
                 color='white' 
                 size='lg' 
                 mt={6}>

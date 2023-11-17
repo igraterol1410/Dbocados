@@ -22,6 +22,7 @@ import {v4 as uuidv4} from 'uuid'
 import { useCotizadorActionsContext, useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
 import Loader from '../../Loader'
 import { updateUser } from '@/services/users'
+import { FaPlus } from 'react-icons/fa'
 import AlertDelete from '@/components/modals/AlertDelete'
 
 interface SetupProps {
@@ -129,12 +130,14 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
 
   return (
     <Center marginTop={6} position='relative'>
-        <AlertDelete
-        setShowPopUp={setItemToDelete}
-        actionDelete={handleRemoveProduct} 
-        itemToDelete={itemToDelete}        
-        />
-        <Box w={['100%','100%','80%' ,'80%']} bg='white' px={[3, 5]} py={[2, 4]} borderRadius={8}>           
+        <Box 
+        w={['100%','100%','90%' ,'90%']} 
+        bg='white' 
+        px={[3, 5]} 
+        py={[2, 4]} 
+        borderRadius={8}
+        shadow='xl'
+        >           
             <Box w='100%'>
                 <Center mb={4}>
                     <Text fontSize='2xl'>Lista de Ingredientes</Text>
@@ -145,7 +148,7 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                 w='100%' 
                 py={2} 
                 px={4}
-                bg='#e80297' 
+                bg='pinkPrimary' 
                 color='white' 
                 marginBottom={2}
                 borderRadius={8}>
@@ -172,8 +175,8 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                         w='100%' 
                         py={2} 
                         px={4}
-                        border='1px solid #e80297'
-                        color='#e80297' 
+                        border='1px solid #BA346E'
+                        color='pinkPrimary' 
                         marginBottom={2}
                         borderRadius={8}>
                             <GridItem>
@@ -189,11 +192,11 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                             _hover={{
                                 cursor:'pointer',
                                 bg:'white',
-                                color:'#e80297'
+                                color:'pinkPrimary'
                             }}
                             >
                                     <Box 
-                                    bg='#e80297' 
+                                    bg='pinkPrimary' 
                                     color='white' 
                                     borderRadius={8}
                                     p={2}
@@ -202,7 +205,7 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                                         <AiOutlineEdit />
                                     </Box>
                                     <Box                                    
-                                    bg='#e80297' 
+                                    bg='pinkPrimary' 
                                     color='white' 
                                     borderRadius={8}
                                     p={2}
@@ -221,8 +224,8 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                         w='100%' 
                         py={2} 
                         px={4}
-                        border='1px solid #e80297'
-                        color='#e80297' 
+                        border='1px solid #BA346E'
+                        color='pinkPrimary' 
                         marginBottom={2}
                         borderRadius={8}>
                             <GridItem>
@@ -256,7 +259,7 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                                 <FormLabel>Ingrediente</FormLabel>
                                 <Field 
                                 as={Input}
-                                focusBorderColor='#e80297'
+                                focusBorderColor='pinkPrimary'
                                 type='text'
                                 name='name'
                                 placeholder='Nombre del Ingrediente'
@@ -277,7 +280,7 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                                 <FormLabel>Cantidad</FormLabel>
                                 <Field 
                                 as={Input}
-                                focusBorderColor='#e80297'
+                                focusBorderColor='pinkPrimary'
                                 type='number'
                                 name='amount'
                                 placeholder='0'
@@ -287,7 +290,7 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                                 <FormLabel>Unidad</FormLabel>
                                 <Field 
                                 as={Select}
-                                focusBorderColor='#e80297'
+                                focusBorderColor='pinkPrimary'
                                 type='number'
                                 name='unity'
                                 placeholder='selecciona'
@@ -303,7 +306,7 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                                 <FormLabel>Precio</FormLabel>
                                 <Field 
                                 as={Input}
-                                focusBorderColor='#e80297'
+                                focusBorderColor='pinkPrimary'
                                 type='number'
                                 name='price'
                                 placeholder='0'
@@ -312,13 +315,13 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                             <GridItem alignSelf='end'>
                                 <Button
                                 type='submit'
-                                bg='#e80297' 
+                                bg='pinkPrimary' 
                                 color='white'
                                 fontSize={22}
                                 w='100%' 
                                 marginTop={4}
                                 _hover={{
-                                    bg:'#17a6bf'
+                                    bg:'pink.400'
                                 }}
                                 isDisabled={
                                     !values.amount || 
@@ -327,7 +330,7 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                                     !values.unity
                                 }
                                 >
-                                    <AiOutlinePlus />
+                                    <FaPlus />
                                 </Button> 
                             </GridItem>
                         </Grid>
@@ -335,12 +338,12 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
                 )}
             </Formik>
             <Button 
-            bg='#e80297' 
+            bg='pinkPrimary' 
             color='white'  
             w='100%' 
             marginTop={4}
             _hover={{
-                bg:'#17a6bf'
+                bg:'pink.400'
             }}
             disabled={disabledButton}
             onClick={handleSaveIngredientsList}

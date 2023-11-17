@@ -14,6 +14,7 @@ export type CtzContentState = {
     ctzName: string,
     pageTitle: string,
     ctzInfo: CtzInfoProp,
+    editId: string | null,
     progress: number
   }
 
@@ -55,6 +56,7 @@ export const CtzStateContext = createContext<CtzContentState>({
         ctzTotalPrice: '',
         ctzRoundedAmount: ''
     },
+    editId: null,
     progress: 0
 })
 

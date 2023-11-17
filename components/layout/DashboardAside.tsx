@@ -149,14 +149,14 @@ const DashboardAside = ({ asideOpen }:{ asideOpen:boolean }) => {
                                 alignItems='center'
                                 py={3}
                                 px={5}
-                                bg={pathname === item.link ? '#e80297' : '' }
+                                bg={pathname === item.link ? 'pinkPrimary' : '' }
                                 color={pathname === item.link ? 'white' : '' }
                                 maxW='100%'
                                 fontSize='lg'
                                 as={motion.div}
                                 transition='all ease .5s'
                                 _hover={{
-                                    color:`${pathname === item.link ? 'white' : '#e80297'}`
+                                    color:`${pathname === item.link ? 'white' : 'pinkPrimary'}`
                                 }}
                                 borderBottom='1px solid rgba(255, 255, 255, .85)'
                                 >

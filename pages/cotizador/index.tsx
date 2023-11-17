@@ -60,6 +60,7 @@ const Cotizador = () => {
         bg='#fcfcfc'
         display='grid'
         gridTemplateRows={['auto 1fr auto']}
+        alignItems={ctzs && ctzs.length > 0 ? '' : 'center'}
         >
           <Text fontWeight='bold' textAlign='center'>
             Tus Cotizaciones
@@ -122,6 +123,7 @@ const Cotizador = () => {
         bg='#fcfcfc'
         display='grid'
         gridTemplateRows={['auto 1fr auto']}
+        alignItems={recipes && recipes.length > 0 ? '' : 'center'}
         >
           <Text fontWeight='bold' textAlign='center'>
             Tus Recetas

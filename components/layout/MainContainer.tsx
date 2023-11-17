@@ -8,7 +8,7 @@ import CotizadorGlobalComponent from '@/context/CotizadorGlobalComponent'
 
 const MainContainer = ({ children }:{ children: React.ReactNode }) => {
     const pathname = usePathname()
-    if (pathname.includes('dashboard')) {
+    if (pathname?.includes('dashboard')) {
         return (
           <Seo
           title='Panel'
@@ -20,7 +20,7 @@ const MainContainer = ({ children }:{ children: React.ReactNode }) => {
           </Seo>
         )
       }
-    if (pathname.includes('cotizador')) {
+    if (pathname?.includes('cotizador')) {
         return (
           <CotizadorGlobalComponent>
             <Seo

@@ -21,7 +21,7 @@ const RecipeCard= ({recipe}:{recipe: Recipe}) => {
             <Badge variant='subtle' colorScheme={recipe.recipeType === RECIPE_TYPES[0] ? 'green' : (recipe.recipeType === RECIPE_TYPES[1] ? 'red' : 'purple')}>{recipe.recipeType}</Badge>
         </Box>
         <Center>
-            <Button onClick={() => setRecipeToShow(recipe)}>Ver detalles</Button>
+            <Button variant='pinkButton' onClick={() => setRecipeToShow(recipe)}>Ver detalles</Button>
         </Center>
     </GridItem>
   )

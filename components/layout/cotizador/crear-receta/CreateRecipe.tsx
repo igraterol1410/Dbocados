@@ -68,7 +68,7 @@ const CreateRecipe = () => {
       >
         <Flex 
         marginInline='auto' 
-        w={['100%','100%','80%' ,'80%']} 
+        w={['100%','100%','90%' ,'90%']} 
         alignItems='center' 
         position='relative'
         gap={4}
@@ -82,15 +82,15 @@ const CreateRecipe = () => {
             alignItems='center' 
             w='auto' 
             gap={2}
-            _hover={{color: '#e80297'}}
+            _hover={{color: 'pinkPrimary'}}
             onClick={() => setProgress(progress - 1)} 
             >
               <MdArrowBackIosNew /> Volver
             </Flex>
           }
           <Box>
-            <CircularProgress size='80px' value={((progress + 1)/recipeProgress.length)*100} color='pink.500'>
-              <CircularProgressLabel fontWeight='bold' color='pink.500'>{progress + 1}/{recipeProgress.length}</CircularProgressLabel>
+            <CircularProgress size='80px' value={((progress + 1)/recipeProgress.length)*100} color='pinkPrimary'>
+              <CircularProgressLabel fontWeight='bold' color='pinkPrimary'>{progress + 1}/{recipeProgress.length}</CircularProgressLabel>
             </CircularProgress>
           </Box>
           <Box >
@@ -121,7 +121,7 @@ const ChooseType = () => {
   
     return (
       <Box 
-      w={['100%','100%','80%' ,'80%']} 
+      w={['100%','100%','90%' ,'90%']} 
       h='90%'
       bg='white' 
       px={[3, 5]} 
@@ -135,7 +135,7 @@ const ChooseType = () => {
           <FormLabel>
             <Box textAlign='center'>Indíca el tipo de receta</Box>
           </FormLabel>
-          <Select placeholder='Elige uno' onChange={(e) => handleRecipeType(e.target.value)}>
+          <Select value={recipeType} placeholder='Elige uno' onChange={(e) => handleRecipeType(e.target.value)}>
             {
               RECIPE_TYPES.map((type, index) => (
                 <option key={index} value={type}>{type}</option>
@@ -148,7 +148,7 @@ const ChooseType = () => {
         marginInline='auto' 
         mt={6}
         onClick={()=> handleChooseType()}
-        bg='#e80297' 
+        bg='pinkPrimary' 
         color='white' 
         isDisabled={!recipeType}
         >
@@ -173,7 +173,7 @@ const ChooseType = () => {
 
     return (
       <Box 
-      w={['100%','100%','80%' ,'80%']} 
+      w={['100%','100%','90%' ,'90%']} 
       h='100%'
       bg='white' 
       px={[3, 5]} 
@@ -186,6 +186,7 @@ const ChooseType = () => {
         <FormControl>
           <Input 
           placeholder='Nombre de tu receta' 
+          value={recipeName}
           onChange={(e) => handleRecipeNAme(e.target.value)} 
           />
         </FormControl>
@@ -194,7 +195,7 @@ const ChooseType = () => {
         marginInline='auto' 
         mt={6}
         onClick={()=> handleChooseType()}
-        bg='#e80297' 
+        bg='pinkPrimary' 
         color='white' 
         isDisabled={!recipeName}
         >
@@ -228,7 +229,7 @@ const ChooseType = () => {
     }
     return (
       <Box 
-      w={['100%','100%','80%' ,'80%']} 
+      w={['100%','100%','90%' ,'90%']} 
       h='100%'
       bg='white' 
       px={[3, 5]} 
@@ -241,7 +242,7 @@ const ChooseType = () => {
       >
           <Box>
             <FormControl>
-              <Select placeholder='Elige uno' onChange={(e) => handlePeopleNumber(e.target.value)}>
+              <Select value={recipePeople} placeholder='Elige uno' onChange={(e) => handlePeopleNumber(e.target.value)}>
                 {
                   recetaTypes.map((type, index) => (
                     <option key={index} value={type}>{type}</option>
@@ -265,7 +266,7 @@ const ChooseType = () => {
         marginInline='auto' 
         mt={6}
         onClick={()=> handleChooseType()}
-        bg='#e80297' 
+        bg='pinkPrimary' 
         color='white' 
         isDisabled={!recipePeople}
         >
@@ -276,6 +277,7 @@ const ChooseType = () => {
   }
 
   const RecipeSuccess = () => {
+    const { rid } = useRecipeStateContext()
     return (
       <Box h='100%' w='full' bg='#fcfcfc' borderRadius={[8, 12]} p={6}>
         <Grid 
@@ -297,16 +299,16 @@ const ChooseType = () => {
                 textAlign='center'
                 >
                     <Heading as='h3' mb={6}>
-                      ¡Receta Creada con Éxito!
+                      ¡Receta {rid ? 'Editada' : 'Creada'} con Éxito!
                     </Heading>
                     <Text>
-                      Felicidades, has completado con éxito el proceso de creación de tu receta. Ahora, estás listo para dar el siguiente paso en tu aventura culinaria. Empieza a crear cotizaciones, calcula costos y abre las puertas a nuevas oportunidades de negocios con tus deliciosos platos. ¡Estamos emocionados de ver a dónde te llevará esta nueva etapa!
+                      Felicidades, has completado con éxito el proceso de {rid ? 'edición' : 'creación'} de tu receta. Ahora, estás listo para dar el siguiente paso en tu aventura culinaria. Empieza a crear cotizaciones, calcula costos y abre las puertas a nuevas oportunidades de negocios con tus deliciosos platos. ¡Estamos emocionados de ver a dónde te llevará esta nueva etapa!
                     </Text>
                 </Box>
                 <Link href='/cotizador'>
                   <Button 
                   w='full' 
-                  bg='#e80297' 
+                  bg='pinkPrimary' 
                   color='white' 
                   mt={6}
                   >
