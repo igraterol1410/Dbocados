@@ -10,11 +10,12 @@ import {v4 as uuidv4} from 'uuid'
 import useGetCtz from '@/hooks/useGetCtz'
 import { useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
 import ConfirmCreateCtz from '@/components/modals/ConfirmCreateCtz'
+import { CtzGlobalProp } from '@/types/ctz'
 
 const Finish = () => {
     const toast = useToast()
     const { ctzUser, uid } = useCotizadorStateContext()
-    const { ctzWorkHand, progress, ctzCake, ctzCoverage, ctzFilling, ctzExtra, ctzPeople, ctzEarn, ctzName } = useCtzStateContext()
+    const { ctzWorkHand, progress, ctzCake, ctzCoverage, ctzFilling, ctzExtra, ctzPeople, ctzEarn, ctzName, editId } = useCtzStateContext()
     const { setProgress, setCtzInfo } = useCtzActionsContext()
     const { cyzInfo, loading } = useCtzPrice(ctzWorkHand, ctzCake, ctzCoverage, ctzFilling, ctzExtra, ctzPeople, ctzEarn)
     const { ctz } = useGetCtz()
@@ -28,22 +29,42 @@ const Finish = () => {
 
   const createCtz = () => {
     if(ctzUser){
-        const newCtz = {
-            id: uuidv4(),
-            ctzWorkHand: ctzWorkHand, 
-            ctzCake: ctzCake, 
-            ctzCoverage: ctzCoverage, 
-            ctzFilling: ctzFilling, 
-            ctzExtra: ctzExtra, 
-            ctzPeople: ctzPeople, 
-            ctzEarn: ctzEarn,
-            ctzName: ctzName
+        if(editId){
+            const ctzEdited = ctz.map((eachCtz: CtzGlobalProp) => (
+                {
+                    id: eachCtz.id,
+                    ctzWorkHand: eachCtz.id === editId ? ctzWorkHand : eachCtz?.ctzWorkHand, 
+                    ctzCake: eachCtz.id === editId ? ctzCake : eachCtz?.ctzCake, 
+                    ctzCoverage: eachCtz.id === editId ? ctzCoverage : eachCtz?.ctzCoverage, 
+                    ctzFilling: eachCtz.id === editId ? ctzFilling : eachCtz?.ctzFilling, 
+                    ctzExtra: eachCtz.id === editId ? ctzExtra : eachCtz?.ctzExtra, 
+                    ctzPeople: eachCtz.id === editId ? ctzPeople : eachCtz?.ctzPeople, 
+                    ctzEarn: eachCtz.id === editId ? ctzEarn : eachCtz?.ctzEarn,
+                    ctzName: eachCtz.id === editId ? ctzName : eachCtz?.ctzName
+                }
+            ))
+            createNewCtz(ctzEdited, uid).then(() => {
+                toast({ status: 'success', description: 'Cotización Editada' })
+                setShowPopUp(false)
+            })
+        } else {
+            const newCtz = {
+                id: uuidv4(),
+                ctzWorkHand: ctzWorkHand, 
+                ctzCake: ctzCake, 
+                ctzCoverage: ctzCoverage, 
+                ctzFilling: ctzFilling, 
+                ctzExtra: ctzExtra, 
+                ctzPeople: ctzPeople, 
+                ctzEarn: ctzEarn,
+                ctzName: ctzName
+            }
+            const payload = [...ctz, newCtz]
+            createNewCtz(payload, uid).then(() => {
+                toast({ status: 'success', description: 'Cotización guardada' })
+                setShowPopUp(false)
+            })
         }
-        const payload = [...ctz, newCtz]
-        createNewCtz(payload, uid).then(() => {
-            toast({ status: 'success', description: 'Cotización guardada' })
-            setShowPopUp(false)
-        })
     } else {
         toast({ status: 'error', description: 'No puedes realizar esta acción' })
         setTimeout(() => {
@@ -160,7 +181,7 @@ const handleSaveCtz = () => {
                 onClick={handleSaveCtz}
                 leftIcon={<FiSave />}
                 >
-                    Guardar
+                    {editId ? 'Editar nombre' : 'Guardar'}
                 </Button>
                 <Button 
                 bg='pinkPrimary' 

@@ -73,7 +73,7 @@ const Coverage = () => {
                     {
                       coverageOptions === options[1] &&
                         <FormControl>
-                        <Select placeholder='Elige uno' onChange={(e) => handleCakeFilling(e.target.value)}>
+                        <Select value={ctzCoverage} placeholder='Elige uno' onChange={(e) => handleCakeFilling(e.target.value)}>
                             {
                             coverages && coverages.map((coverage, index) => (
                                 <option value={coverage.id} key={index}>{coverage.recipeName}</option>

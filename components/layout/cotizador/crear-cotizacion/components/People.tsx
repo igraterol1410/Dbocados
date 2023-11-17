@@ -39,7 +39,7 @@ const People = () => {
       >
           <Box>
             <FormControl>
-              <Select placeholder='Elige uno' onChange={(e) => handlePeopleNumber(e.target.value)}>
+              <Select value={ctzPeople} placeholder='Elige uno' onChange={(e) => handlePeopleNumber(e.target.value)}>
                 {
                   recetaTypes.map((type, index) => (
                     <option value={type} key={index}>{type}</option>

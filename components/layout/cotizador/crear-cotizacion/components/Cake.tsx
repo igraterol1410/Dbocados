@@ -30,7 +30,7 @@ const Cake = () => {
       >
           <Box>
             <FormControl>
-              <Select placeholder='Elige uno' onChange={(e) => handleCakeType(e.target.value)}>
+              <Select value={ctzCake} placeholder='Elige uno' onChange={(e) => handleCakeType(e.target.value)}>
                 {
                   cakes && cakes.map((cake, index) => (
                     <option value={cake?.id} key={index}>{cake.recipeName}</option>

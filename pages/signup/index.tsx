@@ -51,7 +51,7 @@ const Signup = () => {
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if(user){
-                router.push('signup/onboarding')
+                router.push('cotizador')
             }
         })
     }, [])
@@ -69,15 +69,21 @@ const Signup = () => {
             w='100%' 
             h={['100vh']}
             marginInline='auto'
-            bg='#683c10'
+            // bg='#683c10'
             color='white'
             display='grid'
             alignItems='center'
             >
                 <Box
                 as={motion.div}
-                animation={animation2}>
-                    <Heading color='white' textAlign='center' mb={6}>
+                animation={animation2}
+                borderRadius={20}
+                px={4}
+                py={6}
+                bg='rgb(240, 240, 240)'
+                color='pinkPrimary'
+                >
+                    <Heading textAlign='center' mb={6}>
                         Registrate
                     </Heading>
                     <Formik
@@ -92,7 +98,7 @@ const Signup = () => {
                         (
                             <Form>
                                 <FormControl w='full' mt={5}>
-                                    <FormLabel>Correo</FormLabel>
+                                    <FormLabel color='pinkPrimary'>Correo</FormLabel>
                                     <InputGroup size='md'>
                                         <Field
                                         as={Input}
@@ -104,15 +110,18 @@ const Signup = () => {
                                     </InputGroup>
                                 </FormControl>
                                 <FormControl w='full' mt={5}>
-                                    <FormLabel>Contraseña</FormLabel>
-                                    <InputGroup size='md'>
+                                    <FormLabel color='pinkPrimary'>Contraseña</FormLabel>
+                                    <InputGroup border='1px solid rgba(0, 0, 0, 0.20)' size='md' borderRadius={30}>
                                         <Field
                                         as={Input}
+                                        borderRadius={30}
+                                        variant='unstyled'
+                                        px={2}
                                         name='password'
                                         type={password ? 'password' : 'text' }
                                         placeholder='Contraseña'
                                         />
-                                        <InputRightAddon color='pinkPrimary' onClick={() => setPassword(!password)} >
+                                        <InputRightAddon borderRadius={30} color='pinkPrimary' onClick={() => setPassword(!password)} >
                                             {password ? <AiFillEyeInvisible /> : <AiFillEye />}
                                         </InputRightAddon>
                                     </InputGroup>

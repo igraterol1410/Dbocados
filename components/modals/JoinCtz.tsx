@@ -28,6 +28,7 @@ const JoinCtz = () => {
         onClose={()=>{}} 
         closeOnEsc={false} 
         closeOnOverlayClick={false}
+        scrollBehavior='inside'
         >
           <ModalOverlay />
           <ModalContent>
@@ -39,13 +40,12 @@ const JoinCtz = () => {
             alignItems='center'
             >
                 <Box>
-                    <Center>
+                    <Box marginInline='auto' position='relative' w={['100px', '150px']}>
                         <Image
                         src={Ilustracion}
                         alt='Logo dbocados'
-                        width={200}
                         />
-                    </Center>
+                    </Box>
                     <Box
                     w={['85%', '60%']}
                     marginInline='auto'
@@ -55,7 +55,7 @@ const JoinCtz = () => {
                             ¡Estás muy cerca de tener acceso!
                         </Heading>
                         <Text>
-                            Lamentablemente, parece que no tienes acceso a esta sección de la plataforma en este momento. No te preocupes, estamos aquí para ayudarte a desbloquear esta función y llevarte un paso más cerca de tus objetivos. Puedes ponerte en contacto con nuestro equipo de soporte para obtener acceso o, si lo prefieres, simplemente regresar a la página anterior para explorar otras áreas de la plataforma. Estamos ansiosos por ayudarte a tener una experiencia increíble.
+                            Escríbenos para mas información.
                         </Text>
                     </Box>
                 </Box>
@@ -80,6 +80,7 @@ const JoinCtz = () => {
                       <Button 
                       w='full'
                       mt={6}
+                      variant='outline'
                       >
                           Regresar
                       </Button>

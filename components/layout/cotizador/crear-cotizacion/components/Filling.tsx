@@ -76,7 +76,7 @@ const Filling = () => {
                   {
                     fillingsOptions === options[1] &&
                       <FormControl>
-                        <Select placeholder='Elige uno' onChange={(e) => handleCakeFilling(e.target.value)}>
+                        <Select value={ctzFilling} placeholder='Elige uno' onChange={(e) => handleCakeFilling(e.target.value)}>
                           {
                             fillings && fillings.map((filling, index) => (
                               <option value={filling.id} key={index}>{filling.recipeName}</option>

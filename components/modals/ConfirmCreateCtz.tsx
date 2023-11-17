@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useCtzActionsContext } from '@/context/CotizacionContext'
+import { useCtzActionsContext, useCtzStateContext } from '@/context/CotizacionContext'
 import { useCotizadorActionsContext } from '@/context/CotizadorGlobalContext'
 import {
     Modal,
@@ -27,6 +27,7 @@ import { FiSave } from 'react-icons/fi'
 const ConfirmCreateCtz = ({showPopUp, setShowPopUp, createCtz}:{showPopUp:boolean, setShowPopUp:Dispatch<SetStateAction<boolean>>, createCtz:() => void}) => {
     const { onClose, onOpen, isOpen } = useDisclosure()
     const { setCtzName } = useCtzActionsContext()
+    const { ctzName } = useCtzStateContext()
 
     useEffect(() => {
         if(showPopUp){
@@ -60,6 +61,7 @@ const ConfirmCreateCtz = ({showPopUp, setShowPopUp, createCtz}:{showPopUp:boolea
                     <FormLabel>Ingresa un nombre de referencia para esta Cotización</FormLabel>
                     <Input 
                     placeholder='Ingresa un nombre' 
+                    value={ctzName}
                     onChange={(e) => handleRecipeName(e.target.value)} 
                     />
                 </FormControl>

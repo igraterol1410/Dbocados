@@ -71,7 +71,7 @@ const Login = () => {
             justifySelf='center'
             display='flex'
             alignItems='center'             
-            h={['100%','100vh']}
+            h={['50vh']}
             as={motion.div}
             animation={animationInfo}
             >
@@ -85,17 +85,21 @@ const Login = () => {
             p={8}  
             w='100%' 
             h={['100vh']}
-            marginInline='auto'
-            bg='#683c10'
-            color='white'
+            marginInline='auto' 
+            // bg='#683c10'
+            // color='white'
             display='grid'
             alignItems='center'
             >
                 <Box
+                borderRadius={20}
+                px={4}
+                py={6}
+                bg='rgb(240, 240, 240)'
                 as={motion.div}
                 animation={animation2}
                 >
-                    <Heading color='white' textAlign='center' mb={6}>
+                    <Heading color='pinkPrimary' textAlign='center' mb={6}>
                         Inicia sesión
                     </Heading>
                     <Formik
@@ -110,10 +114,11 @@ const Login = () => {
                         (
                             <Form>
                                 <FormControl w='full' mt={5}>
-                                    <FormLabel>Correo</FormLabel>
+                                    <FormLabel color='pinkPrimary'>Correo</FormLabel>
                                     <InputGroup size='md'>
                                         <Field
                                         as={Input}
+                                        color='black'
                                         name='email'
                                         type='email'
                                         placeholder='Correo'
@@ -122,15 +127,19 @@ const Login = () => {
                                     </InputGroup>
                                 </FormControl>
                                 <FormControl w='full' mt={5}>
-                                    <FormLabel>Contraseña</FormLabel>
-                                    <InputGroup size='md'>
+                                    <FormLabel color='pinkPrimary'>Contraseña</FormLabel>
+                                    <InputGroup border='1px solid rgba(0, 0, 0, 0.20)' size='md' borderRadius={30}>
                                         <Field
                                         as={Input}
+                                        px={2}
                                         name='password'
+                                        // bg='white'
+                                        borderRadius={30}
+                                        variant='unstyled'
                                         type={password ? 'password' : 'text' }
                                         placeholder='Contraseña'
                                         />
-                                        <InputRightAddon color='pinkPrimary' onClick={() => setPassword(!password)} >
+                                        <InputRightAddon borderRadius={30} color='pinkPrimary' onClick={() => setPassword(!password)} >
                                             {password ? <AiFillEyeInvisible /> : <AiFillEye />}
                                         </InputRightAddon>
                                     </InputGroup>
@@ -151,10 +160,10 @@ const Login = () => {
                             </Form>
                         )}
                     </Formik>
-                    <Text textAlign='center' mt={4}>
+                    <Text color='pinkPrimary' textAlign='center' mt={4}>
                         No tienes cuenta aún? <Link href='/signup'><u>Registrate</u></Link>
                     </Text>
-                    <Text textAlign='center' mt={2}>
+                    <Text color='pinkPrimary' textAlign='center' mt={2}>
                         o <Link href='/'><u>Ir al inicio</u></Link>
                     </Text>
                 </Box>

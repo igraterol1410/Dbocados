@@ -23,6 +23,11 @@ const Button: ComponentStyleConfig = {
       color: props.colorScheme === 'pinkPrimary' ? 'pinkPrimary' : props.bg,
       bg: props.colorScheme === 'pinkPrimary' ? 'transparent' : props.bg,
     }),
+    outlineWhite: (props: StyleFunctionProps) => ({
+      transition: 'all ease-in-out .2s',
+      color: 'white',
+      border: '2px solid white'
+    }),
     purpleButton: () => ({
       transition: 'all ease-in-out .2s',
       color: 'white',
