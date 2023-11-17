@@ -74,7 +74,7 @@ const AddNew = () => {
         h='60px' 
         w='60px' 
         borderRadius='50% 50% 0 50%'
-        bg='pink.500'
+        bg='pinkPrimary'
         color='white'
         _hover={{
             bg:'pink.400'

@@ -41,7 +41,7 @@ const Save = () => {
                 <Link href='/cotizador'>
                   <Button 
                   w='full' 
-                  bg='#e80297' 
+                  bg='pinkPrimary' 
                   color='white' 
                   mt={6}
                   >

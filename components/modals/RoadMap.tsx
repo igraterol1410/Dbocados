@@ -78,7 +78,7 @@ const RoadMap = () => {
                       <Button 
                       mt={6}
                       marginInline='auto'
-                      bg='pink.500'
+                      bg='pinkPrimary'
                       color='white'
                       _hover={{
                         bg:'pink.400'

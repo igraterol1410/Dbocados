@@ -152,7 +152,7 @@ const CotizadorRepostero = () => {
                                             <Button 
                                             mt={5} 
                                             w='full'
-                                            bg='#e80297' 
+                                            bg='pinkPrimary' 
                                             color='white'
                                             isDisabled={!values.email || !values.name || !values.phone}
                                             type='submit'

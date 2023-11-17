@@ -83,7 +83,7 @@ const Recetas = () => {
                     <Center>
                         <Link href='/cotizador/crear-receta'>
                             <Button 
-                            bg='pink.500'
+                            bg='pinkPrimary'
                             color='white'
                             _hover={{
                                 bg:'pink.400'
@@ -127,7 +127,7 @@ const Introduccion = () => {
                 <Flex direction='column' h='100%' justifyContent='center' marginInline='auto'>
                     <Link href='crear-receta'>
                       <Button 
-                      bg='pink.500' 
+                      bg='pinkPrimary' 
                       _hover={{bg: 'pink.400'}}
                       color='white' 
                       mt={6}

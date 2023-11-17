@@ -43,7 +43,7 @@ const Coverage = () => {
     }
     return (
         <Box 
-        w={['100%','100%','80%' ,'80%']}
+        w={['100%','100%','90%' ,'90%']}
         bg='white' 
         px={[3, 5]} 
         py={[2, 4]} 
@@ -73,7 +73,7 @@ const Coverage = () => {
                     {
                       coverageOptions === options[1] &&
                         <FormControl>
-                        <Select placeholder='Elige uno' onChange={(e) => handleCakeFilling(e.target.value)}>
+                        <Select value={ctzCoverage} placeholder='Elige uno' onChange={(e) => handleCakeFilling(e.target.value)}>
                             {
                             coverages && coverages.map((coverage, index) => (
                                 <option value={coverage.id} key={index}>{coverage.recipeName}</option>
@@ -90,7 +90,7 @@ const Coverage = () => {
           marginInline='auto' 
           mt={6}
           onClick={()=> handleChooseType()}
-          bg='#e80297' 
+          bg='pinkPrimary' 
           color='white' 
           isDisabled={disabledButton}
           >

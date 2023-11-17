@@ -25,13 +25,13 @@ const Navbar = () => {
       </Box>
       <Flex
       gap={4}>
-        <Button variant='outline'>
+        <Button variant='outlineWhite'>
           <Link href="/login">
             Inicio de sesión
           </Link>
         </Button>
       <Link href="/signup">
-        <Button variant='outline'>Registro</Button>
+        <Button variant='outlineWhite'>Registro</Button>
       </Link>
       </Flex>
     </Flex>

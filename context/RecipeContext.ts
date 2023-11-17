@@ -5,7 +5,8 @@ export type RecipeContentState = {
     recipeType:string,
     recipePeople: string,
     pageTitle: string,
-    progress: number
+    progress: number,
+    rid: string | string[] | undefined | null
   }
 
 export type RecipeContentActions = {
@@ -21,7 +22,8 @@ export const RecipeStateContext = createContext<RecipeContentState>({
     recipeType:'',
     recipePeople: '',
     pageTitle: 'Crear receta',
-    progress: 0
+    progress: 0,
+    rid: null
 })
 
 export const RecipeActionsContext = createContext<RecipeContentActions>({

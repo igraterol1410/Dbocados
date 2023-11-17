@@ -105,7 +105,7 @@ const CreateCotizacion = () => {
       >
         <Flex 
         marginInline='auto' 
-        w={['100%','100%','80%' ,'80%']} 
+        w={['100%','100%','90%' ,'90%']} 
         alignItems='center' 
         position='relative'
         gap={4}
@@ -119,15 +119,15 @@ const CreateCotizacion = () => {
             alignItems='center' 
             w='auto' 
             gap={2}
-            _hover={{color: '#e80297'}}
+            _hover={{color: 'pinkPrimary'}}
             onClick={() => setProgress(progress - 1)} 
             >
               <MdArrowBackIosNew /> Volver
             </Flex>
           }
           <Box>
-            <CircularProgress size='80px' value={((progress + 1)/recipeProgress.length)*100} color='pink.500'>
-              <CircularProgressLabel fontWeight='bold' color='pink.500'>{progress + 1}/{recipeProgress.length}</CircularProgressLabel>
+            <CircularProgress size='80px' value={((progress + 1)/recipeProgress.length)*100} color='pinkPrimary'>
+              <CircularProgressLabel fontWeight='bold' color='pinkPrimary'>{progress + 1}/{recipeProgress.length}</CircularProgressLabel>
             </CircularProgress>
           </Box>
           <Box >

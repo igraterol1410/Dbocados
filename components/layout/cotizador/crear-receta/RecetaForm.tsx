@@ -23,9 +23,11 @@ import Loader from '../../Loader'
 import { createNewRecipe } from '@/services/recipes'
 import {v4 as uuidv4} from 'uuid'
 import { useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
+import { useRouter } from 'next/router'
 
 const CreateReceta = () => {
-    const toast = useToast()
+    const toast = useToast()    
+    const router = useRouter()
     const {setProgress} = useRecipeActionsContext()
     const { ingredients, ctzUser, uid, ingredientsLoading } = useCotizadorStateContext()
     const {progress, recipeName, recipeType, recipePeople} = useRecipeStateContext()
@@ -39,6 +41,15 @@ const CreateReceta = () => {
             setIngredientsList(ingredients)
         }
     },[ingredients])
+    
+    useEffect(()=>{
+        if(router.query.rid && recipes){
+            const recipeData = recipes.filter((eachRecipe) => (eachRecipe.id === router.query.rid))
+            if(recipeData.length > 0 && recipeData[0]?.recipeName){
+                setProductList(recipeData[0]?.recipeIngredients)
+            }
+        }
+    },[router.query.rid, recipes])
 
     const getIngredientInfo = (ingredient:string | null) => {
         const ingredientInfo = ingredients.filter((eachIngredient) => (eachIngredient.name === ingredient))
@@ -84,17 +95,33 @@ const CreateReceta = () => {
 
     const handleSaveRecipe = () => {
         if(ctzUser){
-            const newRecipe = {
-                id: uuidv4(),
-                recipeName: recipeName,
-                recipeType: recipeType,
-                recipePeople: recipePeople,
-                recipeIngredients: productList
+            if(router.query.rid){
+                const editedRecipe = recipes.map((eachRecipe) => (
+                    {
+                        id: eachRecipe.id,
+                        recipeName: router.query.rid === eachRecipe.id ? recipeName : eachRecipe.recipeName,
+                        recipeType: router.query.rid === eachRecipe.id ? recipeType : eachRecipe.recipeType,
+                        recipePeople: router.query.rid === eachRecipe.id ? recipePeople : eachRecipe.recipePeople,
+                        recipeIngredients: router.query.rid === eachRecipe.id ? productList : eachRecipe.recipeIngredients
+                    }
+                ))
+                const payload = editedRecipe
+                createNewRecipe(payload, uid).then(() => {
+                    setProgress(progress + 1)
+                })
+            } else {
+                const newRecipe = {
+                    id: uuidv4(),
+                    recipeName: recipeName,
+                    recipeType: recipeType,
+                    recipePeople: recipePeople,
+                    recipeIngredients: productList
+                }
+                const payload = [...recipes, newRecipe]
+                createNewRecipe(payload, uid).then(() => {
+                    setProgress(progress + 1)
+                })
             }
-            const payload = [...recipes, newRecipe]
-            createNewRecipe(payload, uid).then(() => {
-                setProgress(progress + 1)
-            })
         } else {
             toast({ status: 'error', description: 'No puedes realizar esta acción' })
             setTimeout(() => {
@@ -109,7 +136,7 @@ const CreateReceta = () => {
             ingredientsLoading &&
             <Loader/>
         }
-        <Box w={['100%','100%','80%' ,'80%']} bg='white' px={[3, 5]} py={[2, 4]} borderRadius={8}>           
+        <Box w={['100%','100%','90%' ,'90%']} bg='white' px={[3, 5]} py={[2, 4]} borderRadius={8}>           
             <Box w='100%'>
                 <Center mb={4}>
                     <Text fontSize='2xl'>Lista de Ingredientes</Text>
@@ -120,7 +147,7 @@ const CreateReceta = () => {
                 w='100%' 
                 py={2} 
                 px={4}
-                bg='#e80297' 
+                bg='pinkPrimary' 
                 color='white' 
                 marginBottom={2}
                 borderRadius={8}>
@@ -145,8 +172,8 @@ const CreateReceta = () => {
                         w='100%' 
                         py={2} 
                         px={4}
-                        border='1px solid #e80297'
-                        color='#e80297' 
+                        border='1px solid #BA346E'
+                        color='pinkPrimary' 
                         marginBottom={2}
                         borderRadius={8}>
                             <GridItem>
@@ -183,7 +210,7 @@ const CreateReceta = () => {
                                 <FormLabel>Ingrediente</FormLabel>
                                 <Field 
                                 as={Select}
-                                focusBorderColor='#e80297'
+                                focusBorderColor='pinkPrimary'
                                 type='text'
                                 name='name'
                                 placeholder='Nombre del Ingrediente'
@@ -210,7 +237,7 @@ const CreateReceta = () => {
                                 <FormLabel>Cantidad</FormLabel>
                                 <Field 
                                 as={Input}
-                                focusBorderColor='#e80297'
+                                focusBorderColor='pinkPrimary'
                                 type='number'
                                 name='amount'
                                 placeholder='0'
@@ -220,7 +247,7 @@ const CreateReceta = () => {
                                 <FormLabel>Unidad</FormLabel>
                                 <Field 
                                 as={Select}
-                                focusBorderColor='#e80297'
+                                focusBorderColor='pinkPrimary'
                                 type='number'
                                 name='unity'
                                 placeholder='selecciona'
@@ -236,13 +263,13 @@ const CreateReceta = () => {
                             <GridItem alignSelf='end'>
                                 <Button
                                 type='submit'
-                                bg='#e80297' 
+                                bg='pinkPrimary' 
                                 color='white'
                                 fontSize={22}
                                 w='100%' 
                                 marginTop={4}
                                 _hover={{
-                                    bg:'#17a6bf'
+                                    bg:'pink.400'
                                 }}
                                 isDisabled={
                                     !values.amount || 
@@ -258,12 +285,12 @@ const CreateReceta = () => {
                 )}
             </Formik>
             <Button 
-            bg='#e80297' 
+            bg='pinkPrimary' 
             color='white'  
             w='100%' 
             marginTop={4}
             _hover={{
-                bg:'#17a6bf'
+                bg:'pink.400'
             }}
             isDisabled={productList.length < 1}
             onClick={handleSaveRecipe}

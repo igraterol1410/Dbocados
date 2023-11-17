@@ -24,6 +24,7 @@ import Loader from '../layout/Loader'
 import { CtzGlobalProp } from '@/types/ctz'
 import CtzDelete from './CtzDelete'
 import { createNewCtz } from '@/services/cotizaciones'
+import Link from 'next/link'
 
 const CtzDetails = () => {
     const toast = useToast()
@@ -70,6 +71,7 @@ const CtzDetails = () => {
             size='5xl' 
             isOpen={isOpen} 
             onClose={handleClose} 
+            scrollBehavior='inside'
             >
             <ModalOverlay />
             <ModalContent>
@@ -146,7 +148,12 @@ const CtzDetails = () => {
                     }
                     <ModalFooter gap={4}>
                         <Button onClick={handleClose}>Cerrar</Button>
-                        <Button onClick={() => setCtzToDelete(ctzToShow)}>Eliminar</Button>
+                        <Link href={`cotizador/editar-cotizacion/${ctzToShow?.id}`}>
+                            <Button onClick={handleClose} variant='outline'>
+                                Editar
+                            </Button>
+                        </Link>
+                        <Button variant='outline' onClick={() => setCtzToDelete(ctzToShow)}>Eliminar</Button>
                     </ModalFooter>
                 </ModalBody>
             </ModalContent>

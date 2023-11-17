@@ -56,7 +56,7 @@ const CtzDelete:React.FC<CtzDeleteProps> = ({setShowPopUp, actionDelete, itemToD
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={handleClose}>
+              <Button variant='outline' ref={cancelRef} onClick={handleClose}>
                 Cancelar
               </Button>
               <Button colorScheme='red' onClick={confirmnDelete} ml={3}>

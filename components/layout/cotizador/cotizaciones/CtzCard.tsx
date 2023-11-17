@@ -20,7 +20,7 @@ const CtzCard= ({ctz}:{ctz: CtzGlobalProp}) => {
             <Badge variant='subtle' colorScheme='green'>{ctz.ctzPeople}</Badge>
         </Box>
         <Center>
-            <Button onClick={() => setCtzToShow(ctz)}>Ver detalles</Button>
+            <Button variant='pinkButton' onClick={() => setCtzToShow(ctz)}>Ver detalles</Button>
         </Center>
     </GridItem>
   )

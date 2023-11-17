@@ -92,16 +92,16 @@ const Created = () => {
                     <Button 
                     variant='outline'
                     w='30%'
-                    color='#e80297' 
+                    color='pinkPrimary' 
                     bg='white' 
-                    borderColor='#e80297'
+                    borderColor='pinkPrimary'
                     onClick={downloadPdfCtz}
                     leftIcon={<BsCloudDownload />}
                     >
                         Descargar
                     </Button>                    
                     <Button 
-                    bg='#e80297' 
+                    bg='pinkPrimary' 
                     w='30%'
                     color='white' 
                     onClick={handleNext}
