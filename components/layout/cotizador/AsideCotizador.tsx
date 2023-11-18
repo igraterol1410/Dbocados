@@ -42,11 +42,11 @@ const CotizadorAside = ({ asideOpen }:{ asideOpen:boolean }) => {
             icon:<FaReceipt />,
             link:'/cotizador/recetas'
         },
-        // {
-        //     title:'Configuración',
-        //     icon:<FaCog />,
-        //     link:'/cotizador/configuracion'
-        // },
+        {
+            title:'Configuración',
+            icon:<FaCog />,
+            link:'/cotizador/configuracion'
+        },
         // {
         //     title:'Inventario',
         //     icon:<FaDatabase />,
