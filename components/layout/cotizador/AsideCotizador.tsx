@@ -47,11 +47,11 @@ const CotizadorAside = ({ asideOpen }:{ asideOpen:boolean }) => {
             icon:<FaCog />,
             link:'/cotizador/configuracion'
         },
-        // {
-        //     title:'Inventario',
-        //     icon:<FaDatabase />,
-        //     link:'/cotizador/inventario'
-        // }
+        {
+            title:'Inventario',
+            icon:<FaDatabase />,
+            link:'/cotizador/inventario'
+        }
     ]
     const openAside = keyframes`
         0% { width: 64px }

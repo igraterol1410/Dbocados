@@ -47,7 +47,6 @@ const SetupCotizador:React.FC<SetupProps> = ({setShowList, showList}) => {
     const [itemToDelete, setItemToDelete] = useState<Ingredients | null>(null)    
     const [initialValues, setInitialValues] = useState<Ingredients>(initivialValuesRef)    
     const [disabledButton, setDisabledButton] = useState<boolean>(true) 
-    console.log(userInfo) 
     
     useEffect(() => {
         if(currentIngredients.length !== ingredients.length){
