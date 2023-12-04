@@ -12,9 +12,11 @@ const CubiertaChocolate = () => {
     const toast = useToast()
     const [success, setSuccess] = useState(false)
     const [loading, setLoading] = useState(false)
+    const groupLink = "https://chat.whatsapp.com/BKMWfnI4YsbGdCGv5CeAFl"
+    const courseEdition = 'virtual-course-4'
     const handleSubmit = (values: {}) => {
         setLoading(true)
-        createNewStudent(values, 'virtual-course-3').then(() => {
+        createNewStudent(values, courseEdition).then(() => {
             setSuccess(true)
             toast({
                 title: 'Genial',
@@ -82,7 +84,7 @@ const CubiertaChocolate = () => {
                                     <Text fontSize='xl' fontWeight='bold'>Bienvenido</Text>
                                 </Center>
                                 <Center mt={4}>
-                                    <a href="https://chat.whatsapp.com/L3DMeXNaAUK9tpo5oj1SdA">
+                                    <a href={groupLink}>
                                         <Button 
                                         bg='#25D366' 
                                         color='white' 

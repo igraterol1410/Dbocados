@@ -2,7 +2,7 @@ const baseStyleFormLabel = {
   fontSize: 14,
   marginEnd: '3',
   // marginStart: '20px',
-  color: '#3A3A3A',
+  color: 'white',
   mb: '2',
   fontWeight: 700,
   transitionProperty: 'common',
