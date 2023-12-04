@@ -20,6 +20,7 @@ const RecipeComponent:React.FC<RecipeProviderProps> = ({ children }) => {
       if(currentRecipes && router.query.rid){
         const recipeData = currentRecipes.filter((eachRecipe) => (eachRecipe.id === router.query.rid))
         if(recipeData.length > 0 && recipeData[0]?.recipeName){
+          setPageTitle('Modificar receta')
           setRecipeName(recipeData[0]?.recipeName)
           setRecipePeople(recipeData[0]?.recipePeople)
           setRecipeType(recipeData[0]?.recipeType)

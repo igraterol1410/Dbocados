@@ -49,11 +49,12 @@ const People = () => {
             </FormControl>
           </Box>
             {
-              showOthers &&
+              (showOthers || (ctzPeople && recetaTypes.indexOf(ctzPeople) < 0)) &&
               <FormControl>
                 <Input 
                 placeholder='Número de personas' 
                 type='number'
+                value={ctzPeople} 
                 onChange={(e) => handlePeopleOtherNumber(e.target.value)} 
                 />
               </FormControl>

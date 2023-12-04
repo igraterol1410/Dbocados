@@ -107,11 +107,11 @@ const CreateRecipe = () => {
 }
 
 const ChooseType = () => {
-    const { progress, recipeType } = useRecipeStateContext()
+    const { progress, recipeType, pageTitle } = useRecipeStateContext()
     const { setPageTitle, setProgress, setRecipeType } = useRecipeActionsContext()
   
     const handleChooseType = () => {
-      setPageTitle(`Crear receta de ${recipeType}`)
+      setPageTitle(`${pageTitle} de ${recipeType}`)
       setProgress(progress + 1)
     }
 
@@ -252,9 +252,10 @@ const ChooseType = () => {
             </FormControl>
           </Box>
             {
-              showOthers &&
+              showOthers || (recipePeople && recetaTypes.indexOf(recipePeople) < 0) &&
               <FormControl>
                 <Input 
+                value={recipePeople}
                 placeholder='Número de personas' 
                 type='number'
                 onChange={(e) => handlePeopleOtherNumber(e.target.value)} 

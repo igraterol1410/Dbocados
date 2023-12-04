@@ -11,6 +11,7 @@ const StockTableComponent:React.FC<RecipeProviderProps> = ({ children}) => {
     const [pagination, setPagination] = useState<number>(1)
     const [filterParam, setFilterParam] = useState<{label:string, value:string}>({label:FILTER_OPTIONS[0].label, value:FILTER_OPTIONS[0].value})
     const [itemSearch, setItemSearch] = useState<string>('')
+    const [showProductModal, setShowProductModal] = useState<boolean>(false)
     
   return (
     <StockActionsContext.Provider
@@ -18,7 +19,8 @@ const StockTableComponent:React.FC<RecipeProviderProps> = ({ children}) => {
         setFilterParam,
         setItemSearch,
         setData,
-        setPagination
+        setPagination,
+        setShowProductModal
       }}
       >
         <StockStateContext.Provider
@@ -26,7 +28,8 @@ const StockTableComponent:React.FC<RecipeProviderProps> = ({ children}) => {
             filterParam,
             itemSearch,
             data,
-            pagination
+            pagination,
+            showProductModal
         }}
         >
             {children}  

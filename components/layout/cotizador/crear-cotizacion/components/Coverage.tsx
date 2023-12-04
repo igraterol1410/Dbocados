@@ -6,26 +6,23 @@ import EmptyState from './EmptyState'
 import RadioCard from '@/components/layout/buttons/RadioCard'
 
 const Coverage = () => {
-    const { progress, ctzCoverage } = useCtzStateContext()
+    const { progress, ctzCoverage, editId } = useCtzStateContext()
     const { setProgress, setCtzCoverage } = useCtzActionsContext()
     const { coverages } = useGetRecipes()
-    const [coverageOptions, setCoverageOptions] = useState('Con cobertura')
-    const [disabledButton, setDisabledButton] = useState<boolean>(true)
+    const [coverageOptions, setCoverageOptions] = useState(ctzCoverage ? 'Con cobertura' : 'Sin cobertura')
     const options = ['Sin cobertura', 'Con cobertura']
 
     const handleChangeCoverageOption = (e:string) => {
       setCoverageOptions(e)
       if(e === options[1] && ctzCoverage === ''){
-        setDisabledButton(true)
       } else {
         setCtzCoverage('')
-        setDisabledButton(false)
       }
     }
 
     const { getRootProps, getRadioProps } = useRadioGroup({
       name: 'cobertura',
-      defaultValue: 'Con cobertura',
+      defaultValue: ctzCoverage ? 'Con cobertura' : 'Sin cobertura',
       onChange: (e)=>handleChangeCoverageOption(e),
     })
   
@@ -34,7 +31,6 @@ const Coverage = () => {
     const handleCakeFilling = (value: string) => {
       if(value !== ''){ 
           setCtzCoverage(value)  
-          setDisabledButton(false)
         }
     }
   
@@ -92,7 +88,7 @@ const Coverage = () => {
           onClick={()=> handleChooseType()}
           bg='pinkPrimary' 
           color='white' 
-          isDisabled={disabledButton}
+          isDisabled={coverageOptions===options[1] && !ctzCoverage}
           >
             Siguente
           </Button>

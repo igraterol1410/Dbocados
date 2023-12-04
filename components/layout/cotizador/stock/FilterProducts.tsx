@@ -4,13 +4,11 @@ import StockProductForm from '@/components/modals/StockProductForm';
 import { FILTER_OPTIONS } from '@/constant/stock';
 import { useStockActionsContext, useStockStateContext } from '@/context/StockContext';
 import { Box, Button, Flex, Input, InputGroup, InputLeftAddon, InputRightAddon, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
-import { useState } from 'react';
 import { FaPlus, FaRegTimesCircle, FaSearch, FaSlidersH } from 'react-icons/fa';
 
 const FilterProducts = () => {
     const { filterParam, itemSearch} = useStockStateContext()
-    const { setItemSearch, setFilterParam} = useStockActionsContext()
-    const [createUser, setCreateUser] = useState<boolean>(false)
+    const { setItemSearch, setFilterParam, setShowProductModal } = useStockActionsContext()
 
   return (
     <Flex justifyContent='space-between' gap={2} direction={['column', 'row']}>
@@ -52,7 +50,7 @@ const FilterProducts = () => {
                 >
                     Filtros
                 </MenuButton>
-                <MenuList bg='#36185A'>
+                <MenuList bg='pinkPrimary' color='white'>
                     {
                         FILTER_OPTIONS.map((option) => (
                             <MenuItem 
@@ -71,7 +69,7 @@ const FilterProducts = () => {
         <Box>
             <Button 
             rightIcon={<FaPlus />}
-            onClick={() => setCreateUser(true)}
+            onClick={() => setShowProductModal(true)}
             >
                 Nuevo producto
             </Button>

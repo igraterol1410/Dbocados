@@ -1,12 +1,16 @@
+import { useStockActionsContext, useStockStateContext } from '@/context/StockContext'
 import getBase64 from '@/functions/getBase64'
 import { Button, Text, Center, Divider, Flex, FormLabel, Grid, GridItem, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, Box } from '@chakra-ui/react'
 import { Field, Form, Formik } from 'formik'
 import Image from 'next/image'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { BiUpload } from 'react-icons/bi'
+import NoPicture from '@/assets/product.svg'
 
 const StockProductForm = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const { showProductModal } = useStockStateContext()
+    const { setShowProductModal } = useStockActionsContext()
     const [productImage, setProductImage] = useState<string>('')
     const [productImageName, setProductImageName] = useState<string>('')
     const finalRef = useRef(null)
@@ -19,12 +23,29 @@ const StockProductForm = () => {
             })
         }
     }
+
+    useEffect(() => {
+        if(showProductModal){
+            onOpen()
+        }
+    },[showProductModal])
+
+    const handleClose = () => {
+        setShowProductModal(false)
+        onClose()
+    }
   return (
-    <Modal isCentered size='5xl' finalFocusRef={finalRef} isOpen={true} onClose={onClose}>
+    <Modal 
+    isCentered 
+    size='5xl' 
+    finalFocusRef={finalRef} 
+    isOpen={isOpen} 
+    onClose={handleClose}
+    >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader fontWeight={700} fontSize={36}>
-            Nueva compra
+            Producto
             <Divider />
           </ModalHeader>
           <ModalCloseButton />
@@ -41,44 +62,32 @@ const StockProductForm = () => {
                             <FormLabel
                             position='relative'
                             marginInline='auto'
-                            w='250px'
-                            p={1}
-                            pl={3}
+                            p={3}
                             border='1px solid #D5D5D5'
                             rounded='xl'
+                            mb={4}
                             >
                             <Flex
-                                justifyContent='space-between'
-                                alignItems='center'
+                            justifyContent='space-between'
+                            alignItems='center'
+                            w='calc((9/10)*250px)'
+                            h='250px'
                             >
-                                {
-                                productImage
-                                    ? (
-                                        <Box borderRadius={40} position='relative' w={['100px', '500px']}>
-                                            <Image
-                                            width={500}
-                                            height={(9/16)*500}
-                                            src={productImage}
-                                            alt='Logo dbocados'
-                                            />
-                                        </Box>
-                                    )
-                                    : (
-                                    <Flex
-                                        gap={2}
-                                        bg='darkPrimary'
-                                        alignItems='center'
-                                        rounded='md'
-                                        px='24px'
-                                        py='6px'
-                                        // color='white'
-                                        _hover={{ bg: '#0f245b' }}
-                                    >
-                                        <BiUpload />
-                                        Cargar
-                                    </Flex>
-                                    )
-                                }
+                                <Box 
+                                borderRadius={40} 
+                                position='relative' 
+                                w={['100px', '500px']}
+                                >
+                                    <Image
+                                    width={500}
+                                    height={(9/16)*500}
+                                    src={productImage ? productImage : NoPicture}
+                                    alt='Logo dbocados'
+                                    />
+                                    <Text textAlign='center'>
+                                        {productImage ? 'Cambia la imagen' : 'Añade una foto'}
+                                    </Text>
+                                </Box>
                             </Flex>
                             <Input
                                 type='file'
@@ -89,7 +98,7 @@ const StockProductForm = () => {
                             />
                             </FormLabel>
                         </Center>
-                        <Grid w='100%' templateColumns={['1fr', '1fr 1fr 1fr']} gap={4} alignItems='center' justifyContent='center' mb={6}>
+                        <Grid w='100%' templateColumns={['1fr', '1fr 1fr']} gap={4} alignItems='center' justifyContent='center' mb={6}>
                             <GridItem position='relative'>
                                 <Field 
                                 as={Input}
@@ -138,16 +147,16 @@ const StockProductForm = () => {
                         borderRadius={20}
                         >
                             <GridItem position='relative'>
-                                <FormLabel>Monto asignado</FormLabel>
+                                <FormLabel>Cantidad disponible:</FormLabel>
                                 <Field 
                                 as={Input}
                                 focusBorderColor='#e80297'
-                                type='text'
+                                type='number'
                                 name='new_area'
-                                placeholder='Nueva area de trabajo'
+                                placeholder='0'
                                 /> 
                             </GridItem> 
-                            <GridItem position='relative'>
+                            {/* <GridItem position='relative'>
                                 <FormLabel>Periodicidad</FormLabel>
                                 <Field 
                                 as={Input}
@@ -156,13 +165,13 @@ const StockProductForm = () => {
                                 name='new_area'
                                 placeholder='Nueva area de trabajo'
                                 /> 
-                            </GridItem> 
-                            <GridItem position='relative'>
+                            </GridItem>  */}
+                            {/* <GridItem position='relative'>
                                 <Flex gap={4} justifyContent='center'>
                                     <Button>Editar</Button>
                                     <Button>Añadir</Button>
                                 </Flex>
-                            </GridItem> 
+                            </GridItem>  */}
                         </Grid>
                     </Form>
                 )}
@@ -170,10 +179,10 @@ const StockProductForm = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
-              Close
+            <Button  mr={3} variant='outline'>Cancelar</Button>
+            <Button onClick={handleClose}>
+              Guardar
             </Button>
-            <Button variant='ghost'>Secondary Action</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

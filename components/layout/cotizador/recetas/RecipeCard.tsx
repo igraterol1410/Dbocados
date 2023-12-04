@@ -8,11 +8,14 @@ const RecipeCard= ({recipe}:{recipe: Recipe}) => {
   const { setRecipeToShow } = useCotizadorActionsContext()
   return (
     <GridItem 
-    borderRadius={12} 
+    borderRadius={20} 
     shadow='xl'
     border='1px solid rgba(0, 0, 0, .3)'
     px={4}
     py={2}
+    display='flex'
+    flexDirection='column'
+    justifyContent='space-between'
     >
         <Box pb={3}>
             <Text fontWeight='bold' textAlign='center'>

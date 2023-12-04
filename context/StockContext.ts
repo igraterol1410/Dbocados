@@ -4,7 +4,8 @@ export type StockContentState = {
     filterParam: {label:string, value:string},
     itemSearch:string,
     data: any,
-    pagination: number
+    pagination: number,
+    showProductModal: boolean
   }
 
 export type StockContentActions = {
@@ -12,13 +13,15 @@ export type StockContentActions = {
   setItemSearch: Dispatch<SetStateAction<string>>,
   setData: Dispatch<SetStateAction<any>>
   setPagination: Dispatch<SetStateAction<number>>
+  setShowProductModal: Dispatch<SetStateAction<boolean>>
 }
 
 export const StockStateContext = createContext<StockContentState>({
     filterParam: {label:'...', value:''},
     itemSearch: '',
     data: [],
-    pagination: 0
+    pagination: 0,
+    showProductModal: false
 })
 
 export const StockActionsContext = createContext<StockContentActions>({
@@ -26,6 +29,7 @@ export const StockActionsContext = createContext<StockContentActions>({
     setItemSearch: () => {},
     setData: () => {},
     setPagination: () => {},
+    setShowProductModal: () => {},
 })
 
 export const useStockStateContext = () => useContext(StockStateContext)

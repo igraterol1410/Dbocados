@@ -6,26 +6,23 @@ import React, {useState} from 'react'
 import EmptyState from './EmptyState'
 
 const Filling = () => {
-    const { progress, ctzFilling } = useCtzStateContext()
+    const { progress, ctzFilling, editId } = useCtzStateContext()
     const { setProgress, setCtzFilling } = useCtzActionsContext()
     const { fillings } = useGetRecipes()
-    const [fillingsOptions, setFillingsOptions] = useState<string>('Con relleno')
-    const [disabledButton, setDisabledButton] = useState<boolean>(true)
+    const [fillingsOptions, setFillingsOptions] = useState<string>(ctzFilling && !editId ? 'Con relleno' : 'Sin relleno')
     const options = ['Sin relleno', 'Con relleno']
     
     const handleChangeFillingOption = (e:string) => {
       setFillingsOptions(e)
       if(e === options[1] && ctzFilling === ''){
-        setDisabledButton(true)
       } else {
         setCtzFilling('')
-        setDisabledButton(false)
       }
     }
 
     const { getRootProps, getRadioProps } = useRadioGroup({
       name: 'relleno',
-      defaultValue: 'Con relleno',
+      defaultValue: ctzFilling ? 'Con relleno' : 'Sin relleno',
       onChange: (e)=>handleChangeFillingOption(e),
     })
 
@@ -35,7 +32,6 @@ const Filling = () => {
     const handleCakeFilling = (value: string) => {
       if(value !== ''){
         setCtzFilling(value)  
-        setDisabledButton(false)
       }
     }
   
@@ -74,7 +70,7 @@ const Filling = () => {
             : (
                 <Box>                  
                   {
-                    fillingsOptions === options[1] &&
+                    (fillingsOptions === options[1] || ctzFilling) &&
                       <FormControl>
                         <Select value={ctzFilling} placeholder='Elige uno' onChange={(e) => handleCakeFilling(e.target.value)}>
                           {
@@ -96,7 +92,7 @@ const Filling = () => {
         onClick={()=> handleChooseType()}
         bg='pinkPrimary' 
         color='white' 
-        isDisabled={disabledButton}
+        isDisabled={fillingsOptions===options[1] && !ctzFilling}
         >
           Siguente
         </Button>
