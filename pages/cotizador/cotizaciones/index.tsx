@@ -19,6 +19,7 @@ const Cotizaciones = () => {
     useEffect(() => {
         if(ctz){
           setCtzs(ctz)
+          console.log(ctz)
         }
     }, [ctz])
     

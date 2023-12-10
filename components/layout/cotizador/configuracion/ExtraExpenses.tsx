@@ -19,13 +19,10 @@ import useGetExpenses from '@/hooks/useGetExpenses'
 import { Expenses, ExpensesError } from '@/types/extraExpenses'
 import { updateUser } from '@/services/users'
 import { useCotizadorActionsContext, useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
+import { useRouter } from 'next/router'
 
-interface SetupProps {
-    setShowList: React.Dispatch<SetStateAction<number>>,
-    showList: number
-}
-
-const ExtraExpenses:React.FC<SetupProps> = ({setShowList, showList}) => {
+const ExtraExpenses = () => {
+    const router = useRouter()
     const { uid, userInfo } = useCotizadorStateContext()
     const { setGlobalUser } = useCotizadorActionsContext()
     const { extraExpenses, loading } = useGetExpenses()
@@ -43,7 +40,7 @@ const ExtraExpenses:React.FC<SetupProps> = ({setShowList, showList}) => {
             const payload = {...userInfo, hasExpenses: true}
             updateUser(payload, uid).then(() => {
                 setGlobalUser(payload)
-                setShowList(showList + 1)
+                router.back()
             })
         })
     }
@@ -69,7 +66,7 @@ const ExtraExpenses:React.FC<SetupProps> = ({setShowList, showList}) => {
     }
 
   return (
-    <Center marginTop={6}>
+    <Center>
         {
             loading &&
             <Spinner/>

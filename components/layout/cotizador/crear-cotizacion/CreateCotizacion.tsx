@@ -49,9 +49,9 @@ const CreateCotizacion = () => {
       {
         component:<Created />
       },
-      {
-        component:<Save />
-      },
+      // {
+      //   component:<Save />
+      // },
     ]
   
     const steps = [
@@ -91,10 +91,10 @@ const CreateCotizacion = () => {
             title: 'Comparte esta cotización', 
             description: 'Puedes descargar y enviar esta cotización a tu cliente' 
         },
-        { 
-            title: 'Felicitaciones', 
-            description: 'Contización aprobada' 
-        }
+        // { 
+        //     title: 'Felicitaciones', 
+        //     description: 'Contización aprobada' 
+        // }
     ]
 
   return (
@@ -111,7 +111,7 @@ const CreateCotizacion = () => {
         gap={4}
         >
           {
-            (progress + 1) > 1 && (progress + 1) < recipeProgress.length &&
+            (progress + 1) > 1 && (progress + 1) <= recipeProgress.length &&
             <Flex 
             cursor='pointer' 
             position='absolute' 

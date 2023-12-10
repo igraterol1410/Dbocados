@@ -15,7 +15,6 @@ const Button: ComponentStyleConfig = {
       color: props.colorScheme === 'pinkPrimary' ? 'white' : props.bg,
       _hover: {
         bg: 'pink.500',
-        border: '3px solid #BA346E',
         color: 'white'
       }
     }),
@@ -60,6 +59,15 @@ const Button: ComponentStyleConfig = {
       _hover: {
         bg: '#562D83',
         border: '3px solid #edfb2ad7',
+        color: 'white'
+      }      
+    }),
+    greenButton: () => ({
+      transition: 'all ease-in-out .2s',
+      color: 'white',
+      bg: 'green.500',
+      _hover: {
+        bg: 'green.400',
         color: 'white'
       }      
     }),

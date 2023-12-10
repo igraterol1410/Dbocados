@@ -1,19 +1,29 @@
-import { Box, Button, ButtonGroup, Flex, Grid, Heading, Table, TableContainer, Tbody, Td, Text, Tr } from '@chakra-ui/react'
-import React, { useRef } from 'react'
-import { useCtzActionsContext, useCtzStateContext } from '@/context/CotizacionContext'
+import { Box, Button, ButtonGroup, Flex, Grid, Heading, Table, TableContainer, Tbody, Td, Text, Tr, useToast } from '@chakra-ui/react'
+import React, { useRef, useState } from 'react'
+import { useCtzStateContext } from '@/context/CotizacionContext'
 import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
 import { BsCloudDownload } from 'react-icons/bs'
-import { MdOutlineVerified } from 'react-icons/md'
+import { FiSave } from 'react-icons/fi'
+import ConfirmCreateCtz from '@/components/modals/ConfirmCreateCtz'
+import { useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
+import useGetCtz from '@/hooks/useGetCtz'
+import { CtzGlobalProp } from '@/types/ctz'
+import { createNewCtz } from '@/services/cotizaciones'
+import {v4 as uuidv4} from 'uuid'
+import { useRouter } from 'next/router'
+import { CTZ_STATUS_VALUE } from '@/constant/ctzStatus'
 
-const Created = () => {
-    const { progress, ctzExtra, ctzPeople, ctzInfo } = useCtzStateContext()
-    const { setProgress } = useCtzActionsContext()
-    const pdfRef:any = useRef()
+const Created = () => {    
+    const toast = useToast()
+    const router = useRouter()
+    const { ctzExtra, ctzPeople, ctzInfo, editId,ctzWorkHand, ctzCake, ctzCoverage, ctzFilling, ctzEarn, ctzName } = useCtzStateContext()
+    const { ctzUser, uid } = useCotizadorStateContext()
+    const { ctz } = useGetCtz()
+    const pdfRef:any = useRef()    
+    const [showPopUp, setShowPopUp] = useState<boolean>(false)
+    const dateNow = new Date()
 
-    const handleNext = () => {
-    setProgress(progress + 1)
-    }
     const downloadPdfCtz:any = () => {
         const input = pdfRef.current
         html2canvas(input).then((canvas) =>{
@@ -31,15 +41,74 @@ const Created = () => {
         })
     }
 
+    const handleSaveCtz = () => {
+        setShowPopUp(true)
+    }
+
+    const createCtz = () => {
+        if(ctzUser){
+            if(editId){
+                const ctzEdited = ctz.map((eachCtz: CtzGlobalProp) => (
+                    {
+                        id: eachCtz.id,
+                        workHand: eachCtz.id === editId ? ctzWorkHand : eachCtz?.workHand, 
+                        cake: eachCtz.id === editId ? ctzCake : eachCtz?.cake, 
+                        coverage: eachCtz.id === editId ? ctzCoverage : eachCtz?.coverage, 
+                        filling: eachCtz.id === editId ? ctzFilling : eachCtz?.filling, 
+                        extra: eachCtz.id === editId ? ctzExtra : eachCtz?.extra, 
+                        people: eachCtz.id === editId ? ctzPeople : eachCtz?.people, 
+                        earn: eachCtz.id === editId ? ctzEarn : eachCtz?.earn,
+                        name: eachCtz.id === editId ? ctzName : eachCtz?.name,
+                        status: eachCtz?.status || CTZ_STATUS_VALUE[0],
+                        created_at: eachCtz?.created_at,
+                        updated_at: dateNow
+                    }
+                ))
+                createNewCtz(ctzEdited, uid).then(() => {
+                    toast({ status: 'success', description: 'Cotización Editada' })
+                    setShowPopUp(false)
+                    router.push('/cotizador')
+                })
+            } else {
+                const newCtz = {
+                    id: uuidv4(),
+                    workHand: ctzWorkHand, 
+                    cake: ctzCake, 
+                    coverage: ctzCoverage, 
+                    filling: ctzFilling, 
+                    extra: ctzExtra, 
+                    people: ctzPeople, 
+                    earn: ctzEarn,
+                    name: ctzName,
+                    status: CTZ_STATUS_VALUE[0],
+                    created_at: dateNow,
+                    updated_at: dateNow
+                }
+                const payload = [...ctz, newCtz]
+                console.log(newCtz)
+                createNewCtz(payload, uid).then(() => {
+                    toast({ status: 'success', description: 'Cotización guardada' })
+                    setShowPopUp(false)
+                    router.push('/cotizador')
+                })
+            }
+        } else {
+            toast({ status: 'error', description: 'No puedes realizar esta acción' })
+            setTimeout(() => {
+                window.location.reload()                
+            }, 2000);
+        }
+    }
+
 
   return (
     <Box h='100%' w='full' bg='#fcfcfc' borderRadius={[8, 12]} p={6}>
+        <ConfirmCreateCtz showPopUp={showPopUp} setShowPopUp={setShowPopUp} createCtz={createCtz} />
           <Grid
           templateRows={['1fr auto']}
           alignItems='center'
           gap={6}
           h='full'
-        //   overflowY='scroll'
           >
               <Flex direction='column' h='100%' justifyContent='space-between'>
                   <Box 
@@ -99,16 +168,14 @@ const Created = () => {
                     leftIcon={<BsCloudDownload />}
                     >
                         Descargar
-                    </Button>                    
+                    </Button> 
                     <Button 
-                    bg='pinkPrimary' 
+                    onClick={handleSaveCtz}
+                    leftIcon={<FiSave />}
                     w='30%'
-                    color='white' 
-                    onClick={handleNext}
-                    leftIcon={<MdOutlineVerified />}
                     >
-                        Aprobar
-                    </Button>                    
+                        {editId ? 'Editar nombre' : 'Guardar y finalizar'}
+                    </Button>
                   </ButtonGroup>
               </Flex>
           </Grid>

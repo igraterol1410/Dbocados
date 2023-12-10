@@ -66,6 +66,7 @@ const CotizadorLayout = ({ children }:{children: React.ReactNode}) => {
                     animation={['' ,asideOpen ? openAsideAction : closeAsideAction]}
                     pl={[0 ,asideOpen ? '300px' : '64px']} 
                     pt='50px'
+                    overflowY='scroll'
                     >
                         {children}
                     </Box>

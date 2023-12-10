@@ -21,10 +21,10 @@ const RecipeCard= ({recipe}:{recipe: Recipe}) => {
             <Text fontWeight='bold' textAlign='center'>
                 {recipe.recipeName}
             </Text>
-            <Badge variant='subtle' colorScheme={recipe.recipeType === RECIPE_TYPES[0] ? 'green' : (recipe.recipeType === RECIPE_TYPES[1] ? 'red' : 'purple')}>{recipe.recipeType}</Badge>
+            <Badge rounded={20} variant='subtle' colorScheme={recipe.recipeType === RECIPE_TYPES[0] ? 'green' : (recipe.recipeType === RECIPE_TYPES[1] ? 'red' : 'blue')}>{recipe.recipeType}</Badge>
         </Box>
         <Center>
-            <Button variant='pinkButton' onClick={() => setRecipeToShow(recipe)}>Ver detalles</Button>
+            <Button size='sm' onClick={() => setRecipeToShow(recipe)}>Ver detalles</Button>
         </Center>
     </GridItem>
   )

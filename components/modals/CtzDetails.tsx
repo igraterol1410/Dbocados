@@ -25,14 +25,20 @@ import { CtzGlobalProp } from '@/types/ctz'
 import CtzDelete from './CtzDelete'
 import { createNewCtz } from '@/services/cotizaciones'
 import Link from 'next/link'
+import ElaborateCtz from './ElaborateCtz'
+import { useRouter } from 'next/router'
+import { CTZ_STATUSES, CTZ_STATUS_VALUE } from '@/constant/ctzStatus'
 
 const CtzDetails = () => {
     const toast = useToast()
     const { ctzToShow, ctzs, uid } = useCotizadorStateContext()
     const { setCtzToShow, setCtzs } = useCotizadorActionsContext()
     const { onClose, onOpen, isOpen } = useDisclosure()
-    const { cyzInfo, loading } = useCtzPrice(ctzToShow?.ctzWorkHand, ctzToShow?.ctzCake, ctzToShow?.ctzCoverage, ctzToShow?.ctzFilling, ctzToShow?.ctzExtra, ctzToShow?.ctzPeople, ctzToShow?.ctzEarn)
+    const { cyzInfo, loading } = useCtzPrice(ctzToShow?.workHand, ctzToShow?.cake, ctzToShow?.coverage, ctzToShow?.filling, ctzToShow?.extra, ctzToShow?.people, ctzToShow?.earn)
     const [ctzToDelete, setCtzToDelete] = useState<CtzGlobalProp | null>(null)
+    const [startElaborate, setStartElaborate] = useState<CtzGlobalProp | null>(null)
+    const dateNow = new Date()
+    const router = useRouter()
 
     useEffect(() => {
         if(ctzToShow){
@@ -59,12 +65,43 @@ const CtzDetails = () => {
         }
     }
     
+    const handleElaborateCtz = () => {
+        if(startElaborate){
+            const ctzEdited = ctzs.map((eachCtz: CtzGlobalProp) => (
+                {
+                    id: eachCtz.id,
+                    workHand: eachCtz?.workHand, 
+                    cake: eachCtz?.cake, 
+                    coverage: eachCtz?.coverage, 
+                    filling: eachCtz?.filling, 
+                    extra: eachCtz?.extra, 
+                    people: eachCtz?.people, 
+                    earn: eachCtz?.earn,
+                    name: eachCtz?.name,
+                    status: eachCtz.id === startElaborate?.id ? CTZ_STATUS_VALUE[1] : eachCtz?.status || CTZ_STATUS_VALUE[0],
+                    created_at: eachCtz?.created_at || dateNow,
+                    updated_at: dateNow
+                }
+            ))
+            createNewCtz(ctzEdited, uid).then(() => {
+                handleClose()
+                router.push(`/cotizador/realizar-pedido/${ctzToShow?.id}`)
+            })
+        }
+    }
+    
     return (
         <>
         <CtzDelete
         setShowPopUp={setCtzToDelete}
         actionDelete={handleDeleteCtz}
         itemToDelete={ctzToDelete}
+        />
+
+        <ElaborateCtz
+        setShowPopUp={setStartElaborate}
+        actionElaborate={handleElaborateCtz}
+        itemToElaborate={startElaborate}
         />
             <Modal 
             isCentered 
@@ -75,11 +112,8 @@ const CtzDetails = () => {
             >
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader>{ctzToShow?.ctzName}</ModalHeader>
+                <ModalHeader>{ctzToShow?.name}</ModalHeader>
                 <ModalBody>
-                    <Box>
-                        Porciones: {ctzToShow?.ctzPeople}
-                    </Box>
                     {
                     loading 
                     ? (
@@ -90,8 +124,8 @@ const CtzDetails = () => {
                             <Table variant='simple'>
                                 <Tbody>
                                     <Tr>
-                                        <Td><b>Numero de personas: </b></Td>
-                                        <Td>{ctzToShow?.ctzPeople}</Td>
+                                        <Td><b>Numero de porciones: </b></Td>
+                                        <Td>{ctzToShow?.people}</Td>
                                     </Tr>
                                     <Tr>
                                         <Td><b>Torta: </b></Td>
@@ -126,7 +160,7 @@ const CtzDetails = () => {
                                     <Tr>
                                         <Td><b>Extras: </b></Td>
                                         <Td>{
-                                            ctzToShow?.ctzExtra && ctzToShow?.ctzExtra.map((extra:any) => (
+                                            ctzToShow?.extra && ctzToShow?.extra.map((extra:any) => (
                                                 <Text key={extra.id}>{extra.name}</Text>
                                             ))
                                         }</Td>
@@ -153,6 +187,9 @@ const CtzDetails = () => {
                                 Editar
                             </Button>
                         </Link>
+                        <Button onClick={() => setStartElaborate(ctzToShow)} variant='outline'>
+                            Realizar pedido
+                        </Button>
                         <Button variant='outline' onClick={() => setCtzToDelete(ctzToShow)}>Eliminar</Button>
                     </ModalFooter>
                 </ModalBody>

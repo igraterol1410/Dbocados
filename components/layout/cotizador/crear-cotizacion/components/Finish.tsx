@@ -27,55 +27,55 @@ const Finish = () => {
     }
   },[cyzInfo])
 
-  const createCtz = () => {
-    if(ctzUser){
-        if(editId){
-            const ctzEdited = ctz.map((eachCtz: CtzGlobalProp) => (
-                {
-                    id: eachCtz.id,
-                    ctzWorkHand: eachCtz.id === editId ? ctzWorkHand : eachCtz?.ctzWorkHand, 
-                    ctzCake: eachCtz.id === editId ? ctzCake : eachCtz?.ctzCake, 
-                    ctzCoverage: eachCtz.id === editId ? ctzCoverage : eachCtz?.ctzCoverage, 
-                    ctzFilling: eachCtz.id === editId ? ctzFilling : eachCtz?.ctzFilling, 
-                    ctzExtra: eachCtz.id === editId ? ctzExtra : eachCtz?.ctzExtra, 
-                    ctzPeople: eachCtz.id === editId ? ctzPeople : eachCtz?.ctzPeople, 
-                    ctzEarn: eachCtz.id === editId ? ctzEarn : eachCtz?.ctzEarn,
-                    ctzName: eachCtz.id === editId ? ctzName : eachCtz?.ctzName
-                }
-            ))
-            createNewCtz(ctzEdited, uid).then(() => {
-                toast({ status: 'success', description: 'Cotización Editada' })
-                setShowPopUp(false)
-            })
-        } else {
-            const newCtz = {
-                id: uuidv4(),
-                ctzWorkHand: ctzWorkHand, 
-                ctzCake: ctzCake, 
-                ctzCoverage: ctzCoverage, 
-                ctzFilling: ctzFilling, 
-                ctzExtra: ctzExtra, 
-                ctzPeople: ctzPeople, 
-                ctzEarn: ctzEarn,
-                ctzName: ctzName
-            }
-            const payload = [...ctz, newCtz]
-            createNewCtz(payload, uid).then(() => {
-                toast({ status: 'success', description: 'Cotización guardada' })
-                setShowPopUp(false)
-            })
-        }
-    } else {
-        toast({ status: 'error', description: 'No puedes realizar esta acción' })
-        setTimeout(() => {
-            window.location.reload()                
-        }, 2000);
-    }
-}
+//   const createCtz = () => {
+//     if(ctzUser){
+//         if(editId){
+//             const ctzEdited = ctz.map((eachCtz: CtzGlobalProp) => (
+//                 {
+//                     id: eachCtz.id,
+//                     ctzWorkHand: eachCtz.id === editId ? ctzWorkHand : eachCtz?.ctzWorkHand, 
+//                     ctzCake: eachCtz.id === editId ? ctzCake : eachCtz?.ctzCake, 
+//                     ctzCoverage: eachCtz.id === editId ? ctzCoverage : eachCtz?.ctzCoverage, 
+//                     ctzFilling: eachCtz.id === editId ? ctzFilling : eachCtz?.ctzFilling, 
+//                     ctzExtra: eachCtz.id === editId ? ctzExtra : eachCtz?.ctzExtra, 
+//                     ctzPeople: eachCtz.id === editId ? ctzPeople : eachCtz?.ctzPeople, 
+//                     ctzEarn: eachCtz.id === editId ? ctzEarn : eachCtz?.ctzEarn,
+//                     ctzName: eachCtz.id === editId ? ctzName : eachCtz?.ctzName
+//                 }
+//             ))
+//             createNewCtz(ctzEdited, uid).then(() => {
+//                 toast({ status: 'success', description: 'Cotización Editada' })
+//                 setShowPopUp(false)
+//             })
+//         } else {
+//             const newCtz = {
+//                 id: uuidv4(),
+//                 ctzWorkHand: ctzWorkHand, 
+//                 ctzCake: ctzCake, 
+//                 ctzCoverage: ctzCoverage, 
+//                 ctzFilling: ctzFilling, 
+//                 ctzExtra: ctzExtra, 
+//                 ctzPeople: ctzPeople, 
+//                 ctzEarn: ctzEarn,
+//                 ctzName: ctzName
+//             }
+//             const payload = [...ctz, newCtz]
+//             createNewCtz(payload, uid).then(() => {
+//                 toast({ status: 'success', description: 'Cotización guardada' })
+//                 setShowPopUp(false)
+//             })
+//         }
+//     } else {
+//         toast({ status: 'error', description: 'No puedes realizar esta acción' })
+//         setTimeout(() => {
+//             window.location.reload()                
+//         }, 2000);
+//     }
+// }
 
-const handleSaveCtz = () => {
-    setShowPopUp(true)
-}
+// const handleSaveCtz = () => {
+//     setShowPopUp(true)
+// }
 
   const handleNext = () => {
     setProgress(progress + 1)
@@ -83,7 +83,7 @@ const handleSaveCtz = () => {
 
   return (
     <Box maxW='95vw' bg='#fcfcfc' borderRadius={[8, 12]} p={[2, 6]} overflowY='scroll'>
-        <ConfirmCreateCtz showPopUp={showPopUp} setShowPopUp={setShowPopUp} createCtz={createCtz} />
+        {/* <ConfirmCreateCtz showPopUp={showPopUp} setShowPopUp={setShowPopUp} createCtz={createCtz} /> */}
         <Grid 
         templateRows={['1fr auto']}
         alignItems='center'
@@ -172,7 +172,7 @@ const handleSaveCtz = () => {
             gap='4' 
             mt={6} 
             >
-                <Button 
+                {/* <Button 
                 colorScheme='blackAlpha'
                 variant='outline'
                 color='pinkPrimary' 
@@ -182,13 +182,13 @@ const handleSaveCtz = () => {
                 leftIcon={<FiSave />}
                 >
                     {editId ? 'Editar nombre' : 'Guardar'}
-                </Button>
+                </Button> */}
                 <Button 
                 bg='pinkPrimary' 
                 color='white'
                 onClick={handleNext} 
                 >
-                    Resumen
+                    Siguiente
                 </Button>
             </ButtonGroup>
         </Grid>

@@ -15,12 +15,15 @@ export interface CtzInfoProp {
 
   export interface CtzGlobalProp {
     id: string | number,
-    ctzWorkHand: ctzWorkHand, 
-    ctzCake: ctzCake, 
-    ctzCoverage: ctzCoverage, 
-    ctzFilling: ctzFilling, 
-    ctzExtra: ctzExtra, 
-    ctzPeople: ctzPeople, 
-    ctzEarn: ctzEarn,
-    ctzName: ctzName,
+    workHand: ctzWorkHand, 
+    cake: ctzCake, 
+    coverage: ctzCoverage, 
+    filling: ctzFilling, 
+    extra: ctzExtra, 
+    people: ctzPeople, 
+    earn: ctzEarn,
+    name: ctzName,
+    status: string,
+    created_at: string,
+    updated_at: string
   }

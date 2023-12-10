@@ -43,16 +43,16 @@ const CtzComponent:React.FC<RecipeProviderProps> = ({ children }) => {
       if(ctz && router.query.cid && !loading){
         setEditId(router?.query?.cid.toString())
         const ctzData = ctz.filter((eachCtz) => (eachCtz.id === router.query.cid))
-        if(ctzData.length > 0 && ctzData[0]?.ctzPeople){
+        if(ctzData.length > 0 && ctzData[0]?.people){
           setPageTitle('Editar cotización')
-          setCtzPeople(ctzData[0]?.ctzPeople)
-          setCtzCake(ctzData[0]?.ctzCake)
-          setCtzFilling(ctzData[0]?.ctzFilling)
-          setCtzCoverage(ctzData[0]?.ctzCoverage)
-          setCtzExtra(ctzData[0]?.ctzExtra)
-          setCtzWorkHand(ctzData[0]?.ctzWorkHand)
-          setCtzEarn(ctzData[0]?.ctzEarn)
-          setCtzName(ctzData[0]?.ctzName)
+          setCtzPeople(ctzData[0]?.people)
+          setCtzCake(ctzData[0]?.cake)
+          setCtzFilling(ctzData[0]?.filling)
+          setCtzCoverage(ctzData[0]?.coverage)
+          setCtzExtra(ctzData[0]?.extra)
+          setCtzWorkHand(ctzData[0]?.workHand)
+          setCtzEarn(ctzData[0]?.earn)
+          setCtzName(ctzData[0]?.name)
         }
       } else {
         setEditId(null)
