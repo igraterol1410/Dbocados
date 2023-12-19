@@ -12,8 +12,8 @@ const CubiertaChocolate = () => {
     const toast = useToast()
     const [success, setSuccess] = useState(false)
     const [loading, setLoading] = useState(false)
-    const groupLink = "https://chat.whatsapp.com/BKMWfnI4YsbGdCGv5CeAFl"
-    const courseEdition = 'virtual-course-4'
+    const groupLink = "https://chat.whatsapp.com/KgwgDVMf6Jp5OLE460bnfz"
+    const courseEdition = 'virtual-course-5'
     const handleSubmit = (values: {}) => {
         setLoading(true)
         createNewStudent(values, courseEdition).then(() => {
@@ -123,6 +123,7 @@ const CubiertaChocolate = () => {
                                                 name='name'
                                                 type='text'
                                                 placeholder='Nombre'
+                                                color='black'
                                                 />
                                                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                                             </FormControl>
@@ -134,6 +135,7 @@ const CubiertaChocolate = () => {
                                                 name='email'
                                                 type='email'
                                                 placeholder='Correo'
+                                                color='black'
                                                 />
                                                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                                             </FormControl>
@@ -145,6 +147,7 @@ const CubiertaChocolate = () => {
                                                 name='phone'
                                                 type='tel'
                                                 placeholder='Teléfono'
+                                                color='black'
                                                 />
                                                 {
                                                     touched.phone && errors.phone &&
