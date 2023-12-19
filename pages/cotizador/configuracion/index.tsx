@@ -54,7 +54,7 @@ const Configuracion = () => {
                         <Heading size='md'>Gastos indirectos</Heading>
                     </CardHeader>
                     <CardBody>
-                        <Text>View a summary of all your customers over the last month.</Text>
+                        <Text>Guarda los gastos de servicios e implementes que tienes al mes</Text>
                     </CardBody>
                     <CardFooter>
                         <Link href='configuracion/gastos-indirectos'>
@@ -69,7 +69,7 @@ const Configuracion = () => {
                         <Heading size='md'>Meta mensual</Heading>
                     </CardHeader>
                     <CardBody>
-                        <Text>View a summary of all your customers over the last month.</Text>
+                        <Text>Establece una meta de pedidos que estimas tener al mes</Text>
                     </CardBody>
                     <CardFooter>
                         <Link href='configuracion/meta-mensual'>
@@ -84,7 +84,7 @@ const Configuracion = () => {
                         <Heading size='md'>Tus ingredientes</Heading>
                     </CardHeader>
                     <CardBody>
-                        <Text>View a summary of all your customers over the last month.</Text>
+                        <Text>Guarda todos los ingredientes que usualmente utilizas en tus recetas</Text>
                     </CardBody>
                     <CardFooter>
                         <Link href='inventario'>

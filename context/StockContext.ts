@@ -1,3 +1,4 @@
+import { Ingredients } from '@/types/ingredients'
 import { createContext, useContext, Dispatch, SetStateAction } from 'react'
 
 export type StockContentState = {
@@ -6,6 +7,7 @@ export type StockContentState = {
     data: any,
     pagination: number,
     showProductModal: boolean
+    showProduct: Ingredients | null
   }
 
 export type StockContentActions = {
@@ -14,6 +16,7 @@ export type StockContentActions = {
   setData: Dispatch<SetStateAction<any>>
   setPagination: Dispatch<SetStateAction<number>>
   setShowProductModal: Dispatch<SetStateAction<boolean>>
+  setShowProduct: Dispatch<SetStateAction<Ingredients | null>>
 }
 
 export const StockStateContext = createContext<StockContentState>({
@@ -21,7 +24,8 @@ export const StockStateContext = createContext<StockContentState>({
     itemSearch: '',
     data: [],
     pagination: 0,
-    showProductModal: false
+    showProductModal: false,
+    showProduct: null
 })
 
 export const StockActionsContext = createContext<StockContentActions>({
@@ -30,6 +34,7 @@ export const StockActionsContext = createContext<StockContentActions>({
     setData: () => {},
     setPagination: () => {},
     setShowProductModal: () => {},
+    setShowProduct: () => {}
 })
 
 export const useStockStateContext = () => useContext(StockStateContext)

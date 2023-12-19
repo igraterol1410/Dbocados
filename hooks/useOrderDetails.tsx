@@ -33,7 +33,6 @@ export default function useOrderDetails ( order: CtzGlobalProp | undefined ) {
     if((unidadesAmount % 1) > 0.4){ 
         return (unidadesAmount - (unidadesAmount % 1)) + 1
     } else {
-        console.log((unidadesAmount - (unidadesAmount % 1))) 
         return unidadesAmount - (unidadesAmount % 1)
     }
   }
@@ -61,7 +60,7 @@ export default function useOrderDetails ( order: CtzGlobalProp | undefined ) {
         if(order.cake){
             const cakeInfo = recipes.filter((eachRecipe) => eachRecipe.id === order.cake)
             const cakeData = cakeInfo[0]
-            const cakeIngredients = cakeData.recipeIngredients.map((eachIngredient:RecipeIngredient) => (
+            const cakeIngredients = cakeData?.recipeIngredients.map((eachIngredient:RecipeIngredient) => (
                 {
                     ...eachIngredient,
                     amount: order.people === cakeData.recipePeople ? eachIngredient.amount : getScaleIngredientAmount(eachIngredient.amount, order.people, cakeData.recipePeople, eachIngredient.unity)

@@ -12,7 +12,6 @@ const FilterProducts = () => {
 
   return (
     <Flex justifyContent='space-between' gap={2} direction={['column', 'row']}>
-        <StockProductForm />
         <Flex gap={2} direction={['column', 'row']}>
             <InputGroup 
             borderRadius={20} 

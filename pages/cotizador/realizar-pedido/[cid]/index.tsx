@@ -1,5 +1,10 @@
+import CommonAlert from '@/components/modals/CommonAlert'
+import { CTZ_STATUSES, CTZ_STATUS_VALUE } from '@/constant/ctzStatus'
+import { useCotizadorStateContext } from '@/context/CotizadorGlobalContext'
 import useGetCtz from '@/hooks/useGetCtz'
 import useOrderDetails from '@/hooks/useOrderDetails'
+import { createNewCtz } from '@/services/cotizaciones'
+import { CommonAlertProps } from '@/types/alerts'
 import { CtzGlobalProp } from '@/types/ctz'
 import { Expenses } from '@/types/extraExpenses'
 import { RecipeIngredient } from '@/types/recipe'
@@ -10,15 +15,80 @@ import React, { useEffect, useState } from 'react'
 
 const index = () => {    
     const { ctz, loading:  ctzLoading } = useGetCtz()
+    const { uid } = useCotizadorStateContext()
     const [order, setOrder] = useState<CtzGlobalProp>()
+    const [configAlert, setConfigAlert] = useState<CommonAlertProps | null>(null)
+    const [showAlert, setShowAlert] = useState<boolean>(false)
+    const [orderFinished, setOrderFinished] = useState<boolean>(false)
     const { loading, orderInfo } = useOrderDetails(order)
-    const router = useRouter()
+    const router = useRouter()    
+    const dateNow = new Date()
     useEffect(() => {
         if(ctz && router.query.cid){
             const ctzData = ctz.filter((eachCtz) => (eachCtz.id === router.query.cid))
             setOrder(ctzData[0])
         }
     },[ctz])
+
+    const hiddeAlert = () => {
+        setShowAlert(false)
+        setConfigAlert(null)
+    }
+
+    const cancelOrder = () => {
+        const ctzEdited = ctz.map((eachCtz: CtzGlobalProp) =>
+            eachCtz.id === order?.id
+            ? {
+                ...order,
+                status: CTZ_STATUS_VALUE[3],
+                updated_at: dateNow
+            }
+            : eachCtz
+        )
+        createNewCtz(ctzEdited, uid).then(() => {
+            hiddeAlert()
+            router.push(`/cotizador/`)
+        })
+    }
+
+    const finishOrder = () => {
+        const ctzEdited = ctz.map((eachCtz: CtzGlobalProp) =>
+            eachCtz.id === order?.id
+            ? {
+                ...order,
+                status: CTZ_STATUS_VALUE[2],
+                updated_at: dateNow
+            }
+            : eachCtz
+        )
+        createNewCtz(ctzEdited, uid).then(() => {
+            hiddeAlert()
+            router.push(`/cotizador/pedidos/finalizado/${order?.id}`)
+        })
+    }
+
+    const handleCancel = () => {
+        setShowAlert(true)
+        setConfigAlert({
+            title: '¿Deseas cancelar pedido?',
+            text: 'Recuerda que puedes volver a realizar este pedido cuando desees',
+            action: cancelOrder,
+            buttonText: 'Cancelar pedido',
+            buttonColor: 'red'
+        })
+    }
+
+    const handleFinish = () => {
+        setShowAlert(true)
+        setConfigAlert({
+            title: '¿Has finalizado este pedido?',
+            text: 'Recuerda actualizar tu inventario de productos',
+            action: finishOrder,
+            buttonText: 'Finalizar pedido',
+            buttonColor: 'green'
+        })
+    }
+
   return (
     <Box 
     p={4}
@@ -49,7 +119,7 @@ const index = () => {
                 <AccordionPanel pb={4} fontSize='sm'>
                 <Text><b>Nombre del pedido: </b>{order?.name}</Text>
                 <Text><b>Número de porciones: </b>{order?.people}</Text>
-                <Text><b>Estado: </b>{order?.status}</Text>
+                <Text><b>Estado: </b>{CTZ_STATUSES[CTZ_STATUS_VALUE.indexOf(order?.status || '')]?.label || CTZ_STATUSES[0].label}</Text>
                 <Text><b>Fecha de creación: </b>{order?.created_at.split('T')[0]}</Text>
                 </AccordionPanel>
             </AccordionItem>
@@ -183,13 +253,14 @@ const index = () => {
                     Volver
                 </Button>
             </Link>
-            <Button>
+            <Button onClick={handleCancel}>
                 Cancelar pedido
             </Button>
-            <Button>
+            <Button onClick={handleFinish}>
                 Finalizar pedido
             </Button>
         </Box>
+        <CommonAlert configAlert={configAlert} show={showAlert} setShow={hiddeAlert} />
     </Box>
   )
 }

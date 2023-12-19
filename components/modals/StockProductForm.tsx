@@ -25,8 +25,8 @@ const StockProductForm = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const { setIngredients, setGlobalUser } = useCotizadorActionsContext()
     const { ingredients, uid, ctzUser, userInfo } = useCotizadorStateContext()
-    const { showProductModal } = useStockStateContext()
-    const { setShowProductModal } = useStockActionsContext()
+    const { showProductModal, showProduct } = useStockStateContext()
+    const { setShowProductModal, setShowProduct } = useStockActionsContext()
     const [productImage, setProductImage] = useState<string>('')
     const [productImageName, setProductImageName] = useState<string>('')    
     const [initialValues, setInitialValues] = useState<IngredientsForm>(initivialValuesRef)
@@ -43,12 +43,27 @@ const StockProductForm = () => {
 
     useEffect(() => {
         if(showProductModal){
+            if(showProduct){
+                const { name, unity, amount, balance, image, price } = showProduct
+                setInitialValues({
+                    name: name,
+                    unity: unity,
+                    amount: amount,
+                    image: '',
+                    balance: balance || 0,
+                    price: price
+                })
+                setProductImage(image)
+            }
             onOpen()
         }
     },[showProductModal])
 
     const handleClose = () => {
         setShowProductModal(false)
+        setShowProduct(null)
+        setProductImage('')
+        setInitialValues(initivialValuesRef)
         onClose()
     }
 
@@ -57,24 +72,53 @@ const StockProductForm = () => {
         return valueDuplicated.length > 0
     }
 
+    const existName = (name:string | null) => {
+        const valueDuplicated = ingredients.filter((eachIngredient) => eachIngredient.name?.toLocaleLowerCase() === name?.toLocaleLowerCase())
+        console.log(valueDuplicated)
+        return valueDuplicated.length > 0 && valueDuplicated[0].id != showProduct?.id
+    }
+
     const handleSaveIngredientsList = (values: IngredientsForm) => {
         if(ctzUser){
-            const newIngredient = {
-                ...values,
-                id: uuidv4(),
-                image: productImage,
-                created_at: dateNow,
-                updated_at: dateNow
-            }   
-            ingredients.push(newIngredient)
-            createIngredientsList(ingredients, uid).then(() => {
-                const payload = {...userInfo, hasIngredients: true}
-                updateUser(payload, uid).then(() => {
-                    setIngredients(ingredients)
-                    setGlobalUser(payload)
+            if(showProduct){
+                const updatedIngredients = ingredients.map((eachIngredient) =>
+                    eachIngredient.id === showProduct.id
+                    ? {
+                        ...values,
+                        id: showProduct.id,
+                        image: productImage,
+                        created_at: showProduct.created_at,
+                        updated_at: dateNow
+                    }
+                    : eachIngredient
+                )
+                createIngredientsList(updatedIngredients, uid).then(() => {
+                    setIngredients(updatedIngredients)
                     handleClose()
                 })
-            })
+            } else {
+                const newIngredient = {
+                    ...values,
+                    id: uuidv4(),
+                    image: productImage,
+                    created_at: dateNow,
+                    updated_at: dateNow
+                }   
+                ingredients.push(newIngredient)
+                createIngredientsList(ingredients, uid).then(() => {
+                    if(ingredients.length === 1){
+                        const payload = {...userInfo, hasIngredients: true}
+                        updateUser(payload, uid).then(() => {
+                            setGlobalUser(payload)
+                            setIngredients(ingredients)
+                            handleClose()
+                        })
+                    } else {
+                        setIngredients(ingredients)
+                        handleClose()
+                    }
+                })
+            }
         } else {
             toast({ status: 'error', description: 'No puedes realizar esta acción' })
             setTimeout(() => {
@@ -96,8 +140,10 @@ const StockProductForm = () => {
           initialValues={initialValues}
           validate={(values)=>{
               const errors: FormikErrors<IngredientsError> = {}
-              if(isDuplicated(values.name)){
+              if((!showProduct && isDuplicated(values.name))){
                   errors.name = 'Ingrediente duplicado'
+                } else if(showProduct && existName(values.name)){
+                  errors.name = 'Ya existe un ingrediente con este nombre'
               }
               return errors
           }}
@@ -259,7 +305,7 @@ const StockProductForm = () => {
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button  mr={3} variant='outline'>Cancelar</Button>
+                        <Button onClick={handleClose} mr={3} variant='outline'>Cancelar</Button>
                         <Button 
                         type='submit'
                         >

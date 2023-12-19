@@ -1,7 +1,7 @@
 import PageContainer from '@/components/layout/PageContainer'
 import FilterProducts from '@/components/layout/cotizador/stock/FilterProducts'
 import StockGallery from '@/components/layout/cotizador/stock/StockGallery'
-import StockTable from '@/components/layout/cotizador/stock/StockTable'
+import StockProductForm from '@/components/modals/StockProductForm'
 import StockTableComponent from '@/context/StockComponent'
 import { Box } from '@chakra-ui/react'
 import React from 'react'
@@ -14,8 +14,8 @@ const index = () => {
             <Box>
                 <FilterProducts />
                 <StockGallery />
+                <StockProductForm />
             </Box>
-            {/* <StockTable /> */}
         </StockTableComponent>
     </PageContainer>
   )
