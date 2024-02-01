@@ -12,8 +12,8 @@ const CubiertaChocolate = () => {
     const toast = useToast()
     const [success, setSuccess] = useState(false)
     const [loading, setLoading] = useState(false)
-    const groupLink = "https://chat.whatsapp.com/KgwgDVMf6Jp5OLE460bnfz"
-    const courseEdition = 'virtual-course-5'
+    const groupLink = "https://chat.whatsapp.com/DKHpUFPVkkmC9b1mezQYYy"
+    const courseEdition = 'virtual-course-6'
     const handleSubmit = (values: {}) => {
         setLoading(true)
         createNewStudent(values, courseEdition).then(() => {
